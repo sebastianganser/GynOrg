@@ -73,6 +73,7 @@ frontend/dist/
 frontend/build/
 frontend/.next/
 frontend/out/
+!frontend/src/lib/
 
 # Editor directories and files
 .idea
