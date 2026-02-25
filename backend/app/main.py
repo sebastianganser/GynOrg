@@ -78,14 +78,18 @@ async def startup_event():
     """Initialize database tables and ensure holiday data on startup."""
     logger.info("Starting application...")
     
-    # Datenbank-Tabellen erstellen
-    create_db_and_tables()
-    logger.info("Database tables initialized")
+    try:
+        # Datenbank-Tabellen erstellen
+        create_db_and_tables()
+        logger.info("Database tables initialized")
+        
+        # Holiday-Daten sicherstellen
+        await ensure_holiday_data()
+    except Exception as e:
+        logger.error(f"Error during database initialization: {e}")
+        logger.warning("Application started but database might not be fully configured")
     
-    # Holiday-Daten sicherstellen
-    await ensure_holiday_data()
-    
-    logger.info("Application startup completed successfully")
+    logger.info("Application startup completed")
 
 @app.get("/")
 async def root():
