@@ -23,7 +23,7 @@ class AvatarService {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = (import.meta as any).env.VITE_API_URL || 'http://localhost:8000';
+    this.baseUrl = (import.meta as any).env.VITE_API_URL || '';
   }
 
   /**
@@ -42,7 +42,7 @@ class AvatarService {
 
       const formData = new FormData();
       formData.append('file', file);
-      
+
       if (cropData) {
         formData.append('crop_x', cropData.x.toString());
         formData.append('crop_y', cropData.y.toString());
