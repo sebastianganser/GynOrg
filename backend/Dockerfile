@@ -7,14 +7,15 @@ WORKDIR /app
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf-8 \
     PYTHONPATH=/app
 
 # Install system dependencies required for building psycopg2 and other packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        gcc \
-        libpq-dev \
-        python3-dev \
+    gcc \
+    libpq-dev \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies

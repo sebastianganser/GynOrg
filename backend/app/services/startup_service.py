@@ -63,7 +63,7 @@ class StartupService:
             result["missing_years_found"] = missing_years
             
             if not missing_years:
-                logger.info("✅ Startup: Alle Holiday-Daten bereits vollständig vorhanden")
+                logger.info("Startup: Alle Holiday-Daten bereits vollständig vorhanden")
                 result["skipped_reason"] = "All holiday data already complete"
                 return result
             
@@ -98,7 +98,7 @@ class StartupService:
             result["duration_seconds"] = (end_time - start_time).total_seconds()
             
             if result["success"]:
-                logger.info(f"🎉 Startup: Holiday-Daten-Prüfung abgeschlossen in {result['duration_seconds']:.2f}s")
+                logger.info(f"Startup: Holiday-Daten-Prüfung abgeschlossen in {result['duration_seconds']:.2f}s")
             else:
                 logger.error(f"💥 Startup: Holiday-Daten-Prüfung fehlgeschlagen nach {result['duration_seconds']:.2f}s")
         
