@@ -48,6 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             name="username"
             type="text"
             required
+            autoComplete="username"
             className="block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 text-sm"
             placeholder="Geben Sie Ihren Benutzernamen ein"
             value={credentials.username}
@@ -64,6 +65,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             name="password"
             type="password"
             required
+            autoComplete="current-password"
             className="block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 text-sm"
             placeholder="Geben Sie Ihr Passwort ein"
             value={credentials.password}
