@@ -1,0 +1,55 @@
+# Task ID: 13
+# Title: Docker Containerization and CI/CD Pipeline Setup
+# Status: pending
+# Dependencies: 1, 12
+# Priority: high
+# Description: Containerize the application and set up CI/CD pipeline with GitHub Actions, but only after local development and testing are complete.
+# Details:
+Develop the application directly on the host system using Python and Node.js, without Docker during development. Once local tests pass, create a multi-stage Dockerfile for both backend and frontend using Alpine Linux base images. Ensure the SQLite database file is included and accessible within the container. Use a simple single-container approach (no docker-compose). Set up Nginx as a reverse proxy within the container. Configure GitHub Actions to run only after successful local tests, covering linting, testing, security scanning, Docker image building, and deployment. Focus on a straightforward deployment strategy with health checks and basic monitoring.
+
+# Test Strategy:
+Test application locally on the host system first. After passing local tests, build and run the Docker container to verify correct operation, including SQLite file access. Confirm CI/CD pipeline execution and deployment via GitHub Actions.
+
+# Subtasks:
+## 1. Write Backend Dockerfile [pending]
+### Dependencies: None
+### Description: Create a Dockerfile for the backend service, specifying the base image, copying source code, installing dependencies, setting environment variables, and defining the entrypoint. Ensure the SQLite database file is copied into the container and accessible.
+### Details:
+Do not use Docker during development; only create the Dockerfile after local development and testing are complete. Use a multi-stage build for optimal image size. Handle environment-specific variables securely and follow best practices for minimal image size and ephemeral containers.
+
+## 2. Write Frontend Dockerfile [pending]
+### Dependencies: 13.1
+### Description: Develop a Dockerfile for the frontend application, including steps to build static assets and serve them using a lightweight web server.
+### Details:
+Do not use Docker during development; only create the Dockerfile after local development and testing are complete. Use a minimal base image (e.g., node:alpine for build, nginx:alpine for serving) and leverage multi-stage builds to keep the final image lean.
+
+## 3. Set Up Nginx Reverse Proxy [pending]
+### Dependencies: 13.2
+### Description: Configure Nginx within the single application container to act as a reverse proxy, routing requests to the frontend and backend services as appropriate.
+### Details:
+Write an Nginx configuration file that forwards API requests to the backend and serves static files from the frontend within the same container. No docker-compose; all services must run in a single container.
+
+## 4. Configure Multi-Stage Builds [pending]
+### Dependencies: 13.3
+### Description: Refactor Dockerfiles to use multi-stage builds, separating build and runtime environments for both frontend and backend.
+### Details:
+Ensure only production-ready artifacts are included in the final image, reducing size and attack surface. All services must be included in a single container.
+
+## 5. Set Up GitHub Actions for Linting and Testing [pending]
+### Dependencies: 13.4
+### Description: Create GitHub Actions workflows to automatically lint and test both frontend and backend code, but only trigger these workflows after successful local tests and before Docker image build.
+### Details:
+Define jobs for installing dependencies, running linters, and executing test suites for both services. Ensure workflows are not triggered during development, but only after local verification.
+
+## 6. Add Docker Image Build and Deploy Steps [pending]
+### Dependencies: 13.5
+### Description: Extend GitHub Actions workflows to build the single-container Docker image and push it to a container registry, then deploy.
+### Details:
+Include steps for tagging, building, and securely pushing the single-container image, and optionally deploying to a staging or production environment. Ensure the SQLite file is present in the image.
+
+## 7. Implement Health Checks and Monitoring [pending]
+### Dependencies: None
+### Description: Add health check endpoints to backend and frontend services, and configure Docker and Nginx to use them. Set up basic monitoring and alerting.
+### Details:
+Define health check commands in the Dockerfile or deployment scripts, and integrate with monitoring tools for uptime and performance tracking.
+

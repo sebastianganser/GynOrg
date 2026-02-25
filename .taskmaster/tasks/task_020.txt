@@ -1,0 +1,121 @@
+# Task ID: 20
+# Title: Implement Comprehensive School Holidays Integration for All 16 German Federal States with Dual-API Support and UI Enhancements
+# Status: pending
+# Dependencies: 18, 19
+# Priority: high
+# Description: Develop a dual-API system integrating ferien-api.de for 2023-2025 and mehr-schulferien.de for 2026 onwards, extend calendar settings to include federal state selection for school holidays, enhance the absence calendar frontend to distinguish holidays and school vacations, and provide an admin interface for managing school holidays.
+# Details:
+1. Backend Integration:
+- Implement a service module to fetch school holiday data from ferien-api.de for years 2023-2025 using their REST API (e.g., https://ferien-api.de/api/v1/holidays/{stateCode}/{year}).
+- Implement a second service module to fetch school holiday data from mehr-schulferien.de API v2.1 for years 2026 and beyond (e.g., https://www.mehr-schulferien.de/api/v2.1/federal-states/{state}/periods?year={year}).
+- Design logic to switch between APIs based on the year requested.
+- Map all 16 German federal states to their respective codes for both APIs.
+- Store and update holiday data in the database, ensuring consistency and multi-year support.
+
+2. Calendar Settings Extension:
+- Add a federal state selection dropdown in calendar settings to allow users to specify their state for school holiday display.
+- Persist user selections and apply them to holiday data queries.
+
+3. Frontend Integration:
+- Modify the absence calendar UI to visually differentiate between public holidays and school holidays (e.g., different colors or icons).
+- Ensure school holidays are displayed according to the selected federal state and year.
+- Provide tooltips or details on hover/click for holiday type and name.
+
+4. Admin Interface:
+- Create an admin panel section for managing school holidays, including viewing imported data, triggering manual refreshes from both APIs, and resolving conflicts.
+- Provide logs or status indicators for API data fetch success or failure.
+
+5. Performance and Caching:
+- Implement caching strategies for API responses to minimize external calls.
+- Ensure data is refreshed periodically and on-demand via admin interface.
+
+6. Documentation:
+- Document the dual-API integration approach, configuration options, and UI changes for future maintenance.
+
+Code examples:
+- Use asynchronous HTTP clients for API calls.
+- Example pseudocode for API switching:
+
+```typescript
+function fetchSchoolHolidays(stateCode: string, year: number) {
+  if (year >= 2026) {
+    return fetchMehrSchulferienHolidays(stateCode, year);
+  } else {
+    return fetchFerienApiHolidays(stateCode, year);
+  }
+}
+```
+
+- Frontend: Extend calendar component to accept holiday type and render accordingly.
+
+Considerations:
+- Handle API rate limits and failures gracefully.
+- Validate and normalize data from both APIs to a common internal format.
+- Ensure backward compatibility with existing holiday data.
+- Support localization and accessibility in UI components.
+
+# Test Strategy:
+1. Unit Tests:
+- Mock ferien-api.de and mehr-schulferien.de API responses to verify correct parsing, transformation, and storage of holiday data.
+- Test the API switching logic based on year.
+- Verify mapping of federal state codes for both APIs.
+
+2. Integration Tests:
+- Test end-to-end data import from both APIs into the database.
+- Verify calendar settings persist and correctly filter holidays by federal state.
+- Confirm frontend renders holidays and school vacations distinctly with correct data.
+- Test admin interface functionalities: data viewing, manual refresh, and error handling.
+
+3. UI/UX Tests:
+- Validate that the absence calendar visually differentiates holiday types.
+- Test responsiveness and accessibility of new UI elements.
+
+4. Performance Tests:
+- Measure caching effectiveness and API call frequency.
+- Ensure system handles multiple years and states without degradation.
+
+5. Regression Tests:
+- Confirm existing holiday and absence calendar features remain unaffected.
+
+6. User Acceptance Testing:
+- Gather feedback on usability of federal state selection and holiday display.
+
+Automated test suites should cover backend services, API clients, frontend components, and admin interface.
+
+# Subtasks:
+## 1. API-Verfügbarkeit für alle 16 Bundesländer testen [pending]
+### Dependencies: None
+### Description: Umfassender Test beider APIs (ferien-api.de und mehr-schulferien.de) für alle deutschen Bundesländer und Jahre 2023-2030 um Datenabdeckung zu verifizieren.
+### Details:
+Testskript entwickeln das beide APIs für alle 16 Bundesländer testet: BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH. Prüfung der Datenqualität und -vollständigkeit für verschiedene Jahre. Dokumentation der verfügbaren Zeiträume pro API.
+
+## 2. Datenmodell für Schulferien erweitern [pending]
+### Dependencies: 20.1
+### Description: Holiday-Model um Schulferien-spezifische Felder erweitern und Migration erstellen.
+### Details:
+Holiday-Model erweitern um: holiday_type ENUM ('FEIERTAG', 'SCHULFERIEN'), school_holiday_type für Ferienarten ('SOMMERFERIEN', 'HERBSTFERIEN', etc.), data_source für API-Tracking ('FERIEN_API', 'MEHR_SCHULFERIEN', 'MANUAL'). Alembic-Migration erstellen und testen.
+
+## 3. Dual-API-Client implementieren [pending]
+### Dependencies: 20.2
+### Description: SchoolHolidayApiClient entwickeln der beide APIs (ferien-api.de + mehr-schulferien.de) intelligent nutzt.
+### Details:
+Client-Klasse entwickeln mit Jahr-basiertem Routing: ferien-api.de für 2023-2025, mehr-schulferien.de für 2026+. Einheitliche Datenstruktur für beide APIs, Fehlerbehandlung, Rate Limiting, Retry-Logic. Mapping auf Holiday-Model mit korrekten Feldern.
+
+## 4. Kalendereinstellungen um Schulferien erweitern [pending]
+### Dependencies: 20.3
+### Description: Calendar Settings Model und UI um Schulferien-Optionen mit Bundesland-Auswahl erweitern.
+### Details:
+Calendar Settings Model erweitern um: show_school_holidays (boolean), school_holiday_federal_state (FederalState). Migration erstellen. API-Endpoints für GET/PUT Schulferien-Einstellungen. Frontend-Formular erweitern: Checkbox 'Schulferien anzeigen' + Dropdown für Bundesland-Auswahl mit allen 16 Bundesländern.
+
+## 5. Frontend-Kalender um Schulferien-Anzeige erweitern [pending]
+### Dependencies: 20.4
+### Description: AbsenceCalendar-Komponente erweitern um Schulferien-Darstellung mit visueller Unterscheidung zu Feiertagen.
+### Details:
+AbsenceCalendar.tsx erweitern: Schulferien-Daten laden basierend auf Kalendereinstellungen, visuelle Unterscheidung (Feiertage rot, Schulferien blau/grün), Tooltips mit Ferienart und Bundesland, Filter-Toggle für Schulferien ein/aus. useHolidays Hook erweitern um Schulferien-Support.
+
+## 6. Tests und Dokumentation für Schulferien-System [pending]
+### Dependencies: 20.5
+### Description: Umfassende Tests für alle Schulferien-Komponenten und Benutzer-Dokumentation erstellen.
+### Details:
+Unit Tests für SchoolHolidayApiClient, HolidayService-Erweiterungen, Calendar Settings. Integration Tests für API-Calls und Datenbank-Operationen. Frontend-Tests für Kalendereinstellungen und Schulferien-Anzeige. Benutzerhandbuch für Schulferien-Funktionen erstellen.
+

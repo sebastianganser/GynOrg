@@ -1,0 +1,397 @@
+/* Calendar overrides for better readability */
+
+/* Calendar day cells */
+.rbc-month-view .rbc-date-cell {
+  color: #111827 !important;
+  background-color: white !important;
+}
+
+.rbc-month-view .rbc-date-cell:hover {
+  background-color: #eff6ff !important;
+  color: #1e3a8a !important;
+}
+
+/* Today's date */
+.rbc-month-view .rbc-today {
+  background-color: #dbeafe !important;
+  color: #1e3a8a !important;
+  font-weight: 600 !important;
+}
+
+/* Weekend days */
+.rbc-month-view .rbc-off-range-bg {
+  background-color: #f3f4f6 !important;
+  color: #6b7280 !important;
+}
+
+/* Calendar header (day names) */
+.rbc-month-view .rbc-header {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 8px 4px !important;
+}
+
+/* Month header */
+.rbc-month-view .rbc-month-header {
+  background-color: #f9fafb !important;
+}
+
+/* Calendar grid */
+.rbc-month-view .rbc-month-row {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.rbc-month-view .rbc-day-bg {
+  border-right: 1px solid #e5e7eb !important;
+}
+
+/* Date numbers */
+.rbc-month-view .rbc-date-cell > a {
+  color: inherit !important;
+  text-decoration: none !important;
+  display: block !important;
+  padding: 4px !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.rbc-month-view .rbc-date-cell > a:hover {
+  background-color: #eff6ff !important;
+  color: #1e3a8a !important;
+}
+
+/* Selected date */
+.rbc-month-view .rbc-selected {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+/* Event styling improvements */
+.rbc-event {
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 2px 4px !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+/* Event content - prevent text wrapping and overflow */
+.rbc-event-content {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
+}
+
+/* Event label - same overflow handling */
+.rbc-event-label {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Week and day view improvements */
+.rbc-time-view .rbc-time-header {
+  background-color: #f9fafb !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.rbc-time-view .rbc-time-header-content {
+  color: #374151 !important;
+  font-weight: 600 !important;
+}
+
+.rbc-time-view .rbc-time-slot {
+  border-top: 1px solid #f3f4f6 !important;
+  color: #6b7280 !important;
+}
+
+.rbc-time-view .rbc-current-time-indicator {
+  background-color: #ef4444 !important;
+  height: 2px !important;
+}
+
+/* Agenda view improvements */
+.rbc-agenda-view .rbc-agenda-table {
+  color: #111827 !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table thead th {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #e5e7eb !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table tbody tr {
+  border-bottom: 1px solid #f3f4f6 !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table tbody tr:hover {
+  background-color: #f9fafb !important;
+}
+
+/* Popup improvements */
+.rbc-overlay {
+  background-color: white !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.rbc-overlay-header {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* Show more link */
+.rbc-show-more {
+  color: #3b82f6 !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  padding: 2px 4px !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.rbc-show-more:hover {
+  background-color: #eff6ff !important;
+  color: #1e40af !important;
+}
+
+/* Ensure proper text contrast in all states */
+.rbc-calendar * {
+  box-sizing: border-box;
+}
+
+/* Fix any remaining white text on white background issues */
+.rbc-month-view .rbc-date-cell,
+.rbc-month-view .rbc-date-cell a,
+.rbc-month-view .rbc-date-cell span {
+  color: #111827 !important;
+}
+
+.rbc-month-view .rbc-off-range .rbc-date-cell,
+.rbc-month-view .rbc-off-range .rbc-date-cell a,
+.rbc-month-view .rbc-off-range .rbc-date-cell span {
+  color: #9ca3af !important;
+}
+
+/* Custom date cell wrapper for holidays */
+.rbc-date-cell-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+/* Holiday indicator styles */
+.holiday-indicator {
+  font-size: 10px;
+  color: #dc2626;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-top: 2px;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 95%;
+}
+
+/* Override: Ensure date cells have optimal height for holidays and events */
+.rbc-month-view .rbc-date-cell {
+  min-height: 28px !important;
+  max-height: 180px !important;
+  padding: 0px !important;
+  position: relative;
+  border-right: 1px solid #e5e7eb !important;
+  overflow: hidden !important;
+}
+
+/* Prevent cell expansion from long content */
+.rbc-month-view .rbc-row {
+  min-height: 180px !important;
+  max-height: 180px !important;
+  overflow: hidden !important;
+}
+
+.rbc-month-view .rbc-row-bg {
+  min-height: 180px !important;
+  max-height: 180px !important;
+}
+
+.rbc-month-view .rbc-row-content {
+  min-height: 180px !important;
+  max-height: 180px !important;
+  overflow: hidden !important;
+}
+
+/* Remove border from last cell in each row to avoid double borders */
+.rbc-month-view .rbc-date-cell:last-child {
+  border-right: none !important;
+}
+
+/* Date header styling for holidays */
+.rbc-month-view .rbc-date-cell .rbc-date-cell-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+}
+
+/* Ensure holiday text is visible and properly styled */
+.rbc-month-view .rbc-date-cell .text-red-600 {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+  line-height: 1.1 !important;
+  margin-top: 2px !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+  max-width: 100% !important;
+}
+
+/* Date number positioning */
+.rbc-month-view .rbc-date-cell > a {
+  position: static !important;
+  padding: 1px 2px !important;
+  min-width: 16px;
+  text-align: left !important;
+  display: inline-block !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+}
+
+/* Optimize date header layout for horizontal holiday display */
+.rbc-month-view .rbc-date-cell .rbc-date-cell-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  padding: 1px 2px !important;
+  min-height: 12px !important;
+  max-height: 16px !important;
+  overflow: hidden !important;
+}
+
+/* Holiday text styling for horizontal layout */
+.rbc-month-view .rbc-date-cell .text-red-600,
+.rbc-month-view .rbc-date-cell .text-blue-600 {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+  line-height: 1.1 !important;
+  margin-left: 4px !important;
+  margin-top: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: calc(100% - 30px) !important;
+  flex-shrink: 1 !important;
+  display: inline-block !important;
+}
+
+.rbc-month-view .rbc-date-cell .text-blue-600 {
+  color: #2563eb !important;
+}
+
+/* Optimize event space - minimize top padding */
+.rbc-month-view .rbc-row-content {
+  padding-top: 1px !important;
+  height: calc(100% - 1px) !important;
+}
+
+/* Maximize event container height */
+.rbc-month-view .rbc-row-segment {
+  height: 100% !important;
+}
+
+/* Ensure events use available space efficiently */
+.rbc-month-view .rbc-event-content {
+  height: 100% !important;
+}
+
+/* Ensure date header takes minimal space */
+.rbc-month-view .rbc-date-cell .rbc-date-cell-header {
+  min-height: 12px !important;
+  padding: 1px 2px !important;
+}
+
+/* Calendar week column styles */
+.rbc-month-view.show-week-numbers .rbc-month-row {
+  display: grid !important;
+  grid-template-columns: 40px repeat(7, 1fr) !important;
+}
+
+.rbc-month-view.show-week-numbers .rbc-header {
+  display: none !important;
+}
+
+.rbc-month-view.show-week-numbers .rbc-header-wrapper {
+  display: grid !important;
+  grid-template-columns: 40px repeat(7, 1fr) !important;
+}
+
+.week-number-cell {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #f3f4f6 !important;
+  border-right: 2px solid #d1d5db !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  color: #6b7280 !important;
+  padding: 4px !important;
+}
+
+.week-number-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #f9fafb !important;
+  border-right: 2px solid #d1d5db !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  color: #374151 !important;
+  padding: 8px 4px !important;
+}
+
+/* Custom Month View Styles */
+.custom-month-view {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.custom-month-view .calendar-grid {
+  min-height: 500px;
+}
+
+/* Ensure proper grid layout for week numbers */
+.custom-month-view .grid-cols-8 {
+  display: grid;
+  grid-template-columns: 40px repeat(7, 1fr);
+}
+
+/* Week number cell styling */
+.custom-month-view .week-number-cell {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Day cell hover effects */
+.custom-month-view .hover\:bg-blue-100:hover {
+  background-color: #dbeafe !important;
+}

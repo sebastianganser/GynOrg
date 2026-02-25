@@ -1,0 +1,46 @@
+# Task ID: 4
+# Title: Authentication System Implementation
+# Status: done
+# Dependencies: 2
+# Priority: high
+# Description: Implement a simple single-user authentication system with hardcoded credentials, bcrypt password verification, and JWT-based session management. No registration, roles, or multi-user support.
+# Details:
+Implement a FastAPI login endpoint that accepts the hardcoded username 'MGanser' and password 'M4rvelf4n' (bcrypt hash: $2b$12$s6pk...m8). On successful authentication, issue a JWT token for session management. No user registration, roles, or complex user management. All authentication logic should be as simple as possible, focusing on a single user with full access. Use environment variables for JWT secret and bcrypt rounds.
+
+# Test Strategy:
+Test login endpoint with correct and incorrect credentials. Verify that only the hardcoded user can log in. Confirm JWT token generation and validation for session management.
+
+# Subtasks:
+## 1. Implement Hardcoded User Authentication [done]
+### Dependencies: None
+### Description: Implement authentication logic that checks credentials against a single hardcoded user ('MGanser' with bcrypt-hashed password). No user model or database required.
+### Details:
+Store the bcrypt hash for 'M4rvelf4n' directly in the code. When the login endpoint is called, compare the provided username and password to the hardcoded values using bcrypt. Do not implement registration or user management.
+<info added on 2025-07-08T14:29:30.294Z>
+JWT-based authentication fully implemented with bcrypt password verification, JWT token creation and validation, hardcoded user MGanser with bcrypt hash, HTTPBearer security for API endpoints, and all necessary dependencies and configuration files added. API endpoints for login, logout, current user info, and token verification are available. Test script created for verification. Next step: install dependencies and test the server.
+</info added on 2025-07-08T14:29:30.294Z>
+
+## 2. Create Login Endpoint [done]
+### Dependencies: 4.1
+### Description: Develop an API endpoint that accepts user credentials, verifies them against the hardcoded username and bcrypt-hashed password, and returns an appropriate response.
+### Details:
+Set up a POST /login route. Accept username and password, compare them to the hardcoded credentials using bcrypt, and handle authentication success or failure.
+
+## 3. Integrate JWT Token Generation [done]
+### Dependencies: 4.2
+### Description: Enhance the login endpoint to generate a JWT token upon successful authentication, embedding relevant user information in the token payload.
+### Details:
+Use a library like PyJWT or python-jose to sign a JWT with a secret key from environment variables. Include claims such as username and expiration. Return the token in the login response.
+
+## 4. Set Up Environment Variables for Secrets [done]
+### Dependencies: 4.3
+### Description: Configure environment variables to securely store sensitive information such as JWT secret keys and bcrypt rounds.
+### Details:
+Use a package like python-dotenv to load environment variables. Refactor code to reference secrets from environment variables instead of hardcoding them.
+
+## 5. Write Authentication Tests [done]
+### Dependencies: 4.4
+### Description: Develop automated tests to verify the correctness and security of the authentication flow, including password hashing, login, and JWT issuance.
+### Details:
+Write unit and integration tests for the login endpoint and JWT generation. Test both successful and failure scenarios, ensuring only the hardcoded user can authenticate.
+

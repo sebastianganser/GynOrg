@@ -1,0 +1,75 @@
+# Task ID: 19
+# Title: Implement German School Holidays Import by Federal State
+# Status: pending
+# Dependencies: 18, 16
+# Priority: high
+# Description: Integrate German school holidays into the absence calendar with support for all 16 federal states using the ferien-api.de service to automatically import holiday data.
+# Details:
+1. Backend Integration:
+- Implement a service module to fetch school holiday data from ferien-api.de using their REST API endpoints (e.g., https://ferien-api.de/api/v1/holidays/{stateCode}/{year}).
+- Map the 16 German federal states to their respective two-letter state codes as required by the API.
+- Design logic to import holidays for multiple years, ideally covering the current year and upcoming years as needed.
+- Parse and transform the API response JSON into the internal holiday data model, including start and end dates, holiday names, and federal state association.
+- Extend the existing holiday database schema if necessary to store school holidays with federal state linkage.
+- Implement scheduled or on-demand import functionality to keep school holiday data up to date.
+
+2. API and Data Model:
+- Extend the Holiday API to expose school holidays per federal state.
+- Ensure the API supports querying holidays by federal state and year.
+
+3. Frontend:
+- Update the absence calendar UI to display school holidays per employee's federal state.
+- Provide configuration options to enable or disable school holiday visibility.
+
+4. Error Handling and Logging:
+- Handle API failures gracefully with retries and error logging.
+- Validate data integrity before saving to the database.
+
+5. Documentation:
+- Document the new import feature, API endpoints, and configuration options.
+
+Code Example Snippet (Python):
+```python
+import requests
+
+def fetch_school_holidays(state_code: str, year: int):
+    url = f'https://ferien-api.de/api/v1/holidays/{state_code}/{year}'
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+```
+
+Use this data to update the database accordingly.
+
+# Test Strategy:
+1. Unit Tests:
+- Mock ferien-api.de responses to verify correct parsing and transformation of holiday data.
+- Test mapping of federal state codes and handling of multiple years.
+
+2. Integration Tests:
+- Verify successful API calls to ferien-api.de and correct data import into the database.
+- Test scheduled import runs and manual triggers.
+
+3. Backend API Tests:
+- Confirm API endpoints return correct school holiday data filtered by federal state and year.
+
+4. Frontend Tests:
+- Verify school holidays display correctly in the absence calendar for employees from different federal states.
+- Test UI configuration options for enabling/disabling school holiday display.
+
+5. Error Handling Tests:
+- Simulate API failures and ensure graceful degradation with proper logging.
+
+6. End-to-End Tests:
+- Validate the full workflow from import to display in the calendar.
+
+7. Regression Tests:
+- Ensure existing holiday functionality remains unaffected.
+
+# Subtasks:
+## 1. Testskript für Sachsen-Anhalt Schulferien erstellen [pending]
+### Dependencies: None
+### Description: Entwicklung eines Python-Testskripts, das die Schulferien von Sachsen-Anhalt für die Jahre 2026 und 2027 über die ferien-api.de API abruft und strukturiert ausgibt.
+### Details:
+Das Skript soll die API-Endpunkte https://ferien-api.de/api/v1/holidays/ST/2026 und https://ferien-api.de/api/v1/holidays/ST/2027 aufrufen, die JSON-Response verarbeiten und eine übersichtliche Ausgabe aller Schulferien mit Datum, Ferienart und Dauer erstellen. Fehlerbehandlung für API-Ausfälle implementieren.
+

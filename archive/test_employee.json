@@ -1,0 +1,10 @@
+{
+  "title": "Dr.",
+  "first_name": "Maria",
+  "last_name": "Mustermann",
+  "email": "maria.mustermann@example.com",
+  "position": "Gynäkologin",
+  "birth_date": "1980-05-15",
+  "date_hired": "2020-01-01",
+  "federal_state": "Bayern"
+}

@@ -1,0 +1,55 @@
+# Task ID: 10
+# Title: Settings Management Implementation
+# Status: pending
+# Dependencies: 2, 4, 14
+# Priority: medium
+# Description: Implement settings for database backup/reset, absence type management, holiday configuration, and password change, with a primary focus on database management in the settings menu. Ensure integration of the settings UI into the new sidebar navigation as defined by the frontend layout architecture.
+# Details:
+Develop endpoints and UI for database backup (copying the SQLite file with a timestamp) and reset (creating a new empty database with schema) within the settings menu. Provide simple, confirmation-based UI dialogs for these operations. Implement absence type CRUD, holiday configuration, and password change for the single hardcoded user (MGanser). Integrate all settings management features into the new sidebar navigation as specified by the frontend layout architecture (Task 14). No support for multiple environment modes—only production mode is required.
+
+# Test Strategy:
+Test DB backup (file copy with timestamp) and reset (new empty DB with schema) via the settings menu, including confirmation dialogs. Verify absence type and holiday management. Ensure password change works only for the hardcoded user. Confirm all features work in production mode and maintain data integrity and security. Verify that all settings features are accessible and usable via the new sidebar navigation.
+
+# Subtasks:
+## 1. Implement Database Backup and Reset Endpoints [pending]
+### Dependencies: None
+### Description: Develop API endpoints to allow administrators to back up (copy SQLite file with timestamp) and reset (create new empty DB with schema) the database from the settings menu.
+### Details:
+Endpoints should support full backup by copying the SQLite file with a timestamp and reset by creating a new empty database with the correct schema. Provide confirmation dialogs in the UI for both actions. Only production mode is supported. Ensure proper authentication and logging for all actions.
+
+## 2. Develop Absence Type CRUD Functionality [pending]
+### Dependencies: 10.1
+### Description: Create backend logic and endpoints for Create, Read, Update, and Delete (CRUD) operations on absence types.
+### Details:
+Include validation, error handling, and audit logging for all absence type changes. Integrate with existing database schema. Ensure absence types can be managed via the settings menu.
+
+## 3. Implement Holiday Configuration Management [pending]
+### Dependencies: 10.2
+### Description: Add endpoints and logic to manage holiday settings, allowing administrators to configure official holidays.
+### Details:
+Support CRUD operations for holidays, including date validation and conflict detection with existing absence types. Manage holidays via the settings menu.
+
+## 4. Add Password Change Logic [pending]
+### Dependencies: 10.3
+### Description: Implement secure password change functionality for the single hardcoded user (MGanser), including validation and security checks.
+### Details:
+Password change is only available for the hardcoded user (MGanser). Ensure strong password policies, current password verification, and audit logging of password changes.
+
+## 5. Build Frontend Settings UI [pending]
+### Dependencies: 10.4
+### Description: Design and implement a simple, intuitive user interface for managing settings, focusing on DB backup/reset, absence types, holidays, and password changes.
+### Details:
+UI should provide clear feedback and confirmation dialogs for DB backup and reset. Integrate absence type, holiday, and password change management. Integrate the settings UI into the new sidebar navigation as defined by the frontend layout architecture (Task 14). Only production mode is supported.
+
+## 6. Secure Sensitive Operations [pending]
+### Dependencies: 10.5
+### Description: Apply security best practices to all sensitive operations, including authentication, authorization, and input validation.
+### Details:
+Implement role-based access control, CSRF protection, and secure logging for all critical endpoints. Ensure only authorized users can access settings.
+
+## 7. Test All Settings Features [pending]
+### Dependencies: None
+### Description: Develop and execute comprehensive tests for all settings-related features to ensure correctness, security, and usability.
+### Details:
+Include unit, integration, and end-to-end tests. Cover edge cases, error handling, and security scenarios for DB management, absence types, holidays, and password change.
+

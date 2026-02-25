@@ -1,0 +1,78 @@
+# Task ID: 5
+# Title: Employee Management CRUD Operations
+# Status: done
+# Dependencies: 2, 3, 14
+# Priority: medium
+# Description: Implement backend and frontend for creating, reading, updating, and deleting employee records. The Employee Management UI must be integrated into the new sidebar navigation provided by the Frontend Layout Architecture.
+# Details:
+Create CRUD endpoints in FastAPI for Employee model. Implement frontend UI for employee management using shadcn-ui components, ensuring the Employee list is displayed as a desktop table (not cards) within the sidebar-based layout. Use @tanstack/react-query for data fetching and mutations. Employee data: name, position (optional), vacation_allowance, date_hired (optional), active (boolean).
+
+# Test Strategy:
+Test all CRUD operations via API and UI. Verify data persistence and UI updates. Confirm that the Employee Management UI is accessible via the sidebar navigation and that the employee list renders as a desktop table.
+
+# Subtasks:
+## 3. Implement Create Employee Form [done]
+### Dependencies: 5.2
+### Description: Design and develop a form in the frontend to add new employees.
+### Details:
+Create a React form component with fields for employee details. On submission, send a POST request to the backend to create a new employee. Handle form validation and display success/error messages.
+
+## 4. Implement Edit Employee Form [done]
+### Dependencies: 5.2
+### Description: Develop a form to edit existing employee details.
+### Details:
+Allow users to select an employee from the list and open a pre-filled form for editing. On submission, send a PUT/PATCH request to update the employee in the backend. Ensure validation and feedback are handled.
+
+## 5. Add Delete Employee Functionality [done]
+### Dependencies: 5.2
+### Description: Enable users to delete employees from the list.
+### Details:
+Provide a delete button for each employee entry. On click, send a DELETE request to the backend and update the UI accordingly. Confirm deletion with the user before proceeding.
+
+## 6. Integrate Data Fetching and Mutations [done]
+### Dependencies: 5.3, 5.4, 5.5
+### Description: Connect frontend components to backend endpoints for all CRUD operations.
+### Details:
+Use Axios or Fetch API in React to handle all data fetching and mutations (create, read, update, delete). Ensure state management reflects backend changes in real time and handle error/success notifications.
+
+## 7. Refactor Employee List UI to Desktop Table and Integrate with Sidebar [done]
+### Dependencies: 5.2
+### Description: Update the EmployeeList component to render employee data as a desktop table instead of cards. Ensure the Employee Management UI is accessible via the new sidebar navigation as defined in the Frontend Layout Architecture.
+### Details:
+Replace the card-based layout in the EmployeeList component with a table layout suitable for desktop screens, using shadcn-ui table components. Integrate the Employee Management section into the sidebar navigation so users can access it from the main app layout.
+
+## 1. Develop Backend CRUD Endpoints [done]
+### Dependencies: None
+### Description: Implement RESTful API endpoints for employee data, supporting Create, Read, Update, and Delete operations.
+### Details:
+Set up backend using a suitable stack (e.g., Node.js/Express with MongoDB or Spring Boot with PostgreSQL). Define the employee schema/model and implement endpoints: GET (list employees), POST (create employee), PUT/PATCH (update employee), DELETE (remove employee). Ensure endpoints are tested and return appropriate responses.
+
+## 2. Build Frontend UI for Listing Employees [done]
+### Dependencies: 5.1
+### Description: Create a user interface to display a list of employees fetched from the backend.
+### Details:
+Use React to build a component that fetches employee data from the backend and renders it in a table or list format. Include loading and error states for better UX.
+<info added on 2025-07-08T15:41:23.830Z>
+✅ ERFOLGREICH ABGESCHLOSSEN - Frontend UI für Mitarbeiterliste implementiert
+
+Was implementiert wurde:
+- EmployeeList Komponente mit professionellem Design
+- React Query Integration für Datenabfrage
+- TypeScript Typen für Employee-Daten
+- Responsive UI mit shadcn/ui Komponenten
+- Erfolgreiche API-Integration mit Backend
+
+Technische Details:
+- useEmployees Hook für Datenmanagement
+- employeeService für API-Aufrufe
+- Fehlerbehandlung und Loading-States
+- Professionelles Card-Layout für Mitarbeiter
+- Platzhalter-Dialog für "Hinzufügen" Button
+
+Getestet und funktionsfähig:
+- Daten werden korrekt vom Backend geladen
+- UI ist responsive und benutzerfreundlich
+- Keine React Hook Fehler mehr
+- Erfolgreiche Browser-Tests durchgeführt
+</info added on 2025-07-08T15:41:23.830Z>
+

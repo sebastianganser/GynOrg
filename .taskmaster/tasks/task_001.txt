@@ -1,0 +1,37 @@
+# Task ID: 1
+# Title: Setup Project Repository and Initial Structure
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with backend and frontend directories, set up basic README, .gitignore, and environment configuration files.
+# Details:
+Create a root directory with backend (FastAPI, SQLModel, SQLite) and frontend (React, Vite, shadcn-ui, TypeScript) subdirectories. Add README.md, .gitignore, and environment variable templates. Use Poetry for Python dependency management and npm/yarn for Node.js. Recommended: Python 3.11+, Node.js 18+, Poetry 1.7+, npm 9+.
+
+# Test Strategy:
+Verify repository structure and environment setup by running basic commands (poetry install, npm install) and checking for errors.
+
+# Subtasks:
+## 1. Create Root and Subdirectories [done]
+### Dependencies: None
+### Description: Set up the main project directory structure, including root and necessary subdirectories for backend, frontend, documentation, configuration, and tests.
+### Details:
+Establish a clear and organized folder structure such as /backend, /frontend, /docs, /config, and /tests to facilitate navigation and future development. Avoid clutter by excluding unrelated files.
+
+## 2. Initialize Backend with Poetry and Dependencies [done]
+### Dependencies: 1.1
+### Description: Set up the backend environment using Poetry, including initializing the project and adding required dependencies.
+### Details:
+Navigate to the backend directory, run 'poetry init' to create the project, and add necessary dependencies using 'poetry add'. Ensure the backend is ready for development.
+
+## 3. Initialize Frontend with npm/yarn and Dependencies [done]
+### Dependencies: 1.1
+### Description: Set up the frontend environment by initializing with npm or yarn and installing required dependencies.
+### Details:
+Navigate to the frontend directory, run 'npm init' or 'yarn init', and install essential packages. This prepares the frontend for further development.
+
+## 4. Add README, .gitignore, and Environment Templates [done]
+### Dependencies: 1.1, 1.2, 1.3
+### Description: Create a comprehensive README file, a .gitignore to exclude unnecessary files, and environment variable templates for both backend and frontend.
+### Details:
+Draft a README with project description, installation, and usage instructions. Add .gitignore files to exclude items like node_modules and .env. Provide .env.example templates for environment variables.
+

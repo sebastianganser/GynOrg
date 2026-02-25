@@ -1,0 +1,49 @@
+# Task ID: 2
+# Title: Backend Core Infrastructure Setup
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Configure FastAPI, SQLModel, and SQLite for the backend, including database connection and initial models, using a file-based SQLite database for maximum simplicity.
+# Details:
+Set up FastAPI (latest stable), SQLModel (latest), and SQLite. Define database connection using SQLModel with SQLite file in the project directory (e.g., ./data/app.db). Create initial models (User, Employee, Absence, AbsenceType, Holiday) as per PRD schema. Use environment variables for DATABASE_URL (e.g., engine = create_engine(os.getenv('DATABASE_URL', 'sqlite:///./data/app.db'))). No complex migrations—only simple table creation. File-based DB for easy Docker integration. No separate DB containers or services. Development without Docker (only at the end). Production mode only—no environment-specific configurations. Implement DB backup/reset functions in the settings menu[1][2][4].
+
+# Test Strategy:
+Test database connection and model creation with pytest. Verify models can be created and queried. Test backup and reset functionality.
+
+# Subtasks:
+## 1. Install and Configure FastAPI [done]
+### Dependencies: None
+### Description: Set up a Python virtual environment, install FastAPI and Uvicorn, and create a basic FastAPI application file.
+### Details:
+Create a project directory, initialize a virtual environment, install FastAPI and Uvicorn using pip, and create a main.py file with a minimal FastAPI app.
+
+## 2. Set Up SQLModel and Database Connection [done]
+### Dependencies: 2.1
+### Description: Install SQLModel and configure the database connection settings in the project.
+### Details:
+Install SQLModel and a compatible database driver (e.g., for SQLite). Set up the database URL and connection logic in the project files. Use SQLite file in the project directory (e.g., ./data/app.db).
+
+## 3. Define Initial Models [done]
+### Dependencies: 2.2
+### Description: Create initial SQLModel models representing the database schema.
+### Details:
+Define Python classes using SQLModel to represent tables and relationships for the application's data.
+
+## 4. Configure Environment Variables [done]
+### Dependencies: 2.2
+### Description: Set up environment variables for configuration, such as database URLs and secret keys.
+### Details:
+Create a .env file or use another method to securely store and load environment-specific settings, ensuring sensitive data is not hardcoded. Use DATABASE_URL pointing to SQLite file (e.g., sqlite:///./data/app.db).
+
+## 5. Initialize Database and Migrations [done]
+### Dependencies: 2.3, 2.4
+### Description: Initialize the database and set up migration tools to manage schema changes.
+### Details:
+No complex migrations—only simple table creation. Use SQLModel.metadata.create_all(engine) to initialize the database schema.
+
+## 6. Implement DB Backup and Reset Functions [done]
+### Dependencies: 2.5
+### Description: Add backup and reset functionality for the SQLite database in the settings menu.
+### Details:
+Implement functions to backup and reset the SQLite database file, accessible via the application settings menu.
+

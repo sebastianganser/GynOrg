@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gynorg_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      # Pass through the PostgreSQL URL
+      # Assuming you set this in an .env file or rely on the container's environment natively:
+      - DATABASE_URL=${DATABASE_URL:-postgresql://sebastian:1Asport,,M4rvelf4n@192.168.1.93:5432/GynOrg}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-your-super-secret-jwt-key-change-this-in-production-12345678901234567890}
+      - LOG_LEVEL=INFO
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS:-http://localhost,http://192.168.1.93}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gynorg_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
