@@ -70,7 +70,7 @@ class Settings(BaseSettings):
     
     # Authentication (Single User)
     ADMIN_USERNAME: str = "MGanser"
-    ADMIN_PASSWORD_HASH: str
+    ADMIN_PASSWORD_HASH: str = "$2b$12$8CDp40px7qcGwf/oB5IMFuhXA41WWuJhv8zC.OaZS2KLQgAJlNJ/e"
     
     # CORS
     BACKEND_CORS_ORIGINS: str = "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:5173,http://localhost:5174"
