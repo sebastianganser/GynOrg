@@ -2,7 +2,7 @@ from typing import Optional, List, TYPE_CHECKING
 from datetime import date, timedelta
 import re
 from sqlmodel import SQLModel, Field, Relationship
-from pydantic import EmailStr, field_validator
+from pydantic import field_validator
 from .federal_state import FederalState
 
 if TYPE_CHECKING:
@@ -17,7 +17,7 @@ class EmployeeBase(SQLModel):
     title: Optional[str] = Field(default=None, max_length=50, description="Titel wie Dr., Prof., etc.")
     first_name: str = Field(max_length=100, description="Vorname")
     last_name: str = Field(max_length=100, description="Nachname")
-    email: EmailStr = Field(description="E-Mail-Adresse")
+    email: str = Field(max_length=255, description="E-Mail-Adresse")
     position: Optional[str] = Field(default=None, max_length=100, description="Position/Stelle")
     birth_date: Optional[date] = Field(default=None, description="Geburtsdatum")
     date_hired: Optional[date] = Field(default=None, description="Einstellungsdatum")
@@ -33,6 +33,14 @@ class EmployeeBase(SQLModel):
     def validate_calendar_color(cls, v):
         if v and not re.match(r'^#[0-9A-Fa-f]{6}$', v):
             raise ValueError('Kalenderfarbe muss im Hex-Format sein (z.B. #3B82F6)')
+        return v
+
+    @field_validator('email')
+    @classmethod
+    def validate_email_address(cls, v):
+        if v:
+            if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', v):
+                raise ValueError('Ungültige E-Mail-Adresse')
         return v
 
     @field_validator('birth_date')
@@ -93,7 +101,7 @@ class EmployeeUpdate(SQLModel):
     title: Optional[str] = Field(default=None, max_length=50)
     first_name: Optional[str] = Field(default=None, max_length=100)
     last_name: Optional[str] = Field(default=None, max_length=100)
-    email: Optional[EmailStr] = Field(default=None)
+    email: Optional[str] = Field(default=None, max_length=255)
     position: Optional[str] = Field(default=None, max_length=100)
     birth_date: Optional[date] = Field(default=None)
     date_hired: Optional[date] = Field(default=None)
