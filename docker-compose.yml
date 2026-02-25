@@ -7,13 +7,8 @@ services:
     restart: always
     ports:
       - "6174:8000"
-    environment:
-      # Pass through the PostgreSQL URL
-      # Assuming you set this in an .env file or rely on the container's environment natively:
-      - DATABASE_URL=${DATABASE_URL}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - LOG_LEVEL=${LOG_LEVEL:-INFO}
-      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS:-http://localhost,http://192.168.1.93}
+    env_file:
+      - .env
 
   frontend:
     build:

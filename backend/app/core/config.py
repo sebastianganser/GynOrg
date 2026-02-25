@@ -1,7 +1,7 @@
 """
 Application configuration settings.
 """
-from typing import List, Optional
+from typing import List, Optional, Any, Dict
 from pydantic_settings import BaseSettings
 from pydantic import validator
 import os
@@ -22,10 +22,46 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     DEBUG: bool = True
     
-    # Database
+    # Database Components
+    DB_HOST: Optional[str] = None
+    DB_PORT: str = "5432"
+    DB_USER: Optional[str] = None
+    DB_PASSWORD: Optional[str] = None
+    DB_NAME: Optional[str] = None
+
     DATABASE_URL: str = DEFAULT_DATABASE_URL
     DATABASE_ECHO: bool = False
     TEST_DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/test_gynorg"
+
+    @validator("DATABASE_URL", pre=True, always=True)
+    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        if isinstance(v, str) and v != DEFAULT_DATABASE_URL:
+            return v
+        
+        db_host = values.get("DB_HOST")
+        if db_host:
+            db_user = values.get("DB_USER")
+            db_password = values.get("DB_PASSWORD")
+            db_port = values.get("DB_PORT", "5432")
+            db_name = values.get("DB_NAME")
+            if all([db_user, db_password, db_name]):
+                return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        return DEFAULT_DATABASE_URL
+
+    @validator("TEST_DATABASE_URL", pre=True, always=True)
+    def assemble_test_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        if isinstance(v, str) and v != "postgresql://postgres:postgres@localhost:5432/test_gynorg":
+            return v
+        
+        db_host = values.get("DB_HOST")
+        if db_host:
+            db_user = values.get("DB_USER")
+            db_password = values.get("DB_PASSWORD")
+            db_port = values.get("DB_PORT", "5432")
+            db_name = values.get("DB_NAME")
+            if all([db_user, db_password, db_name]):
+                return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}_test"
+        return "postgresql://postgres:postgres@localhost:5432/test_gynorg"
     
     # Security
     JWT_SECRET_KEY: str
