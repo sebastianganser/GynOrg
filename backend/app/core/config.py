@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     @validator("DATABASE_URL", pre=True, always=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str) and v != DEFAULT_DATABASE_URL:
-            return v
+            return v.strip('"').strip("'")
         
         db_host = values.get("DB_HOST")
         if db_host:
