@@ -314,7 +314,7 @@ docker-compose up -d --build
 docker-compose logs -f
 ```
 
-Nach dem Start ist das Frontend über Port `80` und das Backend via Port `8000` erreichbar.
+Nach dem Start ist das Frontend über Port `7392` und das Backend via Port `6174` erreichbar.
 
 ## 📈 Roadmap
 
