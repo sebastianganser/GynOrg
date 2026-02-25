@@ -14,6 +14,7 @@ const mockEmployees: Employee[] = [
     date_hired: '2020-01-15',
     federal_state: FederalState.NW,
     active: true,
+    school_children: false,
     created_at: '2020-01-15T00:00:00Z',
     updated_at: '2020-01-15T00:00:00Z'
   },
@@ -27,6 +28,7 @@ const mockEmployees: Employee[] = [
     date_hired: '2021-06-01',
     federal_state: FederalState.BY,
     active: true,
+    school_children: false,
     created_at: '2021-06-01T00:00:00Z',
     updated_at: '2021-06-01T00:00:00Z'
   }
@@ -86,7 +88,7 @@ export const handlers = [
     const id = parseInt(params.id as string)
     const updates = await request.json() as Partial<Employee>
     const employeeIndex = mockEmployees.findIndex(emp => emp.id === id)
-    
+
     if (employeeIndex === -1) {
       return new HttpResponse(null, { status: 404 })
     }
@@ -96,14 +98,14 @@ export const handlers = [
       ...updates,
       updated_at: new Date().toISOString()
     }
-    
+
     return HttpResponse.json(mockEmployees[employeeIndex])
   }),
 
   http.delete('http://localhost:8000/api/v1/employees/:id', ({ params }) => {
     const id = parseInt(params.id as string)
     const employeeIndex = mockEmployees.findIndex(emp => emp.id === id)
-    
+
     if (employeeIndex === -1) {
       return new HttpResponse(null, { status: 404 })
     }
@@ -122,21 +124,21 @@ export const handlers = [
   http.get('http://localhost:8000/api/v1/employees/:employeeId/vacation-allowances/:year', ({ params }) => {
     const employeeId = parseInt(params.employeeId as string)
     const year = parseInt(params.year as string)
-    const allowance = mockVacationAllowances.find(va => 
+    const allowance = mockVacationAllowances.find(va =>
       va.employee_id === employeeId && va.year === year
     )
-    
+
     if (!allowance) {
       return new HttpResponse(null, { status: 404 })
     }
-    
+
     return HttpResponse.json(allowance)
   }),
 
   http.post('http://localhost:8000/api/v1/employees/:employeeId/vacation-allowances/', async ({ params, request }) => {
     const employeeId = parseInt(params.employeeId as string)
     const data = await request.json() as Omit<VacationAllowance, 'id' | 'employee_id' | 'total_allowance' | 'created_at' | 'updated_at'>
-    
+
     const allowance: VacationAllowance = {
       ...data,
       id: mockVacationAllowances.length + 1,
@@ -145,7 +147,7 @@ export const handlers = [
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }
-    
+
     mockVacationAllowances.push(allowance)
     return HttpResponse.json(allowance, { status: 201 })
   }),
@@ -154,7 +156,7 @@ export const handlers = [
     const id = parseInt(params.id as string)
     const updates = await request.json() as Partial<VacationAllowance>
     const allowanceIndex = mockVacationAllowances.findIndex(va => va.id === id)
-    
+
     if (allowanceIndex === -1) {
       return new HttpResponse(null, { status: 404 })
     }
@@ -164,10 +166,10 @@ export const handlers = [
       ...updates,
       updated_at: new Date().toISOString()
     }
-    
+
     // Recalculate total_allowance
     updatedAllowance.total_allowance = updatedAllowance.annual_allowance + updatedAllowance.carryover_days
-    
+
     mockVacationAllowances[allowanceIndex] = updatedAllowance
     return HttpResponse.json(updatedAllowance)
   }),
@@ -175,7 +177,7 @@ export const handlers = [
   http.delete('http://localhost:8000/api/v1/vacation-allowances/:id', ({ params }) => {
     const id = parseInt(params.id as string)
     const allowanceIndex = mockVacationAllowances.findIndex(va => va.id === id)
-    
+
     if (allowanceIndex === -1) {
       return new HttpResponse(null, { status: 404 })
     }
@@ -196,14 +198,14 @@ export const handlers = [
   // Auth endpoints (mock)
   http.post('http://localhost:8000/api/v1/auth/login', async ({ request }) => {
     const credentials = await request.json() as { username: string; password: string }
-    
+
     if (credentials.username === 'MGanser' && credentials.password === 'M4rvelf4n') {
       return HttpResponse.json({
         access_token: 'mock-jwt-token',
         token_type: 'bearer'
       })
     }
-    
+
     return new HttpResponse(null, { status: 401 })
   })
 ]

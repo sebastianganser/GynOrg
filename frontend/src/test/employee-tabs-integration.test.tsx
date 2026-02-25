@@ -68,6 +68,7 @@ const mockEmployee: Employee = {
   birth_date: '1990-01-01',
   federal_state: FederalState.NW,
   active: true,
+  school_children: false,
   avatar_url: undefined,
   created_at: '2023-01-01T00:00:00Z',
   updated_at: '2023-01-01T00:00:00Z',
@@ -236,7 +237,7 @@ describe('Employee Tabs Integration', () => {
 
   it('handles form submission from personal tab', async () => {
     const onSuccess = vi.fn();
-    
+
     renderWithQueryClient(
       <EditEmployeeForm
         employee={mockEmployee}

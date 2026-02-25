@@ -10,7 +10,7 @@ describe('employeeService', () => {
   describe('getEmployees', () => {
     it('should fetch all employees', async () => {
       const employees = await employeeService.getEmployees()
-      
+
       expect(employees).toHaveLength(2)
       expect(employees[0]).toMatchObject({
         id: 1,
@@ -25,7 +25,7 @@ describe('employeeService', () => {
   describe('getEmployee', () => {
     it('should fetch a specific employee', async () => {
       const employee = await employeeService.getEmployee(1)
-      
+
       expect(employee).toMatchObject({
         id: 1,
         title: 'Dr.',
@@ -52,11 +52,12 @@ describe('employeeService', () => {
         birth_date: '1990-01-01',
         date_hired: '2024-01-01',
         federal_state: FederalState.NW,
-        active: true
+        active: true,
+        school_children: false
       }
 
       const createdEmployee = await employeeService.createEmployee(newEmployeeData)
-      
+
       expect(createdEmployee).toMatchObject({
         ...newEmployeeData,
         id: expect.any(Number)
@@ -74,7 +75,7 @@ describe('employeeService', () => {
       }
 
       const updatedEmployee = await employeeService.updateEmployee(1, updates)
-      
+
       expect(updatedEmployee).toMatchObject({
         id: 1,
         position: 'Senior Gynäkologin',

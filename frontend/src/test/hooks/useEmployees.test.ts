@@ -53,7 +53,8 @@ describe('useCreateEmployee', () => {
       birth_date: '1990-01-01',
       date_hired: '2024-01-01',
       federal_state: FederalState.NW,
-      active: true
+      active: true,
+      school_children: false
     }
 
     expect(result.current.isIdle).toBe(true)

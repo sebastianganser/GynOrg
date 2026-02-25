@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useCalendarFilterStore } from '../stores/calendarFilterStore';
 import type { CalendarFilters } from '../stores/calendarFilterStore';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import {
   applyCalendarFilters,
   createEmployeeColorMap,
@@ -22,7 +22,7 @@ export function useFilteredCalendarEvents(
   // Use a SINGLE selector with SHALLOW equality check
   // This ensures React detects changes in the object properties and triggers re-renders
   const filters: CalendarFilters = useCalendarFilterStore(
-    (state): CalendarFilters => ({
+    useShallow((state): CalendarFilters => ({
       selectedEmployeeIds: state.selectedEmployeeIds,
       showHolidays: state.showHolidays,
       showSchoolVacations: state.showSchoolVacations,
@@ -31,8 +31,7 @@ export function useFilteredCalendarEvents(
       showTraining: state.showTraining,
       showSpecialLeave: state.showSpecialLeave,
       isSidebarCollapsed: state.isSidebarCollapsed,
-    }),
-    shallow // CRITICAL: Use shallow comparison to detect property changes!
+    }))
   ) as CalendarFilters;
 
   // Create employee color map (with safety check)
@@ -47,14 +46,14 @@ export function useFilteredCalendarEvents(
       showHolidays: filters.showHolidays,
       totalEvents: events?.length || 0,
     });
-    
+
     const filtered = applyCalendarFilters(events || [], filters, employeeColorMap);
-    
+
     console.log('[useFilteredCalendarEvents] Filtered result:', {
       filteredCount: filtered.length,
       holidayEvents: filtered.filter(e => e.type === 'holiday').length,
     });
-    
+
     return filtered;
   }, [events, filters, employeeColorMap]);
 

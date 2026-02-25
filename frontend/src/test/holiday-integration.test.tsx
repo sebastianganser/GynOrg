@@ -83,6 +83,9 @@ describe('Holiday Integration Tests', () => {
         <AbsenceCalendar
           absences={[]}
           userFederalState="Nordrhein-Westfalen"
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 
@@ -102,6 +105,9 @@ describe('Holiday Integration Tests', () => {
         <AbsenceCalendar
           absences={[]}
           userFederalState="Nordrhein-Westfalen"
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 
@@ -126,6 +132,9 @@ describe('Holiday Integration Tests', () => {
         <AbsenceCalendar
           absences={[]}
           userFederalState="Nordrhein-Westfalen"
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 
@@ -160,6 +169,9 @@ describe('Holiday Integration Tests', () => {
         <AbsenceCalendar
           absences={[]}
           userFederalState="Nordrhein-Westfalen"
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 
@@ -190,6 +202,9 @@ describe('Holiday Integration Tests', () => {
         <AbsenceCalendar
           absences={[]}
           userFederalState="Nordrhein-Westfalen"
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 
@@ -206,6 +221,9 @@ describe('Holiday Integration Tests', () => {
       renderWithQueryClient(
         <AbsenceCalendar
           absences={[]}
+          onSelectEvent={vi.fn()}
+          onSelectSlot={vi.fn()}
+          onNewAbsence={vi.fn()}
         />
       );
 

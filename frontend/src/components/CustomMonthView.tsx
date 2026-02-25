@@ -80,11 +80,13 @@ export const CustomMonthView: React.FC<CustomMonthViewProps> = ({
     let displayName = holiday.name;
     
     if (holiday.holiday_type === HolidayType.SCHOOL_VACATION && holiday.school_vacation_type) {
-      const vacationTypeLabels = {
+      const vacationTypeLabels: Record<string, string> = {
         'WINTER': 'Winterferien',
         'EASTER': 'Osterferien', 
+        'PENTECOST': 'Pfingstferien',
         'SUMMER': 'Sommerferien',
         'AUTUMN': 'Herbstferien',
+        'CHRISTMAS': 'Weihnachtsferien',
         'OTHER': 'Ferien'
       };
       displayName = vacationTypeLabels[holiday.school_vacation_type] || holiday.name;
