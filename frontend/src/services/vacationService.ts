@@ -1,8 +1,8 @@
-import { 
-  VacationAllowance, 
-  VacationAllowanceCreate, 
+import {
+  VacationAllowance,
+  VacationAllowanceCreate,
   VacationAllowanceUpdate,
-  VacationAllowanceForm 
+  VacationAllowanceForm
 } from '../types/employee';
 import { API_BASE_URL } from './config';
 import { authService } from './authService';
@@ -62,7 +62,7 @@ export const vacationService = {
   // Update vacation allowance
   async updateVacationAllowance(id: number, data: Partial<VacationAllowanceForm>): Promise<VacationAllowance> {
     const updateData: VacationAllowanceUpdate = {};
-    
+
     if (data.annual_allowance !== undefined) {
       updateData.annual_allowance = data.annual_allowance;
     }
@@ -118,7 +118,7 @@ export const vacationService = {
     remaining_days: number;
     carryover_days: number;
   }> {
-    const url = new URL(`${API_BASE_URL}/employees/${employeeId}/vacation-statistics`);
+    const url = new URL(`${API_BASE_URL}/employees/${employeeId}/vacation-statistics`, window.location.origin);
     if (year) {
       url.searchParams.append('year', year.toString());
     }
@@ -137,8 +137,8 @@ export const vacationService = {
 
   // Bulk create vacation allowances for multiple employees
   async bulkCreateVacationAllowances(
-    employeeIds: number[], 
-    year: number, 
+    employeeIds: number[],
+    year: number,
     annualAllowance: number
   ): Promise<VacationAllowance[]> {
     const bulkData = employeeIds.map(employeeId => ({

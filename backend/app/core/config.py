@@ -64,7 +64,7 @@ class Settings(BaseSettings):
         return "postgresql://postgres:postgres@localhost:5432/test_gynorg"
     
     # Security
-    JWT_SECRET_KEY: str
+    JWT_SECRET_KEY: str = "your-super-secret-jwt-key-change-this-in-production-12345678901234567890"
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     

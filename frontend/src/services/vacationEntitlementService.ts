@@ -4,7 +4,7 @@ import { authService } from './authService';
 
 export const vacationEntitlementService = {
     async getEntitlements(employeeId: number): Promise<VacationEntitlement[]> {
-        const url = new URL(`${API_BASE_URL}/vacation-entitlements/`);
+        const url = new URL(`${API_BASE_URL}/vacation-entitlements/`, window.location.origin);
         url.searchParams.append('employee_id', employeeId.toString());
 
         const response = await fetch(url.toString(), {

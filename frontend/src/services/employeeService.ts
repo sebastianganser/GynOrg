@@ -1,9 +1,9 @@
-import { 
-  Employee, 
+import {
+  Employee,
   EmployeeWithVacation,
   EmployeeCreateForm,
   EmployeeUpdateForm,
-  FederalState 
+  FederalState
 } from '../types/employee';
 import { EmployeeCalendarInfo } from '../types/employeeCalendar';
 import { API_BASE_URL } from './config';
@@ -12,7 +12,7 @@ import { authService } from './authService';
 export const employeeService = {
   // Get all employees with optional vacation data
   async getEmployees(includeVacation: boolean = false): Promise<Employee[]> {
-    const url = new URL(`${API_BASE_URL}/employees/`);
+    const url = new URL(`${API_BASE_URL}/employees/`, window.location.origin);
     if (includeVacation) {
       url.searchParams.append('include_vacation', 'true');
     }
@@ -31,7 +31,7 @@ export const employeeService = {
 
   // Get employee by ID with optional vacation data
   async getEmployee(id: number, includeVacation: boolean = false): Promise<Employee | EmployeeWithVacation> {
-    const url = new URL(`${API_BASE_URL}/employees/${id}`);
+    const url = new URL(`${API_BASE_URL}/employees/${id}`, window.location.origin);
     if (includeVacation) {
       url.searchParams.append('include_vacation', 'true');
     }
@@ -98,7 +98,7 @@ export const employeeService = {
 
   // Search employees
   async searchEmployees(query: string, federalState?: FederalState): Promise<Employee[]> {
-    const url = new URL(`${API_BASE_URL}/employees/search`);
+    const url = new URL(`${API_BASE_URL}/employees/search`, window.location.origin);
     url.searchParams.append('q', query);
     if (federalState) {
       url.searchParams.append('federal_state', federalState);
@@ -156,7 +156,7 @@ export const employeeService = {
 
   // Get simplified employee list for calendar sidebar
   async getEmployeesForCalendar(activeOnly: boolean = true): Promise<EmployeeCalendarInfo[]> {
-    const url = new URL(`${API_BASE_URL}/employees/calendar-list`);
+    const url = new URL(`${API_BASE_URL}/employees/calendar-list`, window.location.origin);
     url.searchParams.append('active_only', activeOnly.toString());
 
     const response = await fetch(url.toString(), {
