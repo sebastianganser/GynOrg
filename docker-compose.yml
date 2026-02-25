@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: gynorg_backend
     restart: always
+    networks:
+      - gynorg_net
     ports:
       - "6174:8000"
     env_file:
@@ -16,7 +18,13 @@ services:
       dockerfile: Dockerfile
     container_name: gynorg_frontend
     restart: always
+    networks:
+      - gynorg_net
     ports:
       - "7392:80"
     depends_on:
       - backend
+
+networks:
+  gynorg_net:
+    driver: bridge
