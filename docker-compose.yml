@@ -18,5 +18,7 @@ services:
     restart: always
     ports:
       - "7392:80"
+    labels:
+      - "net.unraid.docker.webui=http://[IP]:[PORT:7392]/"
     depends_on:
       - backend
