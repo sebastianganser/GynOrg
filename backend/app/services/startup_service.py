@@ -58,34 +58,43 @@ class StartupService:
         try:
             logger.info(f"🚀 Startup: Prüfe Holiday-Daten für {start_year}-{end_year}...")
             
-            # Prüfe fehlende Jahre
+            # Prüfe fehlende Jahre (Public Holidays)
             missing_years = self.holiday_service.get_missing_years(
                 start_year, end_year, federal_states
             )
             
-            result["missing_years_found"] = missing_years
+            # Prüfe fehlende Jahre (Schulferien)
+            missing_school_vacation_years = self.holiday_service.get_missing_school_vacation_years(
+                start_year, end_year, federal_states
+            )
             
-            if not missing_years:
-                logger.info("Startup: Alle Holiday-Daten bereits vollständig vorhanden")
+            result["missing_years_found"] = missing_years
+            result["missing_school_vacation_years_found"] = missing_school_vacation_years
+            
+            if not missing_years and not missing_school_vacation_years:
+                logger.info("Startup: Alle Holiday-Daten (inkl. Schulferien) bereits vollständig vorhanden")
                 result["skipped_reason"] = "All holiday data already complete"
                 return result
             
-            logger.info(f"📅 Startup: Importiere fehlende Holiday-Daten für {len(missing_years)} Jahre: {missing_years}")
+            import_result = {"total_imported": 0, "total_errors": 0}
+            if missing_years:
+                logger.info(f"📅 Startup: Importiere fehlende Holiday-Daten für {len(missing_years)} Jahre: {missing_years}")
+                # Importiere fehlende Jahre (Public Holidays)
+                import_result = self.holiday_service.import_missing_years(
+                    missing_years, federal_states
+                )
             
-            # Importiere fehlende Jahre (Public Holidays)
-            import_result = self.holiday_service.import_missing_years(
-                missing_years, federal_states
-            )
-            
-            # Importiere fehlende Schulferien (School Vacations API)
-            logger.info(f"📅 Startup: Synchronisiere Schulferien via API für {len(missing_years)} Jahre...")
-            sync_result = await self.sync_service.sync_all_states(
-                federal_states=federal_states, 
-                years=missing_years
-            )
+            sync_result = None
+            if missing_school_vacation_years:
+                # Importiere fehlende Schulferien (School Vacations API)
+                logger.info(f"📅 Startup: Synchronisiere Schulferien via API für {len(missing_school_vacation_years)} Jahre: {missing_school_vacation_years}...")
+                sync_result = await self.sync_service.sync_all_states(
+                    federal_states=federal_states, 
+                    years=missing_school_vacation_years
+                )
             
             result["import_result"] = import_result
-            result["sync_result"] = sync_result.to_dict()
+            result["sync_result"] = sync_result.to_dict() if sync_result else None
             
             # Erfolg loggen
             imported = import_result.get("total_imported", 0)

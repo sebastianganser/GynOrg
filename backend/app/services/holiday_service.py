@@ -2,7 +2,7 @@ from typing import List, Dict, Optional, Any
 from datetime import date, datetime, timedelta
 from calendar import monthrange
 from sqlmodel import Session, select
-from ..models.holiday import Holiday, HolidayCreate, HolidayFilter
+from ..models.holiday import Holiday, HolidayCreate, HolidayFilter, HolidayType
 from ..models.federal_state import FederalState
 from ..core.database import get_session
 
@@ -391,6 +391,35 @@ class HolidayService:
             raise e
         
         return result
+
+    def get_missing_school_vacation_years(self, start_year: int, end_year: int, federal_states: Optional[List[FederalState]] = None) -> List[int]:
+        """Ermittelt Jahre, für die noch keine Schulferien vorhanden sind"""
+        missing_years = []
+        states_to_check = federal_states or list(FederalState)
+        
+        for year in range(start_year, end_year + 1):
+            if not self._has_school_vacations_for_year(year, states_to_check):
+                missing_years.append(year)
+        
+        return missing_years
+
+    def _has_school_vacations_for_year(self, year: int, federal_states: List[FederalState]) -> bool:
+        """Prüft ob ein Jahr Schulferien-Daten für alle relevanten Bundesländer hat"""
+        for state in federal_states:
+            vacation_count = self.session.exec(
+                select(Holiday).where(
+                    Holiday.year == year,
+                    Holiday.federal_state == state,
+                    Holiday.holiday_type == HolidayType.SCHOOL_VACATION
+                )
+            ).all()
+            
+            # Ein Jahr gilt als unvollständig bzgl. Schulferien, wenn für ein Bundesland garkeine Ferien existieren
+            if len(vacation_count) == 0:
+                return False
+                
+        return True
+
 
     def _is_year_complete(self, year: int, federal_states: List[FederalState]) -> bool:
         """Prüft ob ein Jahr vollständige Feiertage-Daten hat"""
