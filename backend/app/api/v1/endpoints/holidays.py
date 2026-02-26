@@ -6,6 +6,7 @@ from app.core.database import get_session
 from app.models.holiday import Holiday, HolidayCreate, HolidayUpdate, HolidayRead, HolidayFilter, HolidayType, SchoolVacationType
 from app.models.federal_state import FederalState
 from app.services.holiday_service import HolidayService
+from app.services.school_holiday_sync_service import SchoolHolidaySyncService
 
 router = APIRouter()
 
@@ -13,6 +14,11 @@ router = APIRouter()
 def get_holiday_service(session: Session = Depends(get_session)) -> HolidayService:
     """Dependency für HolidayService"""
     return HolidayService(session)
+
+
+def get_sync_service(session: Session = Depends(get_session)) -> SchoolHolidaySyncService:
+    """Dependency für SchoolHolidaySyncService"""
+    return SchoolHolidaySyncService(session=session)
 
 
 def validate_federal_state(state_str: Optional[str]) -> Optional[FederalState]:
@@ -140,20 +146,23 @@ def check_holiday(
 
 
 @router.post("/import/current-year")
-def import_current_year_holidays(
-    holiday_service: HolidayService = Depends(get_holiday_service)
+async def import_current_year_holidays(
+    holiday_service: HolidayService = Depends(get_holiday_service),
+    sync_service: SchoolHolidaySyncService = Depends(get_sync_service)
 ):
     """
-    Importiert Feiertage für das aktuelle Jahr.
+    Importiert Feiertage für das aktuelle Jahr (auch Schulferien).
     """
     current_year = datetime.now().year
     
     try:
         result = holiday_service.import_holidays_for_year(current_year)
+        sync_result = await sync_service.sync_all_states(years=[current_year])
         return {
             "year": current_year,
             "result": result,
-            "message": f"Import für {current_year} abgeschlossen: {result['imported']} importiert, {result['skipped']} übersprungen"
+            "sync_result": sync_result.to_dict(),
+            "message": f"Import für {current_year} abgeschlossen: {result['imported']} Feiertage importiert, Schulferien synchronisiert."
         }
     except Exception as e:
         raise HTTPException(
@@ -163,20 +172,23 @@ def import_current_year_holidays(
 
 
 @router.post("/import/next-year")
-def import_next_year_holidays(
-    holiday_service: HolidayService = Depends(get_holiday_service)
+async def import_next_year_holidays(
+    holiday_service: HolidayService = Depends(get_holiday_service),
+    sync_service: SchoolHolidaySyncService = Depends(get_sync_service)
 ):
     """
-    Importiert Feiertage für das nächste Jahr.
+    Importiert Feiertage für das nächste Jahr (auch Schulferien).
     """
     next_year = datetime.now().year + 1
     
     try:
         result = holiday_service.import_holidays_for_year(next_year)
+        sync_result = await sync_service.sync_all_states(years=[next_year])
         return {
             "year": next_year,
             "result": result,
-            "message": f"Import für {next_year} abgeschlossen: {result['imported']} importiert, {result['skipped']} übersprungen"
+            "sync_result": sync_result.to_dict(),
+            "message": f"Import für {next_year} abgeschlossen: {result['imported']} Feiertage importiert, Schulferien synchronisiert."
         }
     except Exception as e:
         raise HTTPException(
@@ -186,13 +198,14 @@ def import_next_year_holidays(
 
 
 @router.post("/import/{year}")
-def import_holidays_for_year(
+async def import_holidays_for_year(
     year: int,
     federal_states: Optional[List[FederalState]] = None,
-    holiday_service: HolidayService = Depends(get_holiday_service)
+    holiday_service: HolidayService = Depends(get_holiday_service),
+    sync_service: SchoolHolidaySyncService = Depends(get_sync_service)
 ):
     """
-    Importiert Feiertage für ein bestimmtes Jahr.
+    Importiert Feiertage für ein bestimmtes Jahr (auch Schulferien).
     
     - **year**: Jahr für den Import (z.B. 2025)
     - **federal_states**: Liste der Bundesländer (optional, Standard: alle)
@@ -205,11 +218,13 @@ def import_holidays_for_year(
     
     try:
         result = holiday_service.import_holidays_for_year(year, federal_states)
+        sync_result = await sync_service.sync_all_states(federal_states=federal_states, years=[year])
         return {
             "year": year,
             "federal_states": [state.value for state in (federal_states or list(FederalState))],
             "result": result,
-            "message": f"Import für {year} abgeschlossen: {result['imported']} importiert, {result['skipped']} übersprungen"
+            "sync_result": sync_result.to_dict(),
+            "message": f"Import für {year} abgeschlossen: {result['imported']} Feiertage importiert, Schulferien synchronisiert."
         }
     except Exception as e:
         raise HTTPException(
@@ -219,14 +234,15 @@ def import_holidays_for_year(
 
 
 @router.post("/bulk-import/{start_year}/{end_year}")
-def bulk_import_holidays(
+async def bulk_import_holidays(
     start_year: int,
     end_year: int,
     federal_states: Optional[List[FederalState]] = None,
-    holiday_service: HolidayService = Depends(get_holiday_service)
+    holiday_service: HolidayService = Depends(get_holiday_service),
+    sync_service: SchoolHolidaySyncService = Depends(get_sync_service)
 ):
     """
-    Importiert Feiertage für einen Jahresbereich (Bulk-Import).
+    Importiert Feiertage für einen Jahresbereich (Bulk-Import, inkl. Schulferien).
     
     - **start_year**: Startjahr für den Import (z.B. 2020)
     - **end_year**: Endjahr für den Import (z.B. 2030)
@@ -253,13 +269,17 @@ def bulk_import_holidays(
     
     try:
         result = holiday_service.bulk_import_holidays_range(start_year, end_year, federal_states)
+        years_to_sync = list(range(start_year, end_year + 1))
+        sync_result = await sync_service.sync_all_states(federal_states=federal_states, years=years_to_sync)
+        
         return {
             "start_year": start_year,
             "end_year": end_year,
             "years_processed": end_year - start_year + 1,
             "federal_states": [state.value for state in (federal_states or list(FederalState))],
             "result": result,
-            "message": f"Bulk-Import für {start_year}-{end_year} abgeschlossen: {result['total_imported']} importiert, {result['total_skipped']} übersprungen"
+            "sync_result": sync_result.to_dict(),
+            "message": f"Bulk-Import für {start_year}-{end_year} abgeschlossen: {result['total_imported']} Feiertage importiert, Schulferien synchronisiert."
         }
     except Exception as e:
         raise HTTPException(
@@ -269,15 +289,16 @@ def bulk_import_holidays(
 
 
 @router.post("/ensure-range/{start_year}/{end_year}")
-def ensure_holiday_range(
+async def ensure_holiday_range(
     start_year: int,
     end_year: int,
     federal_states: Optional[List[FederalState]] = None,
-    holiday_service: HolidayService = Depends(get_holiday_service)
+    holiday_service: HolidayService = Depends(get_holiday_service),
+    sync_service: SchoolHolidaySyncService = Depends(get_sync_service)
 ):
     """
     Stellt sicher, dass Feiertage für einen Jahresbereich verfügbar sind.
-    Importiert nur fehlende Jahre.
+    Importiert nur fehlende Jahre (inkl. Schulferien).
     
     - **start_year**: Startjahr für die Prüfung (z.B. 2020)
     - **end_year**: Endjahr für die Prüfung (z.B. 2030)
@@ -297,7 +318,7 @@ def ensure_holiday_range(
         )
     
     try:
-        # Ermittle fehlende Jahre
+        # Ermittle fehlende Jahre (dies prüft aktuell aber nur basierend auf Public Holidays)
         missing_years = holiday_service.get_missing_years(start_year, end_year, federal_states)
         
         if not missing_years:
@@ -311,6 +332,7 @@ def ensure_holiday_range(
         
         # Importiere nur fehlende Jahre
         result = holiday_service.import_missing_years(missing_years, federal_states)
+        sync_result = await sync_service.sync_all_states(federal_states=federal_states, years=missing_years)
         
         return {
             "start_year": start_year,
@@ -319,7 +341,8 @@ def ensure_holiday_range(
             "years_imported": len(missing_years),
             "federal_states": [state.value for state in (federal_states or list(FederalState))],
             "result": result,
-            "message": f"Fehlende Feiertage für {len(missing_years)} Jahre importiert: {result['total_imported']} importiert"
+            "sync_result": sync_result.to_dict(),
+            "message": f"Fehlende Feiertage für {len(missing_years)} Jahre importiert: {result['total_imported']} Feiertage importiert, Schulferien synchronisiert."
         }
     except Exception as e:
         raise HTTPException(
