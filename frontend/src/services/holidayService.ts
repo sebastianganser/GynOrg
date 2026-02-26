@@ -1,8 +1,8 @@
 import { API_BASE_URL } from './config';
-import { 
-  Holiday, 
-  HolidayFilter, 
-  HolidayImportResult, 
+import {
+  Holiday,
+  HolidayFilter,
+  HolidayImportResult,
   HolidayDisplayFilter,
   HolidayType,
   getHolidayColor,
@@ -15,7 +15,7 @@ class HolidayService {
 
   async getHolidays(filter?: HolidayFilter): Promise<Holiday[]> {
     const params = new URLSearchParams();
-    
+
     if (filter?.year) params.append('year', filter.year.toString());
     if (filter?.month) params.append('month', filter.month.toString());
     if (filter?.federal_state) params.append('federal_state', filter.federal_state);
@@ -26,19 +26,19 @@ class HolidayService {
     if (filter?.school_vacation_type) params.append('school_vacation_type', filter.school_vacation_type);
     if (filter?.data_source) params.append('data_source', filter.data_source);
 
-    const url = params.toString() ? `${this.baseUrl}?${params}` : this.baseUrl;
-    
+    const url = params.toString() ? `${this.baseUrl}/?${params}` : `${this.baseUrl}/`;
+
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
   async getUpcomingHolidays(federal_state?: string, days: number = 30): Promise<Holiday[]> {
     const params = new URLSearchParams();
-    
+
     if (federal_state) params.append('federal_state', federal_state);
     params.append('days', days.toString());
 
@@ -46,7 +46,7 @@ class HolidayService {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -58,7 +58,7 @@ class HolidayService {
     const params = new URLSearchParams();
     if (federal_state) params.append('federal_state', federal_state);
 
-    const url = params.toString() 
+    const url = params.toString()
       ? `${this.baseUrl}/check/${date}?${params}`
       : `${this.baseUrl}/check/${date}`;
 
@@ -66,13 +66,13 @@ class HolidayService {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
   async importHolidaysForYear(year: number, federal_states?: string[]): Promise<HolidayImportResult> {
     const body = federal_states ? { federal_states } : undefined;
-    
+
     const response = await fetch(`${this.baseUrl}/import/${year}`, {
       method: 'POST',
       headers: {
@@ -80,7 +80,7 @@ class HolidayService {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-    
+
     if (!response.ok) {
       if (response.status === 422) {
         // 422 Unprocessable Entity - wahrscheinlich Duplikate
@@ -89,7 +89,7 @@ class HolidayService {
       }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -100,7 +100,7 @@ class HolidayService {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       if (response.status === 422) {
         // 422 Unprocessable Entity - wahrscheinlich Duplikate
@@ -109,7 +109,7 @@ class HolidayService {
       }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -120,7 +120,7 @@ class HolidayService {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       if (response.status === 422) {
         // 422 Unprocessable Entity - wahrscheinlich Duplikate
@@ -129,7 +129,7 @@ class HolidayService {
       }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -141,11 +141,11 @@ class HolidayService {
     const response = await fetch(`${this.baseUrl}/year/${year}`, {
       method: 'DELETE',
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -154,7 +154,7 @@ class HolidayService {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -167,7 +167,7 @@ class HolidayService {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -179,12 +179,12 @@ class HolidayService {
     holidays_by_state: Record<string, number>;
   }> {
     const params = year ? `?year=${year}` : '';
-    
+
     const response = await fetch(`${this.baseUrl}/statistics${params}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -209,9 +209,9 @@ class HolidayService {
 
       // Filter nach ausgewählten Bundesländern
       if (displayFilter.selectedFederalStates.length > 0) {
-        if (!holiday.is_nationwide && 
-            holiday.federal_state && 
-            !displayFilter.selectedFederalStates.includes(holiday.federal_state)) {
+        if (!holiday.is_nationwide &&
+          holiday.federal_state &&
+          !displayFilter.selectedFederalStates.includes(holiday.federal_state)) {
           return false;
         }
       }
@@ -269,16 +269,16 @@ class HolidayService {
 export const holidayService = new HolidayService();
 
 // Re-export types for convenience
-export type { 
-  Holiday, 
-  HolidayFilter, 
+export type {
+  Holiday,
+  HolidayFilter,
   HolidayImportResult,
   HolidayDisplayFilter,
   GroupedHoliday
 } from '../types/holiday';
 
-export { 
-  HolidayType, 
-  SchoolVacationType, 
-  DataSource 
+export {
+  HolidayType,
+  SchoolVacationType,
+  DataSource
 } from '../types/holiday';
