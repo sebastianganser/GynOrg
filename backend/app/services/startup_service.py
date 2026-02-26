@@ -10,6 +10,7 @@ from sqlmodel import Session
 from ..core.database import get_session
 from ..models.federal_state import FederalState
 from .holiday_service import HolidayService
+from .school_holiday_sync_service import SchoolHolidaySyncService
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,7 @@ class StartupService:
     def __init__(self, session: Session):
         self.session = session
         self.holiday_service = HolidayService(session)
+        self.sync_service = SchoolHolidaySyncService(session)
     
     async def ensure_holiday_data_complete(
         self, 
@@ -48,6 +50,7 @@ class StartupService:
             "duration_seconds": 0,
             "missing_years_found": [],
             "import_result": None,
+            "sync_result": None,
             "error": None,
             "skipped_reason": None
         }
@@ -69,21 +72,29 @@ class StartupService:
             
             logger.info(f"📅 Startup: Importiere fehlende Holiday-Daten für {len(missing_years)} Jahre: {missing_years}")
             
-            # Importiere fehlende Jahre
+            # Importiere fehlende Jahre (Public Holidays)
             import_result = self.holiday_service.import_missing_years(
                 missing_years, federal_states
             )
             
+            # Importiere fehlende Schulferien (School Vacations API)
+            logger.info(f"📅 Startup: Synchronisiere Schulferien via API für {len(missing_years)} Jahre...")
+            sync_result = await self.sync_service.sync_all_states(
+                federal_states=federal_states, 
+                years=missing_years
+            )
+            
             result["import_result"] = import_result
+            result["sync_result"] = sync_result.to_dict()
             
             # Erfolg loggen
             imported = import_result.get("total_imported", 0)
             errors = import_result.get("total_errors", 0)
             
             if errors > 0:
-                logger.warning(f"⚠️ Startup: Holiday-Import mit {errors} Fehlern abgeschlossen. {imported} Feiertage importiert.")
+                logger.warning(f"⚠️ Startup: Holiday-Import mit {errors} Fehlern abgeschlossen. {imported} Feiertage importiert + Schulferien abgeglichen.")
             else:
-                logger.info(f"✅ Startup: Holiday-Import erfolgreich. {imported} Feiertage importiert.")
+                logger.info(f"✅ Startup: Holiday-Import erfolgreich. {imported} Feiertage importiert + Schulferien abgeglichen.")
             
         except Exception as e:
             logger.error(f"❌ Startup: Fehler beim Holiday-Import: {str(e)}")
