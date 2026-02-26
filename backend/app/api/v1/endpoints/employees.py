@@ -258,6 +258,18 @@ def hard_delete_employee(
     if employee.profile_image_path and os.path.exists(employee.profile_image_path):
         os.remove(employee.profile_image_path)
     
+    # Manually delete related records to prevent foreign key errors (robust fallback)
+    from sqlmodel import delete
+    from app.models.school_holiday_notification import SchoolHolidayNotification
+    from app.models.absence import Absence
+    from app.models.vacation_allowance import VacationAllowance
+    from app.models.vacation_entitlement import VacationEntitlement
+
+    session.exec(delete(SchoolHolidayNotification).where(SchoolHolidayNotification.employee_id == employee_id))
+    session.exec(delete(Absence).where(Absence.employee_id == employee_id))
+    session.exec(delete(VacationAllowance).where(VacationAllowance.employee_id == employee_id))
+    session.exec(delete(VacationEntitlement).where(VacationEntitlement.employee_id == employee_id))
+
     session.delete(employee)
     session.commit()
     return None

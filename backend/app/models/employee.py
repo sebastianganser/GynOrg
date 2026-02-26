@@ -87,9 +87,18 @@ class Employee(EmployeeBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     
     # Relationships
-    vacation_allowances: List["VacationAllowance"] = Relationship(back_populates="employee")
-    vacation_entitlements: List["VacationEntitlement"] = Relationship(back_populates="employee")
-    absences: List["Absence"] = Relationship(back_populates="employee")
+    vacation_allowances: List["VacationAllowance"] = Relationship(
+        back_populates="employee",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
+    vacation_entitlements: List["VacationEntitlement"] = Relationship(
+        back_populates="employee",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
+    absences: List["Absence"] = Relationship(
+        back_populates="employee",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
     # school_holiday_preferences and notifications removed per user request
 
 
