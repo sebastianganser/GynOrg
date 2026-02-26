@@ -37,7 +37,7 @@ def get_or_create_default_settings(session: Session, user_id: str = "default") -
         # Standard-Einstellungen erstellen
         settings = CalendarSettings(
             user_id=user_id,
-            selected_federal_states=[FederalState.NORDRHEIN_WESTFALEN.name],  # Default: NRW
+            selected_federal_states=[FederalState.NORDRHEIN_WESTFALEN.value],  # Default: NW
             show_nationwide_holidays=True,
             show_calendar_weeks=False,
             # Kalender-Filter (alle standardmäßig aktiviert)
