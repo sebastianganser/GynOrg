@@ -322,12 +322,25 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
   // Custom Date Header Component
   const CustomDateHeader = ({ label, date }: { label: string, date: Date }) => {
     const isToday = moment(date).isSame(moment(), 'day');
+    const isMonday = moment(date).day() === 1;
+    const kw = moment(date).isoWeek();
+    const showCalendarWeeks = calendarSettings?.show_calendar_weeks ?? false;
+
     return (
-      <div className="flex justify-center items-center p-1">
+      <div className="flex justify-between items-center p-1 w-full relative">
+        {showCalendarWeeks && isMonday && (
+          <span className="text-xs text-muted-foreground mr-1 min-w-[3ch]">
+            KW{kw}
+          </span>
+        )}
+        {!showCalendarWeeks && isMonday && (
+          <span className="min-w-[3ch] mr-1"></span>
+        )}
         <span
           className={`
             flex justify-center items-center w-7 h-7 rounded-full text-sm font-medium
             ${isToday ? 'bg-blue-600 text-white' : 'text-gray-700'}
+            ${(!showCalendarWeeks || !isMonday) ? 'ml-auto' : ''}
           `}
         >
           {label}

@@ -19,6 +19,7 @@ interface TeamCalendarProps {
   onEventClick?: (event: CalendarEvent) => void;
   defaultView?: View;
   className?: string;
+  showCalendarWeeks?: boolean;
 }
 
 /**
@@ -66,6 +67,7 @@ export function TeamCalendar({
   onEventClick,
   defaultView = 'month',
   className = '',
+  showCalendarWeeks = false,
 }: TeamCalendarProps) {
   // Transform CalendarEvent to react-big-calendar Event format
   const calendarEvents = useMemo(() => {
@@ -134,6 +136,36 @@ export function TeamCalendar({
       `${moment(start).format('DD. MMM')} - ${moment(end).format('DD. MMM YYYY')}`,
   };
 
+  // Custom Date Header to show Week Number (KW) if needed
+  const CustomDateHeader = ({ label, date }: { label: string, date: Date }) => {
+    const isToday = moment(date).isSame(moment(), 'day');
+    // Only show the KW on Mondays
+    const isMonday = moment(date).day() === 1;
+    const kw = moment(date).isoWeek();
+
+    return (
+      <div className="flex justify-between items-center p-1 w-full relative">
+        {showCalendarWeeks && isMonday && (
+          <span className="text-xs text-muted-foreground mr-1 min-w-[3ch]">
+            KW{kw}
+          </span>
+        )}
+        {!showCalendarWeeks && isMonday && (
+          <span className="min-w-[3ch] mr-1"></span>
+        )}
+        <span
+          className={`
+            flex justify-center items-center w-7 h-7 rounded-full text-sm font-medium
+            ${isToday ? 'bg-primary text-primary-foreground' : 'text-foreground'}
+            ${(!showCalendarWeeks || !isMonday) ? 'ml-auto' : ''}
+          `}
+        >
+          {label}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <div className={`team-calendar-wrapper ${className}`}>
       <Calendar
@@ -150,14 +182,16 @@ export function TeamCalendar({
         eventPropGetter={eventStyleGetter}
         components={{
           event: CustomEvent,
+          month: {
+            dateHeader: CustomDateHeader
+          }
         }}
         popup
         selectable={false}
         tooltipAccessor={(event: Event) => {
           const calendarEvent = event.resource as CalendarEvent;
-          return `${calendarEvent.title}\n${getEventTypeLabel(calendarEvent.type)}${
-            calendarEvent.description ? `\n${calendarEvent.description}` : ''
-          }`;
+          return `${calendarEvent.title}\n${getEventTypeLabel(calendarEvent.type)}${calendarEvent.description ? `\n${calendarEvent.description}` : ''
+            }`;
         }}
       />
     </div>

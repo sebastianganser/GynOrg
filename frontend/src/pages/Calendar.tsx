@@ -6,6 +6,7 @@ import { EventDetailsDialog } from '../components/EventDetailsDialog';
 import { useCalendarEvents } from '../hooks/useCalendarEvents';
 import { useFilteredCalendarEvents } from '../hooks/useFilteredCalendarEvents';
 import { useEmployeesForCalendar } from '../hooks/useEmployeesForCalendar';
+import { useCalendarSettings } from '../hooks/useCalendarSettings';
 import type { CalendarEvent } from '../utils/calendarFilters';
 
 /**
@@ -29,6 +30,9 @@ export default function Calendar() {
 
   // Load employees for color mapping
   const { data: employees, isLoading: employeesLoading } = useEmployeesForCalendar(true);
+
+  // Load calendar settings
+  const { data: calendarSettings } = useCalendarSettings();
 
   // Apply filters to events
   const { filteredEvents } = useFilteredCalendarEvents(
@@ -64,7 +68,7 @@ export default function Calendar() {
                 Übersicht aller Abwesenheiten und Termine
               </p>
             </div>
-            
+
             {/* Calendar Controls (Placeholder for now) */}
             <div className="flex items-center gap-2">
               <button className="px-4 py-2 text-sm border rounded-md hover:bg-accent">
@@ -159,6 +163,7 @@ export default function Calendar() {
               <TeamCalendar
                 events={filteredEvents}
                 onEventClick={handleEventClick}
+                showCalendarWeeks={calendarSettings?.show_calendar_weeks}
               />
             </div>
           )}
