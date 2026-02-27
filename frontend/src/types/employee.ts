@@ -87,6 +87,7 @@ export interface Employee {
   profile_image_path?: string; // Der reale DB-Pfad
   avatar_filename?: string;
   avatar_url?: string; // Wird im Service dynamisch generiert
+  initials?: string; // Benutzerdefinierte Initialen für Avatar
   calendar_color?: string; // Hex color code for calendar display
   school_children: boolean;
   youngest_child_birth_year?: number;
