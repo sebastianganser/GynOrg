@@ -9,6 +9,16 @@ import { EmployeeCalendarInfo } from '../types/employeeCalendar';
 import { API_BASE_URL } from './config';
 import { authService } from './authService';
 
+const processEmployee = <T extends Employee>(employee: T): T => {
+  if (employee.profile_image_path) {
+    const token = authService.getToken();
+    employee.avatar_url = token
+      ? `${API_BASE_URL}/employees/${employee.id}/avatar?token=${token}`
+      : `${API_BASE_URL}/employees/${employee.id}/avatar`;
+  }
+  return employee;
+};
+
 export const employeeService = {
   // Get all employees with optional vacation data
   async getEmployees(includeVacation: boolean = false): Promise<Employee[]> {
@@ -26,7 +36,8 @@ export const employeeService = {
       throw new Error(`Failed to fetch employees: ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data.map(processEmployee);
   },
 
   // Get employee by ID with optional vacation data
@@ -45,7 +56,8 @@ export const employeeService = {
       throw new Error(`Failed to fetch employee: ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return processEmployee(data);
   },
 
   // Create new employee
@@ -61,7 +73,8 @@ export const employeeService = {
       throw new Error(errorData.detail || `Failed to create employee: ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return processEmployee(data);
   },
 
   // Update employee (full update)
@@ -77,7 +90,8 @@ export const employeeService = {
       throw new Error(errorData.detail || `Failed to update employee: ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return processEmployee(data);
   },
 
   // Partial update employee
@@ -93,7 +107,8 @@ export const employeeService = {
       throw new Error(errorData.detail || `Failed to update employee: ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return processEmployee(data);
   },
 
   // Search employees

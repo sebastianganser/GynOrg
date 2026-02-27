@@ -15,9 +15,7 @@ export interface UploadProgress {
 }
 
 export interface AvatarUploadResponse {
-  employee: Employee;
-  avatar_url: string;
-  avatar_filename: string;
+  // Obsolete: Backend sends Employee directly
 }
 
 class AvatarService {
@@ -63,8 +61,14 @@ class AvatarService {
         throw new Error(errorData.detail || `Upload fehlgeschlagen: ${response.status}`);
       }
 
-      const result: AvatarUploadResponse = await response.json();
-      return result.employee;
+      const employee: Employee = await response.json();
+
+      // Compute the avatar URL for immediate UI rendering
+      if (employee.profile_image_path) {
+        employee.avatar_url = `${this.baseUrl}/api/v1/employees/${employee.id}/avatar`;
+      }
+
+      return employee;
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
         throw new Error('Upload wurde abgebrochen');

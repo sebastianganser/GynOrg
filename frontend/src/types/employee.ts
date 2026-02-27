@@ -84,9 +84,9 @@ export interface Employee {
   federal_state: FederalState;
   active: boolean;
   vacation_allowance?: number; // Temporär für Kompatibilität
+  profile_image_path?: string; // Der reale DB-Pfad
   avatar_filename?: string;
-  avatar_url?: string;
-  initials?: string; // Benutzerdefinierte Initialen für Avatar
+  avatar_url?: string; // Wird im Service dynamisch generiert
   calendar_color?: string; // Hex color code for calendar display
   school_children: boolean;
   youngest_child_birth_year?: number;
