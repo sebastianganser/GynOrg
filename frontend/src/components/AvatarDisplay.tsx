@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  AvatarDisplayProps, 
-  getAvatarInitials, 
+import {
+  AvatarDisplayProps,
+  getAvatarInitials,
   getAvatarSizeClasses,
-  AvatarSize 
+  AvatarSize
 } from '../types/avatar';
+import { authService } from '../services/authService';
 
 const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
   employee,
@@ -15,10 +16,16 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const avatarUrl = employee.avatar_url;
+  // Add authentication token to the avatar URL for successful backend retrieval.
+  // We need to do this because <img> tags cannot send custom 'Authorization' headers.
+  const token = authService.getToken();
+  const avatarUrl = employee.avatar_url && token
+    ? `${employee.avatar_url}?token=${token}`
+    : employee.avatar_url;
+
   const initials = getAvatarInitials(employee.first_name, employee.last_name);
   const sizeClasses = getAvatarSizeClasses(size);
-  
+
   const handleImageError = () => {
     setImageError(true);
     setIsLoading(false);
@@ -40,7 +47,7 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
     }
 
     return (
-      <div 
+      <div
         className={`
           ${sizeClasses} 
           bg-blue-500 text-white 
@@ -61,7 +68,7 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
     <div className={`relative ${sizeClasses} ${className}`}>
       {/* Loading Spinner */}
       {isLoading && (
-        <div 
+        <div
           className={`
             absolute inset-0 
             bg-gray-200 
@@ -73,7 +80,7 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
           <div className="w-1/2 h-1/2 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       )}
-      
+
       {/* Avatar Image */}
       <img
         src={avatarUrl}

@@ -311,7 +311,14 @@ async def upload_avatar(
     # Generate unique filename
     file_extension = file.filename.split(".")[-1] if "." in file.filename else "jpg"
     unique_filename = f"{uuid.uuid4()}.{file_extension}"
-    upload_dir = "backend/uploads/profiles"
+    
+    # Use an absolute path inside the container: /app/uploads/profiles
+    # This matches the volume mapping ./data/uploads:/app/uploads
+    upload_dir = "/app/uploads/profiles"
+    if not os.path.exists("/app"):
+        # Fallback for local testing (without docker)
+        upload_dir = "uploads/profiles"
+        
     file_path = os.path.join(upload_dir, unique_filename)
     
     # Ensure upload directory exists

@@ -1,4 +1,5 @@
 import { Employee } from '../types/employee';
+import { authService } from './authService';
 
 export interface CropData {
   x: number;
@@ -81,6 +82,7 @@ class AvatarService {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authService.getToken()}`
         },
       });
 
@@ -104,6 +106,7 @@ class AvatarService {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authService.getToken()}`
         },
         body: JSON.stringify({ initials: initials.toUpperCase() }),
       });
@@ -196,6 +199,12 @@ class AvatarService {
 
       // Start Upload
       xhr.open('POST', url);
+
+      const token = authService.getToken();
+      if (token) {
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+      }
+
       xhr.send(formData);
     });
   }
