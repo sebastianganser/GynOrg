@@ -16,17 +16,25 @@ branch_labels = None
 depends_on = None
 
 def upgrade() -> None:
-    # 1. Create the new job_positions table
-    op.create_table('job_positions',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sqlmodel.sql.sqltypes.AutoString(length=100), nullable=False),
-    sa.Column('description', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('active', sa.Boolean(), nullable=False, server_default=sa.text('true')),
-    sa.Column('created_at', sa.DateTime(), nullable=False, server_default=sa.text('NOW()')),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_index(op.f('ix_job_positions_name'), 'job_positions', ['name'], unique=False)
+    connection = op.get_bind()
+    
+    # Check if table already exists
+    from sqlalchemy.engine.reflection import Inspector
+    inspector = Inspector.from_engine(connection)
+    
+    # 1. Create the new job_positions table if it doesn't exist
+    if 'job_positions' not in inspector.get_table_names():
+        op.create_table('job_positions',
+        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('name', sqlmodel.sql.sqltypes.AutoString(length=100), nullable=False),
+        sa.Column('description', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+        sa.Column('active', sa.Boolean(), nullable=False, server_default=sa.text('true')),
+        sa.Column('created_at', sa.DateTime(), nullable=False, server_default=sa.text('NOW()')),
+        sa.Column('updated_at', sa.DateTime(), nullable=True),
+        sa.PrimaryKeyConstraint('id')
+        )
+        op.create_index(op.f('ix_job_positions_name'), 'job_positions', ['name'], unique=False)
+
 
     # 2. Migrate existing position strings into the new table
     # This prevents users from losing their previously entered positions
