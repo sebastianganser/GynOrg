@@ -3,14 +3,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
 
-from app.core.database import get_db
+from app.core.database import get_session
 from app.models.job_position import JobPosition, JobPositionCreate, JobPositionRead, JobPositionUpdate
 
 router = APIRouter()
 
 @router.get("/", response_model=List[JobPositionRead])
 def read_job_positions(
-    session: Session = Depends(get_db),
+    session: Session = Depends(get_session),
     skip: int = 0,
     limit: int = 100,
     active_only: bool = False
@@ -29,7 +29,7 @@ def read_job_positions(
 @router.post("/", response_model=JobPositionRead)
 def create_job_position(
     *,
-    session: Session = Depends(get_db),
+    session: Session = Depends(get_session),
     position_in: JobPositionCreate,
 ) -> Any:
     """
@@ -53,7 +53,7 @@ def create_job_position(
 @router.put("/{position_id}", response_model=JobPositionRead)
 def update_job_position(
     *,
-    session: Session = Depends(get_db),
+    session: Session = Depends(get_session),
     position_id: int,
     position_in: JobPositionUpdate,
 ) -> Any:
@@ -86,7 +86,7 @@ def update_job_position(
 @router.delete("/{position_id}")
 def delete_job_position(
     *,
-    session: Session = Depends(get_db),
+    session: Session = Depends(get_session),
     position_id: int,
 ) -> Any:
     """
