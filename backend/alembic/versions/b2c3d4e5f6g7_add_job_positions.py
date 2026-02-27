@@ -19,11 +19,11 @@ def upgrade() -> None:
     connection = op.get_bind()
     
     # Check if table already exists
-    from sqlalchemy.engine.reflection import Inspector
-    inspector = Inspector.from_engine(connection)
+    from sqlalchemy import inspect
+    insp = inspect(connection)
     
     # 1. Create the new job_positions table if it doesn't exist
-    if 'job_positions' not in inspector.get_table_names():
+    if not insp.has_table('job_positions'):
         op.create_table('job_positions',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('name', sqlmodel.sql.sqltypes.AutoString(length=100), nullable=False),
