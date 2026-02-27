@@ -3,7 +3,7 @@ API v1 router configuration.
 """
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, employees, vacation_allowances, federal_states, absences, absence_types, holidays, admin_sync, holiday_admin, vacation_entitlements
+from app.api.v1.endpoints import auth, employees, vacation_allowances, federal_states, absences, absence_types, holidays, admin_sync, holiday_admin, vacation_entitlements, job_positions
 from app.api.v1 import calendar_settings
 
 api_router = APIRouter()
@@ -26,4 +26,5 @@ api_router.include_router(holidays.router, prefix="/holidays", tags=["holidays"]
 api_router.include_router(calendar_settings.router, prefix="/calendar-settings", tags=["calendar-settings"])
 api_router.include_router(admin_sync.router, prefix="/admin/sync", tags=["admin-sync"])
 api_router.include_router(holiday_admin.router, prefix="/holidays/admin", tags=["holiday-admin"])
+api_router.include_router(job_positions.router, prefix="/job-positions", tags=["job-positions"])
 

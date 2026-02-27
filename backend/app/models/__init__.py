@@ -50,6 +50,14 @@ from .vacation_entitlement import (
 
 from .school_holiday_notification import SchoolHolidayNotification, NotificationType
 
+from .job_position import (
+    JobPosition,
+    JobPositionBase,
+    JobPositionCreate,
+    JobPositionUpdate,
+    JobPositionRead
+)
+
 __all__ = [
     "Employee",
     "EmployeeBase", 
@@ -92,5 +100,10 @@ __all__ = [
     "VacationEntitlementBase",
     "VacationEntitlementCreate",
     "VacationEntitlementUpdate",
-    "VacationEntitlementRead"
+    "VacationEntitlementRead",
+    "JobPosition",
+    "JobPositionBase",
+    "JobPositionCreate",
+    "JobPositionUpdate",
+    "JobPositionRead"
 ]

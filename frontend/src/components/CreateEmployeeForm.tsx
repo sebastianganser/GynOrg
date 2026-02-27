@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { employeeService } from '../services/employeeService';
+import { jobPositionService } from '../services/jobPositionService';
 import type { EmployeeCreateForm } from '../types/employee';
 import { FederalState, getFederalStateChoices } from '../types/employee';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -37,6 +38,11 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const queryClient = useQueryClient();
+
+  const { data: jobPositions } = useQuery({
+    queryKey: ['jobPositions', 'active'],
+    queryFn: () => jobPositionService.getPositions(true),
+  });
 
   const createEmployeeMutation = useMutation({
     mutationFn: employeeService.createEmployee,
@@ -412,17 +418,21 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
               <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
                 Position
               </label>
-              <input
-                type="text"
+              <select
                 id="position"
                 name="position"
                 value={formData.position || ''}
                 onChange={handleInputChange}
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${errors.position ? 'border-red-500' : 'border-gray-300'
                   }`}
-                placeholder="Position eingeben (optional)"
-                maxLength={100}
-              />
+              >
+                <option value="">Keine Auswahl</option>
+                {jobPositions?.map((pos) => (
+                  <option key={pos.id} value={pos.name}>
+                    {pos.name}
+                  </option>
+                ))}
+              </select>
               {errors.position && (
                 <p className="mt-1 text-sm text-red-600">{errors.position}</p>
               )}

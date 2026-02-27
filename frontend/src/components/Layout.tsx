@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { CalendarSettingsModal } from './CalendarSettingsModal';
+import { JobPositionManager } from './JobPositionManager';
 import Employees from '../pages/Employees';
 import Absences from '../pages/Absences';
 
@@ -28,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
 
     const handleResize = () => {
       const isMobile = window.innerWidth < 768; // md breakpoint
-      
+
       // If user has no preference, auto-collapse based on screen size
       if (userPreference === null) {
         setIsCollapsed(isMobile);
@@ -40,7 +41,7 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
 
     // Add resize listener
     window.addEventListener('resize', handleResize);
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, [userPreference]);
 
@@ -92,7 +93,7 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
                     Kalender anpassen
                   </button>
                 </div>
-                
+
                 <div className="pt-4">
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Weitere Einstellungen</h3>
                   <p className="text-gray-600">
@@ -101,6 +102,8 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
                 </div>
               </div>
             </div>
+
+            <JobPositionManager />
           </div>
         );
       default:
@@ -111,27 +114,27 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Skip Link für Accessibility */}
-      <a 
-        href="#main-content" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-blue-600 focus:text-white focus:p-2 focus:z-50 focus:rounded"
       >
         Zum Hauptinhalt springen
       </a>
-      
-      <Sidebar 
+
+      <Sidebar
         currentPage={currentPage}
         onPageChange={setCurrentPage}
         onLogout={onLogout}
         isCollapsed={isCollapsed}
         onToggle={handleSidebarToggle}
       />
-      
+
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header 
+        <Header
           title={getPageTitle(currentPage)}
           username={username}
         />
-        
+
         <main id="main-content" className="flex-1 overflow-auto">
           {renderPageContent()}
         </main>
