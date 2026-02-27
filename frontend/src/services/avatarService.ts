@@ -80,7 +80,7 @@ class AvatarService {
   /**
    * Avatar löschen
    */
-  async deleteAvatar(employeeId: number): Promise<Employee> {
+  async deleteAvatar(employeeId: number): Promise<void> {
     try {
       const response = await fetch(`${this.baseUrl}/api/v1/employees/${employeeId}/avatar`, {
         method: 'DELETE',
@@ -90,12 +90,13 @@ class AvatarService {
         },
       });
 
-      if (!response.ok) {
+      if (!response.ok && response.status !== 204) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.detail || `Löschen fehlgeschlagen: ${response.status}`);
       }
 
-      return await response.json();
+      // Bei 204 No Content gibt es keinen JSON-Body zum Parsen
+      return;
     } catch (error) {
       throw error;
     }

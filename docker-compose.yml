@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./data/uploads:/app/backend/uploads
+      - ./data/uploads:/app/uploads
 
   frontend:
     build:

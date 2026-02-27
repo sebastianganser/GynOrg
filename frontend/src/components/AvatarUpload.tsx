@@ -116,7 +116,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
       setUploadState(prev => ({ ...prev, isUploading: false, success: true }));
       onAvatarUpdate(updatedEmployee);
-      
+
       // Modal nach kurzer Verzögerung schließen
       setTimeout(() => {
         handleCloseModal();
@@ -124,11 +124,11 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Upload fehlgeschlagen';
-      setUploadState(prev => ({ 
-        ...prev, 
-        isUploading: false, 
+      setUploadState(prev => ({
+        ...prev,
+        isUploading: false,
         error: errorMessage,
-        progress: 0 
+        progress: 0
       }));
       onError?.(errorMessage);
     }
@@ -140,19 +140,23 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     setUploadState(prev => ({ ...prev, isUploading: true, error: null }));
 
     try {
-      const updatedEmployee = await avatarService.deleteAvatar(employee.id);
+      await avatarService.deleteAvatar(employee.id);
+
+      // Manually construct the updated employee locally since the backend returns 204 No Content
+      const updatedEmployee = { ...employee, avatar_url: undefined, profile_image_path: undefined };
       onAvatarUpdate(updatedEmployee);
+
       setUploadState(prev => ({ ...prev, isUploading: false, success: true }));
-      
+
       setTimeout(() => {
         handleCloseModal();
       }, 1000);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Löschen fehlgeschlagen';
-      setUploadState(prev => ({ 
-        ...prev, 
-        isUploading: false, 
-        error: errorMessage 
+      setUploadState(prev => ({
+        ...prev,
+        isUploading: false,
+        error: errorMessage
       }));
       onError?.(errorMessage);
     }
@@ -183,7 +187,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
       error: null,
       success: false
     });
-    
+
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -282,7 +286,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                     />
                   </ReactCrop>
                 </div>
-                
+
                 <div className="flex gap-2 mt-3">
                   <button
                     onClick={handleUpload}
@@ -291,7 +295,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                   >
                     {uploadState.isUploading ? 'Uploading...' : 'Speichern'}
                   </button>
-                  
+
                   <button
                     onClick={() => {
                       setSelectedFile(null);
