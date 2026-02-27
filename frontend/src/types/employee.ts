@@ -89,6 +89,7 @@ export interface Employee {
   initials?: string; // Benutzerdefinierte Initialen für Avatar
   calendar_color?: string; // Hex color code for calendar display
   school_children: boolean;
+  youngest_child_birth_year?: number;
   created_at: string;
   updated_at: string;
 }
@@ -110,6 +111,7 @@ export interface EmployeeCreate {
   federal_state: FederalState;
   active?: boolean;
   school_children?: boolean;
+  youngest_child_birth_year?: number;
 }
 
 // Employee Update Interface
@@ -125,6 +127,7 @@ export interface EmployeeUpdate {
   active?: boolean;
   vacation_allowance?: number; // Temporär für Kompatibilität
   school_children?: boolean;
+  youngest_child_birth_year?: number;
 }
 
 // Form-spezifische Interfaces
@@ -139,6 +142,7 @@ export interface EmployeeCreateForm {
   federal_state: FederalState;
   active: boolean;
   school_children: boolean;
+  youngest_child_birth_year?: number;
 }
 
 export interface EmployeeUpdateForm {

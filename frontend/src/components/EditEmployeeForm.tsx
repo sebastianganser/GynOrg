@@ -41,6 +41,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
     federal_state: employee.federal_state,
     active: employee.active,
     school_children: employee.school_children,
+    youngest_child_birth_year: employee.youngest_child_birth_year,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -60,6 +61,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
       federal_state: employee.federal_state,
       active: employee.active,
       school_children: employee.school_children,
+      youngest_child_birth_year: employee.youngest_child_birth_year,
     };
     setFormData(newFormData);
     setErrors({});
@@ -100,12 +102,22 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
 
     if (type === 'checkbox') {
       processedValue = (e.target as HTMLInputElement).checked;
+    } else if (type === 'number') {
+      processedValue = value === '' ? undefined : parseInt(value, 10);
     }
 
     setFormData((prev: EmployeeUpdate) => ({
       ...prev,
       [name]: processedValue,
     }));
+
+    // Clear youngest child birth year if school children is unchecked
+    if (name === 'school_children' && !processedValue) {
+      setFormData((prev: EmployeeUpdate) => ({
+        ...prev,
+        youngest_child_birth_year: undefined,
+      }));
+    }
 
     // Mark personal tab as changed
     markTabAsChanged('personal', true);
@@ -146,6 +158,14 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
     }
 
 
+
+    if (formData.school_children && formData.youngest_child_birth_year) {
+      const year = formData.youngest_child_birth_year;
+      const currentYear = new Date().getFullYear();
+      if (year < 1900 || year > currentYear) {
+        newErrors.youngest_child_birth_year = `Gültiges Geburtsjahr (max. ${currentYear}) angeben`;
+      }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -198,6 +218,10 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
 
       if (formData.active !== employee.active) {
         submitData.active = formData.active;
+      }
+
+      if (formData.youngest_child_birth_year !== employee.youngest_child_birth_year) {
+        submitData.youngest_child_birth_year = formData.youngest_child_birth_year;
       }
 
       // Only submit if there are actual changes
@@ -401,7 +425,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
           )}
         </div>
 
-        <div className="flex items-center space-x-6">
+        <div className="flex flex-col gap-4 pt-6 mt-4 border-t border-gray-100">
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -416,18 +440,43 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
             </label>
           </div>
 
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="school_children"
-              name="school_children"
-              checked={formData.school_children ?? false}
-              onChange={handleInputChange}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label htmlFor="school_children" className="ml-2 block text-sm text-gray-700">
-              Schulpflichtige Kinder
-            </label>
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="school_children"
+                name="school_children"
+                checked={formData.school_children ?? false}
+                onChange={handleInputChange}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="school_children" className="ml-2 block text-sm text-gray-700">
+                Schulpflichtige Kinder
+              </label>
+            </div>
+
+            {formData.school_children && (
+              <div className="ml-6 animate-in slide-in-from-top-2 fade-in duration-200">
+                <label htmlFor="youngest_child_birth_year" className="block text-xs text-gray-500 mb-1">
+                  Geburtsjahr des jüngsten Kindes (optional)
+                </label>
+                <input
+                  type="number"
+                  id="youngest_child_birth_year"
+                  name="youngest_child_birth_year"
+                  value={formData.youngest_child_birth_year || ''}
+                  onChange={handleInputChange}
+                  min="1900"
+                  max={new Date().getFullYear()}
+                  className={`w-32 px-3 py-1 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white ${errors.youngest_child_birth_year ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  placeholder="z.B. 2015"
+                />
+                {errors.youngest_child_birth_year && (
+                  <p className="mt-1 text-xs text-red-600">{errors.youngest_child_birth_year}</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

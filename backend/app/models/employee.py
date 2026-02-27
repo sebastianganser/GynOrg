@@ -27,6 +27,7 @@ class EmployeeBase(SQLModel):
     profile_image_path: Optional[str] = Field(default=None, max_length=255, description="Pfad zum Profilbild")
     calendar_color: str = Field(default="#3B82F6", max_length=7, description="Kalenderfarbe im Hex-Format (z.B. #3B82F6)")
     school_children: bool = Field(default=False, description="Hat schulpflichtige Kinder")
+    youngest_child_birth_year: Optional[int] = Field(default=None, ge=1900, le=2100, description="Geburtsjahr des jüngsten Kindes")
 
     @field_validator('calendar_color')
     @classmethod
@@ -120,6 +121,7 @@ class EmployeeUpdate(SQLModel):
     profile_image_path: Optional[str] = Field(default=None, max_length=255)
     calendar_color: Optional[str] = Field(default=None, max_length=7)
     school_children: Optional[bool] = Field(default=None)
+    youngest_child_birth_year: Optional[int] = Field(default=None, ge=1900, le=2100)
 
     @field_validator('calendar_color')
     @classmethod
