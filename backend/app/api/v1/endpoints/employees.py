@@ -4,7 +4,7 @@ import io
 import uuid
 from fastapi import APIRouter, Depends, HTTPException, status, Query, UploadFile, File, Form
 from fastapi.responses import FileResponse
-from PIL import Image
+from PIL import Image, ImageOps
 from sqlmodel import Session, select
 from app.core.database import get_session
 from app.core.auth import get_current_user
@@ -338,6 +338,9 @@ async def upload_avatar(
     if crop_width and crop_height:
         try:
             image = Image.open(io.BytesIO(file_content))
+            
+            # Auto-rotate image according to EXIF data before applying crop coordinates
+            image = ImageOps.exif_transpose(image)
             
             # Convert percentage coordinates to pixels
             img_width, img_height = image.size
