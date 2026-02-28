@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
+import ReactCrop, { Crop, PercentCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Employee } from '../types/employee';
 import { avatarService, CropData, UploadProgress } from '../services/avatarService';
@@ -38,7 +38,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     x: 25,
     y: 25
   });
-  const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
+  const [completedCrop, setCompletedCrop] = useState<PercentCrop | null>(null);
   const [uploadState, setUploadState] = useState<UploadState>({
     isUploading: false,
     progress: 0,
@@ -273,7 +273,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                   <ReactCrop
                     crop={crop}
                     onChange={(_, percentCrop) => setCrop(percentCrop)}
-                    onComplete={(c) => setCompletedCrop(c)}
+                    onComplete={(_, percentCrop) => setCompletedCrop(percentCrop)}
                     aspect={1}
                     circularCrop
                   >

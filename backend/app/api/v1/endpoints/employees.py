@@ -1,8 +1,10 @@
 from typing import List, Optional
 import os
+import io
 import uuid
-from fastapi import APIRouter, Depends, HTTPException, status, Query, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, status, Query, UploadFile, File, Form
 from fastapi.responses import FileResponse
+from PIL import Image
 from sqlmodel import Session, select
 from app.core.database import get_session
 from app.core.auth import get_current_user
@@ -279,6 +281,10 @@ def hard_delete_employee(
 async def upload_avatar(
     employee_id: int,
     file: UploadFile = File(...),
+    crop_x: Optional[float] = Form(None),
+    crop_y: Optional[float] = Form(None),
+    crop_width: Optional[float] = Form(None),
+    crop_height: Optional[float] = Form(None),
     session: Session = Depends(get_session),
     current_user: dict = Depends(get_current_user)
 ):
@@ -328,9 +334,45 @@ async def upload_avatar(
     if employee.profile_image_path and os.path.exists(employee.profile_image_path):
         os.remove(employee.profile_image_path)
     
-    # Save new file
-    with open(file_path, "wb") as buffer:
-        buffer.write(file_content)
+    # Process and save image
+    if crop_width and crop_height:
+        try:
+            image = Image.open(io.BytesIO(file_content))
+            
+            # Convert percentage coordinates to pixels
+            img_width, img_height = image.size
+            x0 = int((crop_x or 0) * img_width / 100)
+            y0 = int((crop_y or 0) * img_height / 100)
+            x1 = x0 + int(crop_width * img_width / 100)
+            y1 = y0 + int(crop_height * img_height / 100)
+            
+            # Crop image
+            cropped_image = image.crop((x0, y0, x1, y1))
+            
+            # Convert to RGB (in case of PNG with alpha) before saving as JPEG or similar uniformly
+            if cropped_image.mode in ("RGBA", "P"):
+                cropped_image = cropped_image.convert("RGB")
+                
+            # Resize
+            cropped_image.thumbnail((256, 256), Image.Resampling.LANCZOS)
+            
+            # Save optimized
+            cropped_image.save(file_path, format="JPEG", quality=85, optimize=True)
+            
+            # Force filename to be jpg since we converted
+            file_extension = "jpg"
+            unique_filename = f"{uuid.uuid4()}.{file_extension}"
+            file_path = os.path.join(upload_dir, unique_filename)
+            cropped_image.save(file_path, format="JPEG", quality=85, optimize=True)
+            
+        except Exception as e:
+            print(f"Error cropping image: {e}")
+            with open(file_path, "wb") as buffer:
+                buffer.write(file_content)
+    else:
+        # Save original file
+        with open(file_path, "wb") as buffer:
+            buffer.write(file_content)
     
     # Update employee record
     employee.profile_image_path = file_path
