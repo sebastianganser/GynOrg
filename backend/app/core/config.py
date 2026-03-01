@@ -69,9 +69,8 @@ class Settings(BaseSettings):
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # Authentication (Single User)
-    ADMIN_USERNAME: str = "MGanser"
+    ADMIN_USERNAME: str = "admin"
     ADMIN_PASSWORD: Optional[str] = None
-    ADMIN_PASSWORD_HASH: str = "$2b$12$8CDp40px7qcGwf/oB5IMFuhXA41WWuJhv8zC.OaZS2KLQgAJlNJ/e"
     
     # CORS
     BACKEND_CORS_ORIGINS: str = "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:5173,http://localhost:5174"

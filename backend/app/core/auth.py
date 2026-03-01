@@ -14,12 +14,6 @@ from .config import settings
 # Make HTTPBearer auto_error=False so we can manually check for a query token as a fallback
 security = HTTPBearer(auto_error=False)
 
-# Hardcoded fallback user credentials (as specified in requirements)
-# These will be used if not overridden in .env or config
-HARDCODED_USERNAME = "MGanser"
-# bcrypt hash of "M4rvelf4n" with rounds=12
-HARDCODED_PASSWORD_HASH = "$2b$12$8CDp40px7qcGwf/oB5IMFuhXA41WWuJhv8zC.OaZS2KLQgAJlNJ/e"
-
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -40,17 +34,15 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def authenticate_user(username: str, password: str) -> bool:
     """Authenticate user with credentials from settings."""
-    # Fallback to hardcoded username if not set in settings
-    admin_username = getattr(settings, "ADMIN_USERNAME", HARDCODED_USERNAME)
-    if username != admin_username:
+    # Ensure an admin password is configured
+    if getattr(settings, "ADMIN_PASSWORD", None) is None:
+        return False
+
+    # Enforce configured username and password
+    if username != settings.ADMIN_USERNAME:
         return False
     
-    # Check for plain text password in settings (from .env)
-    if hasattr(settings, "ADMIN_PASSWORD") and settings.ADMIN_PASSWORD is not None:
-        return password == settings.ADMIN_PASSWORD
-        
-    admin_password_hash = getattr(settings, "ADMIN_PASSWORD_HASH", HARDCODED_PASSWORD_HASH)
-    return verify_password(password, admin_password_hash)
+    return password == settings.ADMIN_PASSWORD
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """Create JWT access token."""
@@ -94,8 +86,7 @@ async def get_current_user(
     except JWTError:
         raise credentials_exception
     
-    admin_username = getattr(settings, "ADMIN_USERNAME", HARDCODED_USERNAME)
-    if token_data.username != admin_username:
+    if token_data.username != settings.ADMIN_USERNAME:
         raise credentials_exception
     
     return token_data.username
@@ -119,8 +110,7 @@ def get_current_user_optional(credentials: Optional[HTTPAuthorizationCredentials
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-        admin_username = getattr(settings, "ADMIN_USERNAME", HARDCODED_USERNAME)
-        if username != admin_username:
+        if username != settings.ADMIN_USERNAME:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Could not validate credentials",
