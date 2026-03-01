@@ -43,6 +43,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
     active: employee.active,
     school_children: employee.school_children,
     youngest_child_birth_year: employee.youngest_child_birth_year,
+    calendar_color: employee.calendar_color || '#3B82F6',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -68,6 +69,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
       active: employee.active,
       school_children: employee.school_children,
       youngest_child_birth_year: employee.youngest_child_birth_year,
+      calendar_color: employee.calendar_color || '#3B82F6',
     };
     setFormData(newFormData);
     setErrors({});
@@ -228,6 +230,10 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
 
       if (formData.youngest_child_birth_year !== employee.youngest_child_birth_year) {
         submitData.youngest_child_birth_year = formData.youngest_child_birth_year;
+      }
+
+      if (formData.calendar_color !== employee.calendar_color) {
+        submitData.calendar_color = formData.calendar_color;
       }
 
       // Only submit if there are actual changes
@@ -433,6 +439,23 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
           {errors.federal_state && (
             <p className="mt-1 text-sm text-red-600">{errors.federal_state}</p>
           )}
+        </div>
+
+        <div>
+          <label htmlFor="calendar_color" className="block text-sm font-medium text-gray-700 mb-1">
+            Darstellungsfarbe (Kalender)
+          </label>
+          <div className="flex items-center space-x-3">
+            <input
+              type="color"
+              id="calendar_color"
+              name="calendar_color"
+              value={formData.calendar_color || '#3B82F6'}
+              onChange={handleInputChange}
+              className="h-10 w-16 p-1 border border-gray-300 rounded-md cursor-pointer"
+            />
+            <span className="text-sm text-gray-500 uppercase">{formData.calendar_color || '#3B82F6'}</span>
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 pt-6 mt-4 border-t border-gray-100">

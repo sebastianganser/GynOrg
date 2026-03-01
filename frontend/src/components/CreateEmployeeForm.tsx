@@ -32,6 +32,7 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
     date_hired: '',
     federal_state: FederalState.ST, // Default: Sachsen-Anhalt
     active: true,
+    calendar_color: '#3B82F6',
     school_children: false,
     youngest_child_birth_year: undefined,
   });
@@ -58,6 +59,7 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
         date_hired: '',
         federal_state: FederalState.ST, // Default: Sachsen-Anhalt
         active: true,
+        calendar_color: '#3B82F6',
         school_children: false,
         youngest_child_birth_year: undefined,
       });
@@ -247,6 +249,7 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
         email: formData.email.trim(),
         federal_state: formData.federal_state,
         active: formData.active ?? true,
+        calendar_color: formData.calendar_color,
         school_children: formData.school_children ?? false,
       };
 
@@ -479,6 +482,23 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
               {errors.federal_state && (
                 <p className="mt-1 text-sm text-red-600">{errors.federal_state}</p>
               )}
+            </div>
+
+            <div>
+              <label htmlFor="calendar_color" className="block text-sm font-medium text-gray-700 mb-1">
+                Darstellungsfarbe (Kalender)
+              </label>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="color"
+                  id="calendar_color"
+                  name="calendar_color"
+                  value={formData.calendar_color || '#3B82F6'}
+                  onChange={handleInputChange}
+                  className="h-10 w-16 p-1 border border-gray-300 rounded-md cursor-pointer"
+                />
+                <span className="text-sm text-gray-500 uppercase">{formData.calendar_color || '#3B82F6'}</span>
+              </div>
             </div>
 
             <div className="flex flex-col gap-4 pt-6">

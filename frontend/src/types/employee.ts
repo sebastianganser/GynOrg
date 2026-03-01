@@ -111,6 +111,7 @@ export interface EmployeeCreate {
   date_hired?: string;
   federal_state: FederalState;
   active?: boolean;
+  calendar_color?: string;
   school_children?: boolean;
   youngest_child_birth_year?: number;
 }
@@ -127,6 +128,7 @@ export interface EmployeeUpdate {
   federal_state?: FederalState;
   active?: boolean;
   vacation_allowance?: number; // Temporär für Kompatibilität
+  calendar_color?: string;
   school_children?: boolean;
   youngest_child_birth_year?: number;
 }
@@ -142,6 +144,7 @@ export interface EmployeeCreateForm {
   date_hired?: string;
   federal_state: FederalState;
   active: boolean;
+  calendar_color?: string;
   school_children: boolean;
   youngest_child_birth_year?: number;
 }
