@@ -70,6 +70,7 @@ class Settings(BaseSettings):
     
     # Authentication (Single User)
     ADMIN_USERNAME: str = "MGanser"
+    ADMIN_PASSWORD: Optional[str] = None
     ADMIN_PASSWORD_HASH: str = "$2b$12$8CDp40px7qcGwf/oB5IMFuhXA41WWuJhv8zC.OaZS2KLQgAJlNJ/e"
     
     # CORS
