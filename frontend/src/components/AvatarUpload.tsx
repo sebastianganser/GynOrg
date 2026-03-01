@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
-import ReactCrop, { Crop, PercentCrop } from 'react-image-crop';
+import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Employee } from '../types/employee';
-import { avatarService, CropData, UploadProgress } from '../services/avatarService';
+import { avatarService, UploadProgress } from '../services/avatarService';
 import { AvatarSize } from '../types/avatar';
 import Avatar from './Avatar';
 
@@ -38,7 +38,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     x: 25,
     y: 25
   });
-  const [completedCrop, setCompletedCrop] = useState<PercentCrop | null>(null);
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
   const [uploadState, setUploadState] = useState<UploadState>({
     isUploading: false,
     progress: 0,
@@ -88,6 +88,43 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     }
   }, [onError]);
 
+  const getCroppedImageFile = async (image: HTMLImageElement, crop: PixelCrop, fileName: string): Promise<File> => {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+
+    // Create a 256x256 targeted avatar canvas for perfect resolution
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error('Canvas 2D Context nicht verfügbar');
+    }
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      256,
+      256
+    );
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error('Canvas ist leer'));
+          return;
+        }
+        resolve(new File([blob], fileName, { type: 'image/jpeg' }));
+      }, 'image/jpeg', 0.95);
+    });
+  };
+
   const handleUpload = async () => {
     if (!selectedFile || !completedCrop) return;
 
@@ -95,12 +132,9 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     abortControllerRef.current = new AbortController();
 
     try {
-      const cropData: CropData = {
-        x: completedCrop.x,
-        y: completedCrop.y,
-        width: completedCrop.width,
-        height: completedCrop.height
-      };
+      if (!imageRef.current) throw new Error("Bildreferenz nicht gefunden");
+
+      const croppedFile = await getCroppedImageFile(imageRef.current, completedCrop, 'avatar.jpg');
 
       const onProgress = (progress: UploadProgress) => {
         setUploadState(prev => ({ ...prev, progress: progress.percentage }));
@@ -108,8 +142,8 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
       const updatedEmployee = await avatarService.uploadAvatar(
         employee.id,
-        selectedFile,
-        cropData,
+        croppedFile,
+        undefined, // Keine CropData mehr ans Backend senden, wir pushen das fertige Bild
         onProgress,
         abortControllerRef.current
       );
@@ -272,8 +306,8 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                 <div className="border rounded-lg overflow-hidden">
                   <ReactCrop
                     crop={crop}
-                    onChange={(_, percentCrop) => setCrop(percentCrop)}
-                    onComplete={(_, percentCrop) => setCompletedCrop(percentCrop)}
+                    onChange={(pixelCrop) => setCrop(pixelCrop)}
+                    onComplete={(pixelCrop) => setCompletedCrop(pixelCrop)}
                     aspect={1}
                     circularCrop
                   >
