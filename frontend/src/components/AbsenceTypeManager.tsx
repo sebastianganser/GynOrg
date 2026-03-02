@@ -3,6 +3,18 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { absenceTypeService } from '../services/absenceTypeService';
 import { AbsenceType, AbsenceTypeCreate, AbsenceTypeUpdate, AbsenceTypeCategory } from '../types/absenceType';
 
+const getCategoryLabel = (category: AbsenceTypeCategory) => {
+    const labels: Record<AbsenceTypeCategory, string> = {
+        [AbsenceTypeCategory.VACATION]: 'Urlaub',
+        [AbsenceTypeCategory.SICK_LEAVE]: 'Krankheit',
+        [AbsenceTypeCategory.TRAINING]: 'Fortbildung',
+        [AbsenceTypeCategory.SPECIAL_LEAVE]: 'Sonderurlaub',
+        [AbsenceTypeCategory.UNPAID_LEAVE]: 'Unbezahlter Urlaub',
+        [AbsenceTypeCategory.OTHER]: 'Sonstiges',
+    };
+    return labels[category] || category;
+};
+
 export const AbsenceTypeManager: React.FC = () => {
     const queryClient = useQueryClient();
     const [isAdding, setIsAdding] = useState(false);
@@ -97,13 +109,10 @@ export const AbsenceTypeManager: React.FC = () => {
         e.preventDefault();
         setError(null);
 
-        if (!formData.name.trim()) {
-            setError('Der Name des Typs ist erforderlich.');
-            return;
-        }
+        const typeName = getCategoryLabel(formData.category);
 
         const dataToSubmit = {
-            name: formData.name.trim(),
+            name: typeName,
             category: formData.category,
             color: formData.color,
             is_paid: formData.is_paid,
@@ -145,21 +154,8 @@ export const AbsenceTypeManager: React.FC = () => {
         '#8B5CF6', // Violet
         '#D946EF', // Fuchsia
         '#EC4899', // Pink
-        '#F43F5E', // Rose
         '#64748B', // Slate
     ];
-
-    const getCategoryLabel = (category: AbsenceTypeCategory) => {
-        const labels: Record<AbsenceTypeCategory, string> = {
-            [AbsenceTypeCategory.VACATION]: 'Urlaub',
-            [AbsenceTypeCategory.SICK_LEAVE]: 'Krankheit',
-            [AbsenceTypeCategory.TRAINING]: 'Fortbildung',
-            [AbsenceTypeCategory.SPECIAL_LEAVE]: 'Sonderurlaub',
-            [AbsenceTypeCategory.UNPAID_LEAVE]: 'Unbezahlter Urlaub',
-            [AbsenceTypeCategory.OTHER]: 'Sonstiges',
-        };
-        return labels[category] || category;
-    };
 
     if (isLoading) return <div className="p-4 text-gray-500">Lade Abwesenheitstypen...</div>;
     if (isError) return <div className="p-4 text-red-500">Fehler beim Laden der Abwesenheitstypen.</div>;
@@ -202,59 +198,18 @@ export const AbsenceTypeManager: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                                    placeholder="z.B. Erholungsurlaub"
-                                    autoFocus
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Kategorie *
+                                    Abwesenheitstyp *
                                 </label>
                                 <select
                                     value={formData.category}
                                     onChange={(e) => setFormData({ ...formData, category: e.target.value as AbsenceTypeCategory })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white"
+                                    autoFocus
                                 >
                                     {Object.values(AbsenceTypeCategory).map(cat => (
                                         <option key={cat} value={cat}>{getCategoryLabel(cat)}</option>
                                     ))}
                                 </select>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Farbe (Darstellung im Kalender) *
-                                </label>
-                                <div className="flex flex-wrap gap-2">
-                                    {PREDEFINED_COLORS.map(color => (
-                                        <button
-                                            key={color}
-                                            type="button"
-                                            className={`w-6 h-6 rounded-full focus:outline-none transition-transform ${formData.color === color ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : ''}`}
-                                            style={{ backgroundColor: color }}
-                                            onClick={() => setFormData(prev => ({ ...prev, color }))}
-                                            title={color}
-                                        />
-                                    ))}
-                                    <div className="flex items-center ml-2 border border-gray-300 rounded overflow-hidden">
-                                        <input
-                                            type="color"
-                                            value={formData.color}
-                                            onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
-                                            className="w-8 h-8 cursor-pointer p-0 border-0"
-                                            title="Eigene Farbe"
-                                        />
-                                    </div>
-                                </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -266,6 +221,33 @@ export const AbsenceTypeManager: React.FC = () => {
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                                 />
+                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Farbe (Darstellung im Kalender) *
+                            </label>
+                            <div className="flex flex-wrap gap-2">
+                                {PREDEFINED_COLORS.map(color => (
+                                    <button
+                                        key={color}
+                                        type="button"
+                                        className={`w-6 h-6 rounded-full focus:outline-none transition-transform ${formData.color === color ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : ''}`}
+                                        style={{ backgroundColor: color }}
+                                        onClick={() => setFormData(prev => ({ ...prev, color }))}
+                                        title={color}
+                                    />
+                                ))}
+                                <div className="flex items-center ml-2 border border-gray-300 rounded overflow-hidden">
+                                    <input
+                                        type="color"
+                                        value={formData.color}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                                        className="w-8 h-8 cursor-pointer p-0 border-0"
+                                        title="Eigene Farbe"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -333,10 +315,7 @@ export const AbsenceTypeManager: React.FC = () => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Kategorie
+                                        Typ
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Eigenschaften
@@ -367,11 +346,6 @@ export const AbsenceTypeManager: React.FC = () => {
                                                     {type.description}
                                                 </div>
                                             )}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">
-                                                {getCategoryLabel(type.category)}
-                                            </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex flex-col space-y-1">
