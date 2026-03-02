@@ -3,6 +3,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { CalendarSettingsModal } from './CalendarSettingsModal';
 import { JobPositionManager } from './JobPositionManager';
+import { AbsenceTypeManager } from './AbsenceTypeManager';
 import Employees from '../pages/Employees';
 import Absences from '../pages/Absences';
 
@@ -104,6 +105,7 @@ export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
             </div>
 
             <JobPositionManager />
+            <AbsenceTypeManager />
           </div>
         );
       default:
