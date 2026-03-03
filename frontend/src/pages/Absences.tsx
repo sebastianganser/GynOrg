@@ -15,9 +15,13 @@ const Absences: React.FC = () => {
 
   const { absences, isLoading, error } = useAbsenceManagement();
 
-  const handleSelectEvent = (absence: Absence) => {
-    setSelectedAbsence(absence);
-    setShowCreateForm(false);
+  const handleSelectEvent = (event: any) => {
+    if (event && event.resource && 'employee_id' in event.resource) {
+      setSelectedAbsence(event.resource as Absence);
+      setShowCreateForm(false);
+    } else {
+      setSelectedAbsence(null);
+    }
   };
 
   const handleSelectSlot = (slotInfo: { start: Date; end: Date }) => {
@@ -131,10 +135,10 @@ const Absences: React.FC = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Status</label>
                     <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${selectedAbsence.status === 'approved'
-                        ? 'bg-green-100 text-green-800'
-                        : selectedAbsence.status === 'pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
+                      ? 'bg-green-100 text-green-800'
+                      : selectedAbsence.status === 'pending'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-gray-100 text-gray-800'
                       }`}>
                       {selectedAbsence.status === 'approved' ? 'Genehmigt' :
                         selectedAbsence.status === 'pending' ? 'Wartend' : selectedAbsence.status}

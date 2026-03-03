@@ -365,10 +365,12 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
 
           {/* Comment */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-2">
               Kommentar
             </label>
             <textarea
+              id="comment"
+              name="comment"
               value={formData.comment}
               onChange={(e) => handleInputChange('comment', e.target.value)}
               placeholder="Optional: Zusätzliche Informationen..."
