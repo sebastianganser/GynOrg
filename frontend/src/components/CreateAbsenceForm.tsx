@@ -22,10 +22,9 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
 }) => {
   const [formData, setFormData] = useState<AbsenceFormData>({
     absence_type_id: 0,
-    start_date: initialData?.start_date || new Date(),
-    end_date: initialData?.end_date || new Date(),
-    comment: '',
-    save_as_draft: false
+    start_date: initialData?.start_date ? new Date(initialData.start_date) : new Date(),
+    end_date: initialData?.end_date ? new Date(initialData.end_date) : new Date(),
+    comment: ''
   });
 
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<number>(0);
@@ -57,7 +56,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
       // Filter only active employees
       const activeEmployees = employeeList.filter(emp => emp.active);
       setEmployees(activeEmployees);
-      
+
       // Auto-select first employee if available
       if (activeEmployees.length > 0) {
         setSelectedEmployeeId(activeEmployees[0].id);
@@ -74,10 +73,9 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
     if (isOpen) {
       setFormData({
         absence_type_id: absenceTypes.length > 0 ? absenceTypes[0].id : 0,
-        start_date: initialData?.start_date || new Date(),
-        end_date: initialData?.end_date || new Date(),
-        comment: '',
-        save_as_draft: false
+        start_date: initialData?.start_date ? new Date(initialData.start_date) : new Date(),
+        end_date: initialData?.end_date ? new Date(initialData.end_date) : new Date(),
+        comment: ''
       });
       setConflicts(null);
       setValidationErrors({});
@@ -151,8 +149,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
     if (!validateForm()) return;
 
     // Check for conflicts before submitting
-    if (conflicts?.has_conflicts && !formData.save_as_draft) {
-      return; // Don't submit if there are conflicts and it's not a draft
+    if (conflicts?.has_conflicts) {
+      return; // Don't submit if there are conflicts
     }
 
     const absenceData = {
@@ -161,7 +159,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
       start_date: absenceService.formatDateForAPI(formData.start_date),
       end_date: absenceService.formatDateForAPI(formData.end_date),
       comment: formData.comment || undefined,
-      status: formData.save_as_draft ? AbsenceStatus.DRAFT : AbsenceStatus.PENDING
+      status: AbsenceStatus.PENDING
     };
 
     createAbsence(absenceData, {
@@ -173,7 +171,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
 
   const handleInputChange = (field: keyof AbsenceFormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    
+
     // Clear validation error for this field
     if (validationErrors[field]) {
       setValidationErrors(prev => {
@@ -185,11 +183,20 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
   };
 
   const formatDateForInput = (date: Date): string => {
-    return date.toISOString().split('T')[0];
+    // Return YYYY-MM-DD in local time
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   const parseInputDate = (dateString: string): Date => {
-    return new Date(dateString + 'T00:00:00');
+    // Parse YYYY-MM-DD back to local midnight
+    if (!dateString) return new Date();
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day, 0, 0, 0);
   };
 
   const calculateDuration = (): number => {
@@ -229,9 +236,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
               name="employee_id"
               value={selectedEmployeeId}
               onChange={(e) => setSelectedEmployeeId(parseInt(e.target.value))}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${
-                validationErrors.employee_id ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${validationErrors.employee_id ? 'border-red-500' : 'border-gray-300'
+                }`}
               disabled={isLoadingEmployees}
             >
               <option value={0}>Bitte wählen...</option>
@@ -259,9 +265,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
               name="absence_type_id"
               value={formData.absence_type_id}
               onChange={(e) => handleInputChange('absence_type_id', parseInt(e.target.value))}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${
-                validationErrors.absence_type_id ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${validationErrors.absence_type_id ? 'border-red-500' : 'border-gray-300'
+                }`}
               disabled={isLoading}
             >
               <option value={0}>Bitte wählen...</option>
@@ -291,9 +296,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
                 name="start_date"
                 value={formatDateForInput(formData.start_date)}
                 onChange={(e) => handleInputChange('start_date', parseInputDate(e.target.value))}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${
-                  validationErrors.start_date ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${validationErrors.start_date ? 'border-red-500' : 'border-gray-300'
+                  }`}
               />
               {validationErrors.start_date && (
                 <p className="mt-1 text-sm text-red-600">{validationErrors.start_date}</p>
@@ -310,9 +314,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
                 name="end_date"
                 value={formatDateForInput(formData.end_date)}
                 onChange={(e) => handleInputChange('end_date', parseInputDate(e.target.value))}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${
-                  validationErrors.end_date ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${validationErrors.end_date ? 'border-red-500' : 'border-gray-300'
+                  }`}
               />
               {validationErrors.end_date && (
                 <p className="mt-1 text-sm text-red-600">{validationErrors.end_date}</p>
@@ -385,17 +388,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
           )}
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={formData.save_as_draft}
-                onChange={(e) => handleInputChange('save_as_draft', e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-sm text-gray-700">Als Entwurf speichern</span>
-            </label>
-
+          <div className="flex items-center justify-end pt-4">
             <div className="flex space-x-3">
               <button
                 type="button"
@@ -406,15 +399,13 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
               </button>
               <button
                 type="submit"
-                disabled={isCreating || (conflicts?.has_conflicts && !formData.save_as_draft)}
+                disabled={isCreating || conflicts?.has_conflicts}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
               >
                 {isCreating && (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 )}
-                <span>
-                  {formData.save_as_draft ? 'Als Entwurf speichern' : 'Erstellen'}
-                </span>
+                <span>Erstellen</span>
               </button>
             </div>
           </div>

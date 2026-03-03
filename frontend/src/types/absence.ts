@@ -2,9 +2,7 @@ export enum AbsenceStatus {
   PENDING = "pending",
   APPROVED = "approved",
   REJECTED = "rejected",
-  CANCELLED = "cancelled",
-  DRAFT = "draft",
-  CONFIRMED = "confirmed"
+  CANCELLED = "cancelled"
 }
 
 export enum AbsenceTypeCategory {

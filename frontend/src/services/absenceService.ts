@@ -1,10 +1,10 @@
-import { 
-  Absence, 
-  AbsenceCreate, 
-  AbsenceUpdate, 
-  AbsenceType, 
+import {
+  Absence,
+  AbsenceCreate,
+  AbsenceUpdate,
+  AbsenceType,
   AbsenceFilters,
-  ConflictCheckResponse 
+  ConflictCheckResponse
 } from '../types/absence';
 import { API_BASE_URL } from './config';
 
@@ -32,14 +32,14 @@ class AbsenceService {
   // Absence CRUD operations
   async getAbsences(filters?: AbsenceFilters): Promise<Absence[]> {
     const params = new URLSearchParams();
-    
+
     if (filters?.status) params.append('status', filters.status);
     if (filters?.start_date) params.append('start_date', filters.start_date);
     if (filters?.end_date) params.append('end_date', filters.end_date);
     if (filters?.absence_type_id) params.append('absence_type_id', filters.absence_type_id.toString());
 
     const url = `${this.baseUrl}/absences/${params.toString() ? `?${params.toString()}` : ''}`;
-    
+
     const response = await fetch(url, {
       method: 'GET',
       headers: this.getAuthHeaders()
@@ -110,9 +110,9 @@ class AbsenceService {
 
   // Conflict detection
   async checkConflicts(
-    employeeId: number, 
-    startDate: string, 
-    endDate: string, 
+    employeeId: number,
+    startDate: string,
+    endDate: string,
     excludeAbsenceId?: number
   ): Promise<ConflictCheckResponse> {
     const params = new URLSearchParams({
@@ -139,7 +139,7 @@ class AbsenceService {
     if (activeOnly) params.append('active_only', 'true');
 
     const url = `${this.baseUrl}/absence-types/${params.toString() ? `?${params.toString()}` : ''}`;
-    
+
     const response = await fetch(url, {
       method: 'GET',
       headers: this.getAuthHeaders()
@@ -179,7 +179,7 @@ class AbsenceService {
 
   async deleteAbsenceType(id: number, hardDelete: boolean = false): Promise<void> {
     const endpoint = hardDelete ? `/absence-types/${id}/hard` : `/absence-types/${id}`;
-    
+
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: 'DELETE',
       headers: this.getAuthHeaders()
@@ -193,7 +193,12 @@ class AbsenceService {
 
   // Utility methods
   formatDateForAPI(date: Date): string {
-    return date.toISOString().split('T')[0];
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   parseAPIDate(dateString: string): Date {

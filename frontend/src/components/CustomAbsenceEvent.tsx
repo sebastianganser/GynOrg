@@ -2,19 +2,16 @@ import React from 'react';
 import { EventProps } from 'react-big-calendar';
 import { CalendarAbsence } from '../types/absence';
 
-interface CustomAbsenceEventProps extends EventProps<CalendarAbsence> {}
+interface CustomAbsenceEventProps extends EventProps<CalendarAbsence> { }
 
 export const CustomAbsenceEvent: React.FC<CustomAbsenceEventProps> = ({ event }) => {
   const { resource: absence } = event;
-  
+
   const getStatusIcon = () => {
     switch (absence.status) {
-      case 'draft':
-        return '📝';
       case 'pending':
         return '⏳';
       case 'approved':
-      case 'confirmed':
         return '✅';
       case 'rejected':
         return '❌';
@@ -27,14 +24,10 @@ export const CustomAbsenceEvent: React.FC<CustomAbsenceEventProps> = ({ event })
 
   const getStatusText = () => {
     switch (absence.status) {
-      case 'draft':
-        return 'Entwurf';
       case 'pending':
         return 'Wartend';
       case 'approved':
         return 'Genehmigt';
-      case 'confirmed':
-        return 'Bestätigt';
       case 'rejected':
         return 'Abgelehnt';
       case 'cancelled':
@@ -46,12 +39,9 @@ export const CustomAbsenceEvent: React.FC<CustomAbsenceEventProps> = ({ event })
 
   const getBorderStyle = () => {
     switch (absence.status) {
-      case 'draft':
-        return 'border-l-4 border-gray-400';
       case 'pending':
         return 'border-l-4 border-yellow-400';
       case 'approved':
-      case 'confirmed':
         return 'border-l-4 border-green-500';
       case 'rejected':
         return 'border-l-4 border-red-500';
@@ -63,18 +53,18 @@ export const CustomAbsenceEvent: React.FC<CustomAbsenceEventProps> = ({ event })
   };
 
   const getOpacity = () => {
-    return absence.status === 'draft' ? 'opacity-70' : 'opacity-100';
+    return 'opacity-100';
   };
 
   return (
-    <div 
+    <div
       className={`
         h-full w-full p-1 text-xs text-white rounded-sm
         ${getBorderStyle()} ${getOpacity()}
         hover:shadow-md transition-shadow duration-200
         cursor-pointer
       `}
-      style={{ 
+      style={{
         backgroundColor: absence.absence_type?.color || '#3B82F6',
         minHeight: '20px'
       }}
