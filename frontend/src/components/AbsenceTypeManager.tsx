@@ -138,24 +138,6 @@ export const AbsenceTypeManager: React.FC = () => {
         });
     };
 
-    const PREDEFINED_COLORS = [
-        '#EF4444', // Red
-        '#F97316', // Orange
-        '#F59E0B', // Amber
-        '#EAB308', // Yellow
-        '#84CC16', // Lime
-        '#22C55E', // Green
-        '#10B981', // Emerald
-        '#14B8A6', // Teal
-        '#06B6D4', // Cyan
-        '#0EA5E9', // Sky
-        '#3B82F6', // Blue
-        '#6366F1', // Indigo
-        '#8B5CF6', // Violet
-        '#D946EF', // Fuchsia
-        '#EC4899', // Pink
-        '#64748B', // Slate
-    ];
 
     if (isLoading) return <div className="p-4 text-gray-500">Lade Abwesenheitstypen...</div>;
     if (isError) return <div className="p-4 text-red-500">Fehler beim Laden der Abwesenheitstypen.</div>;
@@ -225,29 +207,18 @@ export const AbsenceTypeManager: React.FC = () => {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="calendar_color" className="block text-sm font-medium text-gray-700 mb-2">
                                 Farbe (Darstellung im Kalender) *
                             </label>
-                            <div className="flex flex-wrap gap-2">
-                                {PREDEFINED_COLORS.map(color => (
-                                    <button
-                                        key={color}
-                                        type="button"
-                                        className={`w-6 h-6 rounded-full focus:outline-none transition-transform ${formData.color === color ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : ''}`}
-                                        style={{ backgroundColor: color }}
-                                        onClick={() => setFormData(prev => ({ ...prev, color }))}
-                                        title={color}
-                                    />
-                                ))}
-                                <div className="flex items-center ml-2 border border-gray-300 rounded overflow-hidden">
-                                    <input
-                                        type="color"
-                                        value={formData.color}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
-                                        className="w-8 h-8 cursor-pointer p-0 border-0"
-                                        title="Eigene Farbe"
-                                    />
-                                </div>
+                            <div className="flex items-center space-x-3">
+                                <input
+                                    type="color"
+                                    id="calendar_color"
+                                    value={formData.color}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                                    className="h-10 w-16 p-1 border border-gray-300 rounded-md cursor-pointer"
+                                />
+                                <span className="text-sm text-gray-500 uppercase">{formData.color}</span>
                             </div>
                         </div>
 

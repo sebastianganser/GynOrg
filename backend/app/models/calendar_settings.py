@@ -57,6 +57,16 @@ class CalendarSettingsBase(SQLModel):
         sa_column=Column(JSON),
         description="Liste der sichtbaren Mitarbeiter-IDs (None = alle sichtbar)"
     )
+    
+    # Farbanpassungen für allgemeine Kalenderkategorien (die keinen separaten Eintrag in der DB haben)
+    holiday_color: str = Field(
+        default="#EF4444",  # red-500
+        description="Farbe für Feiertage im Kalender"
+    )
+    school_vacation_color: str = Field(
+        default="#3B82F6",  # blue-500
+        description="Farbe für Schulferien im Kalender"
+    )
 
 
 class CalendarSettings(CalendarSettingsBase, table=True):
@@ -95,6 +105,10 @@ class CalendarSettingsUpdate(SQLModel):
     
     # Mitarbeiter-Filter
     visible_employee_ids: Optional[List[int]] = None
+
+    # Farbanpassungen
+    holiday_color: Optional[str] = None
+    school_vacation_color: Optional[str] = None
 
 
 class CalendarSettingsRead(CalendarSettingsBase):
@@ -159,6 +173,8 @@ class CalendarSettingsResponse(CalendarSettingsRead):
             show_training=settings.show_training,
             show_special_leave=settings.show_special_leave,
             visible_employee_ids=settings.visible_employee_ids,
+            holiday_color=settings.holiday_color,
+            school_vacation_color=settings.school_vacation_color,
             created_at=settings.created_at,
             updated_at=settings.updated_at,
             federal_states_display=federal_states_display

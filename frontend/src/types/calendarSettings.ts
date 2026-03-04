@@ -18,6 +18,8 @@ export interface CalendarSettings {
   created_at: string;
   updated_at: string;
   federal_states_display: FederalStateOption[];
+  holiday_color: string;
+  school_vacation_color: string;
 }
 
 export interface CalendarSettingsUpdate {
@@ -30,6 +32,8 @@ export interface CalendarSettingsUpdate {
   show_sick_leave?: boolean;
   show_training?: boolean;
   show_special_leave?: boolean;
+  holiday_color?: string;
+  school_vacation_color?: string;
 }
 
 export interface CalendarSettingsFormData {
@@ -42,4 +46,6 @@ export interface CalendarSettingsFormData {
   show_sick_leave: boolean;
   show_training: boolean;
   show_special_leave: boolean;
+  holiday_color: string;
+  school_vacation_color: string;
 }

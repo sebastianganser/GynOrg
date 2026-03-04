@@ -22,6 +22,8 @@ export const CalendarSettingsForm: React.FC<CalendarSettingsFormProps> = ({
     show_sick_leave: true,
     show_training: true,
     show_special_leave: true,
+    holiday_color: '#EF4444',
+    school_vacation_color: '#3B82F6',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -52,6 +54,8 @@ export const CalendarSettingsForm: React.FC<CalendarSettingsFormProps> = ({
         show_sick_leave: currentSettings.show_sick_leave,
         show_training: currentSettings.show_training,
         show_special_leave: currentSettings.show_special_leave,
+        holiday_color: currentSettings.holiday_color || '#EF4444',
+        school_vacation_color: currentSettings.school_vacation_color || '#3B82F6',
       });
     }
   }, [currentSettings]);
@@ -88,6 +92,8 @@ export const CalendarSettingsForm: React.FC<CalendarSettingsFormProps> = ({
         show_sick_leave: resetSettings.show_sick_leave,
         show_training: resetSettings.show_training,
         show_special_leave: resetSettings.show_special_leave,
+        holiday_color: resetSettings.holiday_color || '#EF4444',
+        school_vacation_color: resetSettings.school_vacation_color || '#3B82F6',
       });
       setErrors({});
     },

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, Calendar, Search, Palette } from 'lucide-react';
 import { useEmployeesForCalendar } from '../hooks/useEmployeesForCalendar';
-import { useAbsenceTypes } from '../hooks/useAbsences';
+import { useAbsenceTypes, useUpdateAbsenceType } from '../hooks/useAbsences';
+import { useCalendarSettings, useUpdateCalendarSettings } from '../hooks/useCalendarSettings';
 import { useCalendarFilterStore } from '../stores/calendarFilterStore';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
@@ -37,6 +38,11 @@ export function CalendarSidebar({
 
   // Fetch absence types
   const { data: absenceTypes, isLoading: isLoadingTypes } = useAbsenceTypes(true);
+  const { mutate: updateAbsenceType } = useUpdateAbsenceType();
+
+  // Fetch calendar settings (for holiday & school vacation colors)
+  const { data: calendarSettings } = useCalendarSettings();
+  const { mutate: updateCalendarSettings } = useUpdateCalendarSettings();
 
   const showHolidays = useCalendarFilterStore((state) => state.showHolidays);
   const showSchoolVacations = useCalendarFilterStore((state) => state.showSchoolVacations);
@@ -54,9 +60,13 @@ export function CalendarSidebar({
   // Search state
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Color picker state
+  // Color picker state for Employees
   const [colorPickerOpen, setColorPickerOpen] = useState<number | null>(null);
   const [pendingColor, setPendingColor] = useState<string>('');
+
+  // Color picker state for Categories (Holidays, School Vacations, Absence Types)
+  const [categoryColorPickerOpen, setCategoryColorPickerOpen] = useState<string | null>(null);
+  const [pendingCategoryColor, setPendingCategoryColor] = useState<string>('');
 
   // Filter employees based on search query
   const filteredEmployees = employees?.filter((employee) =>
@@ -85,12 +95,45 @@ export function CalendarSidebar({
     }
   };
 
-  // Handle color picker open
+  // Handle color picker open for employees
   const handleColorPickerClick = (employeeId: number, currentColor: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setColorPickerOpen(employeeId);
+    setCategoryColorPickerOpen(null);
     setPendingColor(currentColor);
+  };
+
+  // Handle color picker open for categories
+  const handleCategoryColorPickerClick = (categoryId: string, currentColor: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCategoryColorPickerOpen(categoryId);
+    setColorPickerOpen(null);
+    setPendingCategoryColor(currentColor);
+  };
+
+  // Save color for calendar categories
+  const handleCategoryColorSave = (categoryId: string) => {
+    if (categoryId === 'holiday' || categoryId === 'school_vacation') {
+      const updatePayload = categoryId === 'holiday'
+        ? { holiday_color: pendingCategoryColor }
+        : { school_vacation_color: pendingCategoryColor };
+      updateCalendarSettings(updatePayload, {
+        onSuccess: () => {
+          setCategoryColorPickerOpen(null);
+          window.location.reload();
+        }
+      });
+    } else if (categoryId.startsWith('absence_type_')) {
+      const typeId = parseInt(categoryId.replace('absence_type_', ''), 10);
+      updateAbsenceType({ id: typeId, data: { color: pendingCategoryColor } }, {
+        onSuccess: () => {
+          setCategoryColorPickerOpen(null);
+          window.location.reload();
+        }
+      });
+    }
   };
 
   // Auto-select all employees on first load if none selected
@@ -330,36 +373,114 @@ export function CalendarSidebar({
               {!isCollapsed && (
                 <div className="space-y-1">
                   {/* Feiertage */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showHolidays}
-                      onCheckedChange={toggleHolidays}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-red-500"
-                      title="Feiertage"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Feiertage
-                    </span>
-                  </label>
+                  <div className="space-y-1">
+                    <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
+                      <Checkbox
+                        checked={showHolidays}
+                        onCheckedChange={toggleHolidays}
+                        className="shrink-0"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => handleCategoryColorPickerClick('holiday', calendarSettings?.holiday_color || '#EF4444', e)}
+                        className="h-3 w-3 rounded-full shrink-0 hover:ring-2 hover:ring-offset-1 hover:ring-primary transition-all"
+                        style={{ backgroundColor: calendarSettings?.holiday_color || '#EF4444' }}
+                        title="Farbe ändern"
+                      />
+                      <span className="text-sm truncate flex-1 group-hover:text-foreground">
+                        Feiertage
+                      </span>
+                      <Palette
+                        className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground"
+                      />
+                    </label>
+
+                    {/* Inline Color Picker für Feiertage */}
+                    {categoryColorPickerOpen === 'holiday' && (
+                      <div className="px-2 py-2 bg-accent/50 rounded-md space-y-2">
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="color"
+                            value={pendingCategoryColor}
+                            onChange={(e) => setPendingCategoryColor(e.target.value)}
+                            className="h-8 w-full cursor-pointer rounded border border-input"
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleCategoryColorSave('holiday')}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Speichern
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setCategoryColorPickerOpen(null)}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Abbrechen
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
                   {/* Schulferien */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showSchoolVacations}
-                      onCheckedChange={toggleSchoolVacations}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-blue-500"
-                      title="Schulferien"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Schulferien
-                    </span>
-                  </label>
+                  <div className="space-y-1">
+                    <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
+                      <Checkbox
+                        checked={showSchoolVacations}
+                        onCheckedChange={toggleSchoolVacations}
+                        className="shrink-0"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => handleCategoryColorPickerClick('school_vacation', calendarSettings?.school_vacation_color || '#3B82F6', e)}
+                        className="h-3 w-3 rounded-full shrink-0 hover:ring-2 hover:ring-offset-1 hover:ring-primary transition-all"
+                        style={{ backgroundColor: calendarSettings?.school_vacation_color || '#3B82F6' }}
+                        title="Farbe ändern"
+                      />
+                      <span className="text-sm truncate flex-1 group-hover:text-foreground">
+                        Schulferien
+                      </span>
+                      <Palette
+                        className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground"
+                      />
+                    </label>
+
+                    {/* Inline Color Picker für Schulferien */}
+                    {categoryColorPickerOpen === 'school_vacation' && (
+                      <div className="px-2 py-2 bg-accent/50 rounded-md space-y-2">
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="color"
+                            value={pendingCategoryColor}
+                            onChange={(e) => setPendingCategoryColor(e.target.value)}
+                            className="h-8 w-full cursor-pointer rounded border border-input"
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleCategoryColorSave('school_vacation')}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Speichern
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setCategoryColorPickerOpen(null)}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Abbrechen
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
                   {/* Dynamic Absence Types */}
                   {isLoadingTypes && (
@@ -369,21 +490,59 @@ export function CalendarSidebar({
                   )}
 
                   {absenceTypes && absenceTypes.map(type => (
-                    <label key={type.id} className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                      <Checkbox
-                        checked={selectedAbsenceTypeIds.includes(type.id)}
-                        onCheckedChange={() => toggleAbsenceType(type.id)}
-                        className="shrink-0"
-                      />
-                      <div
-                        className="h-3 w-3 rounded-full shrink-0"
-                        style={{ backgroundColor: type.color }}
-                        title={type.name}
-                      />
-                      <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                        {type.name}
-                      </span>
-                    </label>
+                    <div key={type.id} className="space-y-1">
+                      <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
+                        <Checkbox
+                          checked={selectedAbsenceTypeIds.includes(type.id)}
+                          onCheckedChange={() => toggleAbsenceType(type.id)}
+                          className="shrink-0"
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleCategoryColorPickerClick(`absence_type_${type.id}`, type.color || '#3B82F6', e)}
+                          className="h-3 w-3 rounded-full shrink-0 hover:ring-2 hover:ring-offset-1 hover:ring-primary transition-all"
+                          style={{ backgroundColor: type.color || '#3B82F6' }}
+                          title="Farbe ändern"
+                        />
+                        <span className="text-sm truncate flex-1 group-hover:text-foreground">
+                          {type.name}
+                        </span>
+                        <Palette
+                          className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground"
+                        />
+                      </label>
+
+                      {/* Inline Color Picker für Absence Types */}
+                      {categoryColorPickerOpen === `absence_type_${type.id}` && (
+                        <div className="px-2 py-2 bg-accent/50 rounded-md space-y-2">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="color"
+                              value={pendingCategoryColor}
+                              onChange={(e) => setPendingCategoryColor(e.target.value)}
+                              className="h-8 w-full cursor-pointer rounded border border-input"
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              onClick={() => handleCategoryColorSave(`absence_type_${type.id}`)}
+                              className="flex-1 h-7 text-xs"
+                            >
+                              Speichern
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setCategoryColorPickerOpen(null)}
+                              className="flex-1 h-7 text-xs"
+                            >
+                              Abbrechen
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}

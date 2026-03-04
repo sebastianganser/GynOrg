@@ -4,6 +4,8 @@ import { useHolidays } from './useHolidays';
 import type { CalendarEvent, CalendarEventType } from '../utils/calendarFilters';
 import type { Absence } from '../types/absence';
 import type { Holiday } from '../types/holiday';
+import { useCalendarSettings } from './useCalendarSettings';
+import type { CalendarSettings } from '../types/calendarSettings';
 
 /**
  * Map absence type to calendar event type
@@ -27,6 +29,7 @@ function transformAbsenceToEvent(absence: Absence): CalendarEvent {
     type: mapAbsenceTypeToEventType(),
     employeeId: absence.employee_id,
     absenceTypeId: absence.absence_type_id,
+    color: absence.absence_type?.color || undefined,
     allDay: true,
     description: absence.comment || undefined,
   };
@@ -35,7 +38,7 @@ function transformAbsenceToEvent(absence: Absence): CalendarEvent {
 /**
  * Transform holiday to calendar event
  */
-function transformHolidayToEvent(holiday: Holiday): CalendarEvent {
+function transformHolidayToEvent(holiday: Holiday, settings?: CalendarSettings): CalendarEvent {
   // Determine if it's a school vacation or public holiday
   const isSchoolVacation = holiday.holiday_type === 'SCHOOL_VACATION';
 
@@ -45,6 +48,7 @@ function transformHolidayToEvent(holiday: Holiday): CalendarEvent {
     start: new Date(holiday.date),
     end: new Date(holiday.date),
     type: isSchoolVacation ? 'school_vacation' : 'holiday',
+    color: isSchoolVacation ? settings?.school_vacation_color : settings?.holiday_color,
     allDay: true,
     description: holiday.federal_state_code
       ? `Bundesland: ${holiday.federal_state_code}`
@@ -78,6 +82,9 @@ export function useCalendarEvents() {
     error: holidaysError,
   } = useHolidays(currentYear);
 
+  // Fetch calendar settings for colors
+  const { data: settings } = useCalendarSettings();
+
   // Combine loading states
   const isLoading = absencesLoading || holidaysLoading;
 
@@ -96,12 +103,12 @@ export function useCalendarEvents() {
 
     // Add holiday events
     if (holidays && Array.isArray(holidays)) {
-      const holidayEvents = holidays.map(transformHolidayToEvent);
+      const holidayEvents = holidays.map(h => transformHolidayToEvent(h, settings));
       allEvents.push(...holidayEvents);
     }
 
     return allEvents;
-  }, [absences, holidays]);
+  }, [absences, holidays, settings]);
 
   // Calculate statistics
   const stats = useMemo(() => {
