@@ -133,7 +133,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
       return true;
     }).map((absence): CalendarAbsence => ({
       id: absence.id,
-      title: `${absence.absence_type?.name || 'Abwesenheit'} (${absence.employee_id})`, // Simplified title
+      title: absence.absence_type?.name || 'Abwesenheit',
       start: new Date(absence.start_date),
       end: new Date(absence.end_date),
       resource: absence,
