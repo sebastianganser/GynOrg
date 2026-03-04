@@ -9,6 +9,7 @@ import { useCalendarSettings } from '../hooks/useCalendarSettings';
 import { Absence, CalendarAbsence } from '../types/absence';
 import { Holiday, HolidayType, getHolidayColor, getHolidayIcon, formatHolidayDisplayName, getSchoolVacationTypeLabel, SchoolVacationType } from '../types/holiday';
 import { Employee } from '../types/employee';
+import { getTextColorForBackground } from '../utils/colorUtils';
 
 // Initialize moment localizer
 moment.locale('de');
@@ -305,11 +306,12 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
 
     if (event.isHoliday || event.isConsolidated) {
       const holiday = event.resource as Holiday;
+      const bgColor = getHolidayColor(holiday);
       return {
         style: {
           ...style,
-          backgroundColor: getHolidayColor(holiday),
-          color: 'white',
+          backgroundColor: bgColor,
+          color: getTextColorForBackground(bgColor),
         },
         title: event.title // Native tooltip
       };
@@ -322,7 +324,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
       style: {
         ...style,
         backgroundColor: color,
-        color: 'white',
+        color: getTextColorForBackground(color),
       },
       title: event.title // Native tooltip
     };

@@ -6,6 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '../styles/team-calendar.css';
 import type { CalendarEvent } from '../utils/calendarFilters';
 import { getEventTypeLabel } from '../utils/calendarFilters';
+import { getTextColorForBackground } from '../utils/colorUtils';
 
 // Configure moment for German locale
 moment.locale('de');
@@ -31,11 +32,15 @@ interface EventProps {
 }
 
 function CustomEvent({ event }: EventProps) {
+  const bgColor = event.color || '#6b7280';
+  const textColor = getTextColorForBackground(bgColor);
+
   return (
     <div
       className="rbc-event-content"
       style={{
-        backgroundColor: event.color,
+        backgroundColor: bgColor,
+        color: textColor,
         borderRadius: '4px',
         padding: '2px 4px',
         overflow: 'hidden',
@@ -93,12 +98,13 @@ export function TeamCalendar({
   // Custom event style getter
   const eventStyleGetter = useCallback((event: Event) => {
     const calendarEvent = event.resource as CalendarEvent;
+    const bgColor = calendarEvent.color || '#6b7280';
     return {
       style: {
-        backgroundColor: calendarEvent.color || '#6b7280',
+        backgroundColor: bgColor,
         borderRadius: '4px',
         opacity: 0.9,
-        color: 'white',
+        color: getTextColorForBackground(bgColor),
         border: 'none',
         display: 'block',
         fontSize: '0.875rem',
