@@ -13,7 +13,15 @@ const Absences: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const { absences, isLoading, error } = useAbsenceManagement();
+  const { absences, absenceTypes, isLoading, error } = useAbsenceManagement();
+
+  const enrichedAbsences = React.useMemo(() => {
+    if (!absences) return [];
+    return absences.map(absence => ({
+      ...absence,
+      absence_type: absenceTypes?.find(t => t.id === absence.absence_type_id) || absence.absence_type
+    }));
+  }, [absences, absenceTypes]);
 
   const handleSelectEvent = (event: any) => {
     if (event && event.resource && 'employee_id' in event.resource) {
@@ -83,7 +91,7 @@ const Absences: React.FC = () => {
             ) : (
               <ErrorBoundary>
                 <AbsenceCalendar
-                  absences={absences || []}
+                  absences={enrichedAbsences}
                   onSelectEvent={handleSelectEvent}
                   onSelectSlot={handleSelectSlot}
                   onNewAbsence={handleCreateAbsence}
@@ -124,7 +132,9 @@ const Absences: React.FC = () => {
                 <div className="p-4 space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Typ</label>
-                    <p className="mt-1 text-sm text-gray-900">Abwesenheit</p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {selectedAbsence.absence_type?.name || 'Abwesenheit'}
+                    </p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Zeitraum</label>
