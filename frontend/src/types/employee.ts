@@ -160,6 +160,7 @@ export interface EmployeeUpdateForm {
   federal_state?: FederalState;
   active?: boolean;
   school_children?: boolean;
+  calendar_color?: string;
 }
 
 export interface VacationAllowanceForm {

@@ -4,6 +4,7 @@ import { useEmployeesForCalendar } from '../hooks/useEmployeesForCalendar';
 import { useAbsenceTypes, useUpdateAbsenceType } from '../hooks/useAbsences';
 import { useCalendarSettings, useUpdateCalendarSettings } from '../hooks/useCalendarSettings';
 import { useCalendarFilterStore } from '../stores/calendarFilterStore';
+import { employeeService } from '../services/employeeService';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
 import { ScrollArea } from './ui/scroll-area';
@@ -76,17 +77,7 @@ export function CalendarSidebar({
   // Handle color change
   const handleColorChange = async (employeeId: number, newColor: string) => {
     try {
-      const response = await fetch(`/api/employees/${employeeId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ calendar_color: newColor }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update color');
-      }
+      await employeeService.patchEmployee(employeeId, { calendar_color: newColor });
 
       // Refetch employees to update the UI
       window.location.reload(); // Simple solution - in production use React Query's refetch
