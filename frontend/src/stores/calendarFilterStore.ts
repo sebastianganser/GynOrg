@@ -7,15 +7,14 @@ import { persist } from 'zustand/middleware';
 export interface CalendarFilters {
   // Employee filters
   selectedEmployeeIds: number[];
-  
-  // Calendar type filters
+
+  // Calendar Holiday filters
   showHolidays: boolean;
   showSchoolVacations: boolean;
-  showVacationAbsences: boolean;
-  showSickLeave: boolean;
-  showTraining: boolean;
-  showSpecialLeave: boolean;
-  
+
+  // Absence Type filters
+  selectedAbsenceTypeIds: number[];
+
   // Sidebar state
   isSidebarCollapsed: boolean;
 }
@@ -29,24 +28,25 @@ interface CalendarFilterActions {
   selectAllEmployees: (employeeIds: number[]) => void;
   deselectAllEmployees: () => void;
   setSelectedEmployees: (employeeIds: number[]) => void;
-  
-  // Calendar filter actions
+
+  // Calendar Holiday filter actions
   toggleHolidays: () => void;
   toggleSchoolVacations: () => void;
-  toggleVacationAbsences: () => void;
-  toggleSickLeave: () => void;
-  toggleTraining: () => void;
-  toggleSpecialLeave: () => void;
-  
+
+  // Absence Type filter actions
+  toggleAbsenceType: (id: number) => void;
+  selectAllAbsenceTypes: (ids: number[]) => void;
+  deselectAllAbsenceTypes: () => void;
+
   // Bulk calendar filter actions
-  setCalendarFilter: (filterKey: keyof Omit<CalendarFilters, 'selectedEmployeeIds' | 'isSidebarCollapsed'>, value: boolean) => void;
+  setCalendarFilter: (filterKey: keyof Omit<CalendarFilters, 'selectedEmployeeIds' | 'selectedAbsenceTypeIds' | 'isSidebarCollapsed'>, value: boolean) => void;
   enableAllCalendarFilters: () => void;
   disableAllCalendarFilters: () => void;
-  
+
   // Sidebar actions
   toggleSidebar: () => void;
   setSidebarCollapsed: (collapsed: boolean) => void;
-  
+
   // Reset action
   resetFilters: () => void;
 }
@@ -63,10 +63,7 @@ const defaultFilters: CalendarFilters = {
   selectedEmployeeIds: [],
   showHolidays: true,
   showSchoolVacations: true,
-  showVacationAbsences: true,
-  showSickLeave: true,
-  showTraining: true,
-  showSpecialLeave: true,
+  selectedAbsenceTypeIds: [],
   isSidebarCollapsed: false,
 };
 
@@ -106,17 +103,19 @@ export const useCalendarFilterStore = create<CalendarFilterStore>()(
       toggleSchoolVacations: () =>
         set((state) => ({ showSchoolVacations: !state.showSchoolVacations })),
 
-      toggleVacationAbsences: () =>
-        set((state) => ({ showVacationAbsences: !state.showVacationAbsences })),
+      // Absence Type filter actions
+      toggleAbsenceType: (id) =>
+        set((state) => ({
+          selectedAbsenceTypeIds: state.selectedAbsenceTypeIds.includes(id)
+            ? state.selectedAbsenceTypeIds.filter((typeId) => typeId !== id)
+            : [...state.selectedAbsenceTypeIds, id],
+        })),
 
-      toggleSickLeave: () =>
-        set((state) => ({ showSickLeave: !state.showSickLeave })),
+      selectAllAbsenceTypes: (ids) =>
+        set({ selectedAbsenceTypeIds: ids }),
 
-      toggleTraining: () =>
-        set((state) => ({ showTraining: !state.showTraining })),
-
-      toggleSpecialLeave: () =>
-        set((state) => ({ showSpecialLeave: !state.showSpecialLeave })),
+      deselectAllAbsenceTypes: () =>
+        set({ selectedAbsenceTypeIds: [] }),
 
       // Bulk calendar filter actions
       setCalendarFilter: (filterKey, value) =>
@@ -126,20 +125,12 @@ export const useCalendarFilterStore = create<CalendarFilterStore>()(
         set({
           showHolidays: true,
           showSchoolVacations: true,
-          showVacationAbsences: true,
-          showSickLeave: true,
-          showTraining: true,
-          showSpecialLeave: true,
         }),
 
       disableAllCalendarFilters: () =>
         set({
           showHolidays: false,
           showSchoolVacations: false,
-          showVacationAbsences: false,
-          showSickLeave: false,
-          showTraining: false,
-          showSpecialLeave: false,
         }),
 
       // Sidebar actions
@@ -161,10 +152,7 @@ export const useCalendarFilterStore = create<CalendarFilterStore>()(
         selectedEmployeeIds: state.selectedEmployeeIds,
         showHolidays: state.showHolidays,
         showSchoolVacations: state.showSchoolVacations,
-        showVacationAbsences: state.showVacationAbsences,
-        showSickLeave: state.showSickLeave,
-        showTraining: state.showTraining,
-        showSpecialLeave: state.showSpecialLeave,
+        selectedAbsenceTypeIds: state.selectedAbsenceTypeIds,
         isSidebarCollapsed: state.isSidebarCollapsed,
       }),
     }
@@ -181,10 +169,7 @@ export const useCalendarFilters = () =>
   useCalendarFilterStore((state) => ({
     showHolidays: state.showHolidays,
     showSchoolVacations: state.showSchoolVacations,
-    showVacationAbsences: state.showVacationAbsences,
-    showSickLeave: state.showSickLeave,
-    showTraining: state.showTraining,
-    showSpecialLeave: state.showSpecialLeave,
+    selectedAbsenceTypeIds: state.selectedAbsenceTypeIds,
   }));
 
 export const useIsSidebarCollapsed = () =>

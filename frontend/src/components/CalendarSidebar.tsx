@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, Calendar, Search, Palette } from 'lucide-react';
 import { useEmployeesForCalendar } from '../hooks/useEmployeesForCalendar';
+import { useAbsenceTypes } from '../hooks/useAbsences';
 import { useCalendarFilterStore } from '../stores/calendarFilterStore';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
@@ -34,19 +35,17 @@ export function CalendarSidebar({
   const selectAllEmployees = useCalendarFilterStore((state) => state.selectAllEmployees);
   const deselectAllEmployees = useCalendarFilterStore((state) => state.deselectAllEmployees);
 
+  // Fetch absence types
+  const { data: absenceTypes, isLoading: isLoadingTypes } = useAbsenceTypes(true);
+
   const showHolidays = useCalendarFilterStore((state) => state.showHolidays);
   const showSchoolVacations = useCalendarFilterStore((state) => state.showSchoolVacations);
-  const showVacationAbsences = useCalendarFilterStore((state) => state.showVacationAbsences);
-  const showSickLeave = useCalendarFilterStore((state) => state.showSickLeave);
-  const showTraining = useCalendarFilterStore((state) => state.showTraining);
-  const showSpecialLeave = useCalendarFilterStore((state) => state.showSpecialLeave);
+  const selectedAbsenceTypeIds = useCalendarFilterStore((state) => state.selectedAbsenceTypeIds);
 
   const toggleHolidays = useCalendarFilterStore((state) => state.toggleHolidays);
   const toggleSchoolVacations = useCalendarFilterStore((state) => state.toggleSchoolVacations);
-  const toggleVacationAbsences = useCalendarFilterStore((state) => state.toggleVacationAbsences);
-  const toggleSickLeave = useCalendarFilterStore((state) => state.toggleSickLeave);
-  const toggleTraining = useCalendarFilterStore((state) => state.toggleTraining);
-  const toggleSpecialLeave = useCalendarFilterStore((state) => state.toggleSpecialLeave);
+  const toggleAbsenceType = useCalendarFilterStore((state) => state.toggleAbsenceType);
+  const selectAllAbsenceTypes = useCalendarFilterStore((state) => state.selectAllAbsenceTypes);
 
   // Local state for collapsible sections
   const [employeesExpanded, setEmployeesExpanded] = useState(true);
@@ -101,6 +100,14 @@ export function CalendarSidebar({
       selectAllEmployees(allIds);
     }
   }, [employees, selectedEmployeeIds.length, selectAllEmployees]);
+
+  // Auto-select all absence types on first load if none selected
+  useEffect(() => {
+    if (absenceTypes && absenceTypes.length > 0 && selectedAbsenceTypeIds.length === 0) {
+      const allIds = absenceTypes.map((t) => t.id);
+      selectAllAbsenceTypes(allIds);
+    }
+  }, [absenceTypes, selectedAbsenceTypeIds.length, selectAllAbsenceTypes]);
 
   // Handle select/deselect all employees
   const handleSelectAllEmployees = () => {
@@ -354,69 +361,30 @@ export function CalendarSidebar({
                     </span>
                   </label>
 
-                  {/* Urlaub */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showVacationAbsences}
-                      onCheckedChange={toggleVacationAbsences}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-green-500"
-                      title="Urlaub"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Urlaub
-                    </span>
-                  </label>
+                  {/* Dynamic Absence Types */}
+                  {isLoadingTypes && (
+                    <div className="px-2 py-4 text-xs text-muted-foreground">
+                      Lade Abwesenheitsarten...
+                    </div>
+                  )}
 
-                  {/* Krankheit */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showSickLeave}
-                      onCheckedChange={toggleSickLeave}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-orange-500"
-                      title="Krankheit"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Krankheit
-                    </span>
-                  </label>
-
-                  {/* Fortbildung */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showTraining}
-                      onCheckedChange={toggleTraining}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-purple-500"
-                      title="Fortbildung"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Fortbildung
-                    </span>
-                  </label>
-
-                  {/* Sonderurlaub */}
-                  <label className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
-                    <Checkbox
-                      checked={showSpecialLeave}
-                      onCheckedChange={toggleSpecialLeave}
-                      className="shrink-0"
-                    />
-                    <div
-                      className="h-3 w-3 rounded-full shrink-0 bg-pink-500"
-                      title="Sonderurlaub"
-                    />
-                    <span className="text-sm truncate flex-1 group-hover:text-foreground">
-                      Sonderurlaub
-                    </span>
-                  </label>
+                  {absenceTypes && absenceTypes.map(type => (
+                    <label key={type.id} className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent cursor-pointer group">
+                      <Checkbox
+                        checked={selectedAbsenceTypeIds.includes(type.id)}
+                        onCheckedChange={() => toggleAbsenceType(type.id)}
+                        className="shrink-0"
+                      />
+                      <div
+                        className="h-3 w-3 rounded-full shrink-0"
+                        style={{ backgroundColor: type.color }}
+                        title={type.name}
+                      />
+                      <span className="text-sm truncate flex-1 group-hover:text-foreground">
+                        {type.name}
+                      </span>
+                    </label>
+                  ))}
                 </div>
               )}
             </CollapsibleContent>

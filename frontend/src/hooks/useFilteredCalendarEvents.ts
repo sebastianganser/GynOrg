@@ -26,10 +26,7 @@ export function useFilteredCalendarEvents(
       selectedEmployeeIds: state.selectedEmployeeIds,
       showHolidays: state.showHolidays,
       showSchoolVacations: state.showSchoolVacations,
-      showVacationAbsences: state.showVacationAbsences,
-      showSickLeave: state.showSickLeave,
-      showTraining: state.showTraining,
-      showSpecialLeave: state.showSpecialLeave,
+      selectedAbsenceTypeIds: state.selectedAbsenceTypeIds,
       isSidebarCollapsed: state.isSidebarCollapsed,
     }))
   ) as CalendarFilters;

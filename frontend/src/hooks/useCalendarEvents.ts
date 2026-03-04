@@ -8,15 +8,8 @@ import type { Holiday } from '../types/holiday';
 /**
  * Map absence type to calendar event type
  */
-function mapAbsenceTypeToEventType(absenceType: string): CalendarEventType {
-  const typeMap: Record<string, CalendarEventType> = {
-    'Urlaub': 'vacation',
-    'Krankheit': 'sick_leave',
-    'Fortbildung': 'training',
-    'Sonderurlaub': 'special_leave',
-  };
-
-  return typeMap[absenceType] || 'vacation';
+function mapAbsenceTypeToEventType(): CalendarEventType {
+  return 'absence';
 }
 
 /**
@@ -25,14 +18,15 @@ function mapAbsenceTypeToEventType(absenceType: string): CalendarEventType {
 function transformAbsenceToEvent(absence: Absence): CalendarEvent {
   // Get absence type name from the nested absence_type object
   const absenceTypeName = absence.absence_type?.name || 'Urlaub';
-  
+
   return {
     id: `absence-${absence.id}`,
     title: absenceTypeName,
     start: new Date(absence.start_date),
     end: new Date(absence.end_date),
-    type: mapAbsenceTypeToEventType(absenceTypeName),
+    type: mapAbsenceTypeToEventType(),
     employeeId: absence.employee_id,
+    absenceTypeId: absence.absence_type_id,
     allDay: true,
     description: absence.comment || undefined,
   };
@@ -44,7 +38,7 @@ function transformAbsenceToEvent(absence: Absence): CalendarEvent {
 function transformHolidayToEvent(holiday: Holiday): CalendarEvent {
   // Determine if it's a school vacation or public holiday
   const isSchoolVacation = holiday.holiday_type === 'SCHOOL_VACATION';
-  
+
   return {
     id: `holiday-${holiday.id}`,
     title: holiday.name,
@@ -52,8 +46,8 @@ function transformHolidayToEvent(holiday: Holiday): CalendarEvent {
     end: new Date(holiday.date),
     type: isSchoolVacation ? 'school_vacation' : 'holiday',
     allDay: true,
-    description: holiday.federal_state_code 
-      ? `Bundesland: ${holiday.federal_state_code}` 
+    description: holiday.federal_state_code
+      ? `Bundesland: ${holiday.federal_state_code}`
       : undefined,
   };
 }

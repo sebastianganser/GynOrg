@@ -35,7 +35,7 @@ describe('TeamCalendar', () => {
       title: 'Test Event 1',
       start: new Date('2025-01-01'),
       end: new Date('2025-01-05'),
-      type: 'vacation',
+      type: 'absence',
       allDay: true,
       color: '#22c55e',
     },
@@ -52,7 +52,7 @@ describe('TeamCalendar', () => {
 
   it('should render calendar with events', () => {
     render(<TeamCalendar events={mockEvents} />);
-    
+
     expect(screen.getByTestId('mock-calendar')).toBeInTheDocument();
     expect(screen.getByTestId('event-event-1')).toBeInTheDocument();
     expect(screen.getByTestId('event-event-2')).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('TeamCalendar', () => {
 
   it('should display event titles', () => {
     render(<TeamCalendar events={mockEvents} />);
-    
+
     expect(screen.getByText('Test Event 1')).toBeInTheDocument();
     expect(screen.getByText('Test Event 2')).toBeInTheDocument();
   });
@@ -68,10 +68,10 @@ describe('TeamCalendar', () => {
   it('should call onEventClick when event is clicked', () => {
     const onEventClick = vi.fn();
     render(<TeamCalendar events={mockEvents} onEventClick={onEventClick} />);
-    
+
     const event = screen.getByTestId('event-event-1');
     fireEvent.click(event);
-    
+
     expect(onEventClick).toHaveBeenCalledTimes(1);
     expect(onEventClick).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -83,7 +83,7 @@ describe('TeamCalendar', () => {
 
   it('should render with empty events array', () => {
     render(<TeamCalendar events={[]} />);
-    
+
     expect(screen.getByTestId('mock-calendar')).toBeInTheDocument();
   });
 
@@ -91,7 +91,7 @@ describe('TeamCalendar', () => {
     const { container } = render(
       <TeamCalendar events={mockEvents} className="custom-class" />
     );
-    
+
     const wrapper = container.querySelector('.team-calendar-wrapper');
     expect(wrapper).toHaveClass('custom-class');
   });
@@ -103,7 +103,7 @@ describe('TeamCalendar', () => {
         title: 'Vacation',
         start: new Date('2025-01-01'),
         end: new Date('2025-01-05'),
-        type: 'vacation',
+        type: 'absence',
         allDay: true,
         color: '#22c55e',
       },
@@ -112,7 +112,7 @@ describe('TeamCalendar', () => {
         title: 'Sick Leave',
         start: new Date('2025-01-10'),
         end: new Date('2025-01-12'),
-        type: 'sick_leave',
+        type: 'absence',
         allDay: true,
         color: '#f97316',
       },
@@ -121,14 +121,14 @@ describe('TeamCalendar', () => {
         title: 'Training',
         start: new Date('2025-01-15'),
         end: new Date('2025-01-16'),
-        type: 'training',
+        type: 'absence',
         allDay: true,
         color: '#a855f7',
       },
     ];
 
     render(<TeamCalendar events={diverseEvents} />);
-    
+
     expect(screen.getByText('Vacation')).toBeInTheDocument();
     expect(screen.getByText('Sick Leave')).toBeInTheDocument();
     expect(screen.getByText('Training')).toBeInTheDocument();
@@ -141,7 +141,7 @@ describe('TeamCalendar', () => {
         title: 'Employee 1 Vacation',
         start: new Date('2025-01-01'),
         end: new Date('2025-01-05'),
-        type: 'vacation',
+        type: 'absence',
         employeeId: 1,
         allDay: true,
         color: '#22c55e',
@@ -151,7 +151,7 @@ describe('TeamCalendar', () => {
         title: 'Employee 2 Vacation',
         start: new Date('2025-01-10'),
         end: new Date('2025-01-12'),
-        type: 'vacation',
+        type: 'absence',
         employeeId: 2,
         allDay: true,
         color: '#3b82f6',
@@ -159,7 +159,7 @@ describe('TeamCalendar', () => {
     ];
 
     render(<TeamCalendar events={employeeEvents} />);
-    
+
     expect(screen.getByText('Employee 1 Vacation')).toBeInTheDocument();
     expect(screen.getByText('Employee 2 Vacation')).toBeInTheDocument();
   });
@@ -171,7 +171,7 @@ describe('TeamCalendar', () => {
         title: 'Event with Description',
         start: new Date('2025-01-01'),
         end: new Date('2025-01-05'),
-        type: 'vacation',
+        type: 'absence',
         allDay: true,
         color: '#22c55e',
         description: 'This is a test description',
@@ -179,13 +179,13 @@ describe('TeamCalendar', () => {
     ];
 
     render(<TeamCalendar events={eventsWithDescriptions} />);
-    
+
     expect(screen.getByText('Event with Description')).toBeInTheDocument();
   });
 
   it('should not call onEventClick when not provided', () => {
     render(<TeamCalendar events={mockEvents} />);
-    
+
     const event = screen.getByTestId('event-event-1');
     // Should not throw error
     expect(() => fireEvent.click(event)).not.toThrow();
@@ -198,14 +198,14 @@ describe('TeamCalendar', () => {
         title: 'String Date Event',
         start: '2025-01-01',
         end: '2025-01-05',
-        type: 'vacation',
+        type: 'absence',
         allDay: true,
         color: '#22c55e',
       },
     ];
 
     render(<TeamCalendar events={stringDateEvents} />);
-    
+
     expect(screen.getByText('String Date Event')).toBeInTheDocument();
   });
 });

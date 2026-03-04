@@ -9,7 +9,7 @@ describe('EventDetailsDialog', () => {
     title: 'Test Event',
     start: new Date('2025-01-01'),
     end: new Date('2025-01-05'),
-    type: 'vacation',
+    type: 'absence',
     allDay: true,
     color: '#22c55e',
     description: 'Test description',
@@ -24,7 +24,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(container.firstChild).toBeNull();
   });
 
@@ -36,7 +36,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(container.firstChild).toBeNull();
   });
 
@@ -48,7 +48,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Test Event')).toBeInTheDocument();
   });
 
@@ -60,9 +60,9 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Typ:')).toBeInTheDocument();
-    expect(screen.getByText('Urlaub')).toBeInTheDocument();
+    expect(screen.getByText('Abwesenheit')).toBeInTheDocument();
   });
 
   it('should display start and end dates', () => {
@@ -73,7 +73,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Beginn:')).toBeInTheDocument();
     expect(screen.getByText('Ende:')).toBeInTheDocument();
   });
@@ -86,7 +86,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Dauer:')).toBeInTheDocument();
     expect(screen.getByText(/Tage/)).toBeInTheDocument();
   });
@@ -99,14 +99,14 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Beschreibung:')).toBeInTheDocument();
     expect(screen.getByText('Test description')).toBeInTheDocument();
   });
 
   it('should not display description when not provided', () => {
     const eventWithoutDescription = { ...mockEvent, description: undefined };
-    
+
     render(
       <EventDetailsDialog
         event={eventWithoutDescription}
@@ -114,7 +114,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.queryByText('Beschreibung:')).not.toBeInTheDocument();
   });
 
@@ -126,14 +126,14 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Mitarbeiter-ID:')).toBeInTheDocument();
     expect(screen.getByText('1')).toBeInTheDocument();
   });
 
   it('should not display employee ID when not provided', () => {
     const eventWithoutEmployeeId = { ...mockEvent, employeeId: undefined };
-    
+
     render(
       <EventDetailsDialog
         event={eventWithoutEmployeeId}
@@ -141,7 +141,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.queryByText('Mitarbeiter-ID:')).not.toBeInTheDocument();
   });
 
@@ -153,14 +153,14 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Ganztägig:')).toBeInTheDocument();
     expect(screen.getByText('Ja')).toBeInTheDocument();
   });
 
   it('should not display all-day indicator when allDay is false', () => {
     const eventNotAllDay = { ...mockEvent, allDay: false };
-    
+
     render(
       <EventDetailsDialog
         event={eventNotAllDay}
@@ -168,7 +168,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.queryByText('Ganztägig:')).not.toBeInTheDocument();
   });
 
@@ -180,14 +180,14 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText(/Event-ID:/)).toBeInTheDocument();
     expect(screen.getByText(/test-event-1/)).toBeInTheDocument();
   });
 
   it('should call onOpenChange when close button is clicked', () => {
     const onOpenChange = vi.fn();
-    
+
     render(
       <EventDetailsDialog
         event={mockEvent}
@@ -195,16 +195,16 @@ describe('EventDetailsDialog', () => {
         onOpenChange={onOpenChange}
       />
     );
-    
+
     const closeButton = screen.getByRole('button');
     fireEvent.click(closeButton);
-    
+
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
   it('should call onOpenChange when backdrop is clicked', () => {
     const onOpenChange = vi.fn();
-    
+
     const { container } = render(
       <EventDetailsDialog
         event={mockEvent}
@@ -212,7 +212,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={onOpenChange}
       />
     );
-    
+
     const backdrop = container.querySelector('.bg-black\\/50');
     if (backdrop) {
       fireEvent.click(backdrop);
@@ -222,10 +222,7 @@ describe('EventDetailsDialog', () => {
 
   it('should handle different event types correctly', () => {
     const eventTypes: Array<{ type: CalendarEvent['type']; label: string }> = [
-      { type: 'vacation', label: 'Urlaub' },
-      { type: 'sick_leave', label: 'Krankheit' },
-      { type: 'training', label: 'Fortbildung' },
-      { type: 'special_leave', label: 'Sonderurlaub' },
+      { type: 'absence', label: 'Abwesenheit' },
       { type: 'holiday', label: 'Feiertag' },
       { type: 'school_vacation', label: 'Schulferien' },
     ];
@@ -239,7 +236,7 @@ describe('EventDetailsDialog', () => {
           onOpenChange={vi.fn()}
         />
       );
-      
+
       expect(screen.getByText(label)).toBeInTheDocument();
       unmount();
     });
@@ -251,7 +248,7 @@ describe('EventDetailsDialog', () => {
       start: new Date('2025-01-01'),
       end: new Date('2025-01-01'),
     };
-    
+
     render(
       <EventDetailsDialog
         event={singleDayEvent}
@@ -259,7 +256,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('1 Tag')).toBeInTheDocument();
   });
 
@@ -271,7 +268,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText(/Tage/)).toBeInTheDocument();
   });
 
@@ -281,7 +278,7 @@ describe('EventDetailsDialog', () => {
       start: '2025-01-01',
       end: '2025-01-05',
     };
-    
+
     render(
       <EventDetailsDialog
         event={stringDateEvent}
@@ -289,7 +286,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     expect(screen.getByText('Test Event')).toBeInTheDocument();
   });
 
@@ -301,7 +298,7 @@ describe('EventDetailsDialog', () => {
         onOpenChange={vi.fn()}
       />
     );
-    
+
     const colorIndicator = container.querySelector('[style*="background-color"]');
     expect(colorIndicator).toBeInTheDocument();
   });

@@ -7,10 +7,8 @@ import type { CalendarFilters } from '../stores/calendarFilterStore';
 export type CalendarEventType =
   | 'holiday'
   | 'school_vacation'
-  | 'vacation'
-  | 'sick_leave'
-  | 'training'
-  | 'special_leave';
+  | 'vacation' // Keeping vacation as fallback or generic if needed, better to use 'absence'
+  | 'absence';
 
 /**
  * Calendar Event Interface
@@ -23,6 +21,7 @@ export interface CalendarEvent {
   end: Date | string;
   type: CalendarEventType;
   employeeId?: number;
+  absenceTypeId?: number;
   color?: string;
   allDay?: boolean;
   description?: string;
@@ -52,7 +51,7 @@ export function filterEventsByEmployees(
     if (!event.employeeId) {
       return true;
     }
-    
+
     // For employee events: only keep if employee is selected
     return selectedEmployeeIds.includes(event.employeeId);
   });
@@ -74,31 +73,30 @@ export function filterEventsByType(
     showHolidays: filters.showHolidays,
     holidayEvents: events.filter(e => e.type === 'holiday').length,
   });
-  
+
   const filtered = events.filter((event) => {
     switch (event.type) {
       case 'holiday':
         return filters.showHolidays;
       case 'school_vacation':
         return filters.showSchoolVacations;
+      case 'absence':
       case 'vacation':
-        return filters.showVacationAbsences;
-      case 'sick_leave':
-        return filters.showSickLeave;
-      case 'training':
-        return filters.showTraining;
-      case 'special_leave':
-        return filters.showSpecialLeave;
+        // If we have selected IDs, only show if it matches
+        if (event.absenceTypeId !== undefined && filters.selectedAbsenceTypeIds.length > 0) {
+          return filters.selectedAbsenceTypeIds.includes(event.absenceTypeId);
+        }
+        return true;
       default:
         return true;
     }
   });
-  
+
   console.log('[filterEventsByType] Output:', {
     filteredEvents: filtered.length,
     holidayEvents: filtered.filter(e => e.type === 'holiday').length,
   });
-  
+
   return filtered;
 }
 
@@ -113,9 +111,7 @@ export function getEventTypeColor(type: CalendarEventType): string {
     holiday: '#ef4444', // red-500
     school_vacation: '#3b82f6', // blue-500
     vacation: '#22c55e', // green-500
-    sick_leave: '#f97316', // orange-500
-    training: '#a855f7', // purple-500
-    special_leave: '#ec4899', // pink-500
+    absence: '#6b7280', // generic gray
   };
 
   return colorMap[type] || '#6b7280'; // gray-500 as fallback
@@ -168,10 +164,7 @@ export function applyCalendarFilters(
   let filteredEvents = filterEventsByType(events, {
     showHolidays: filters.showHolidays,
     showSchoolVacations: filters.showSchoolVacations,
-    showVacationAbsences: filters.showVacationAbsences,
-    showSickLeave: filters.showSickLeave,
-    showTraining: filters.showTraining,
-    showSpecialLeave: filters.showSpecialLeave,
+    selectedAbsenceTypeIds: filters.selectedAbsenceTypeIds,
   });
 
   // Step 2: Filter by employees
@@ -193,7 +186,7 @@ export function createEmployeeColorMap(
   employees: Array<{ id: number; calendar_color: string }>
 ): Map<number, string> {
   const colorMap = new Map<number, string>();
-  
+
   employees.forEach((employee) => {
     colorMap.set(employee.id, employee.calendar_color);
   });
@@ -212,9 +205,7 @@ export function getEventTypeLabel(type: CalendarEventType): string {
     holiday: 'Feiertag',
     school_vacation: 'Schulferien',
     vacation: 'Urlaub',
-    sick_leave: 'Krankheit',
-    training: 'Fortbildung',
-    special_leave: 'Sonderurlaub',
+    absence: 'Abwesenheit',
   };
 
   return labelMap[type] || 'Unbekannt';
@@ -230,10 +221,7 @@ export function hasActiveFilters(filters: CalendarFilters): boolean {
   return (
     !filters.showHolidays ||
     !filters.showSchoolVacations ||
-    !filters.showVacationAbsences ||
-    !filters.showSickLeave ||
-    !filters.showTraining ||
-    !filters.showSpecialLeave ||
+    filters.selectedAbsenceTypeIds.length > 0 || // Actually, should only trigger if it's not all
     filters.selectedEmployeeIds.length === 0
   );
 }
@@ -249,10 +237,7 @@ export function getActiveFilterCount(filters: CalendarFilters): number {
 
   if (!filters.showHolidays) count++;
   if (!filters.showSchoolVacations) count++;
-  if (!filters.showVacationAbsences) count++;
-  if (!filters.showSickLeave) count++;
-  if (!filters.showTraining) count++;
-  if (!filters.showSpecialLeave) count++;
+  if (filters.selectedAbsenceTypeIds.length > 0) count++;
 
   return count;
 }

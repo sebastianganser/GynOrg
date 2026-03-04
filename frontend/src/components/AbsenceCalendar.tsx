@@ -118,7 +118,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
   const [absenceTypeFilter, setAbsenceTypeFilter] = useState<string>('');
 
   // Global store for Holiday filters
-  const { showHolidays, showSchoolVacations } = useCalendarFilterStore();
+  const { showHolidays, showSchoolVacations, selectedEmployeeIds, selectedAbsenceTypeIds } = useCalendarFilterStore();
 
   const { data: calendarSettings } = useCalendarSettings();
   const { data: employees } = useEmployees(false);
@@ -129,7 +129,19 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
   // Filter and Process Absences
   const filteredAbsences = useMemo(() => {
     return absences.filter(absence => {
+      // 1. Filter by Employee
+      if (selectedEmployeeIds.length > 0 && !selectedEmployeeIds.includes(absence.employee_id)) {
+        return false;
+      }
+
+      // 2. Filter by Absence Type
+      if (selectedAbsenceTypeIds.length > 0 && !selectedAbsenceTypeIds.includes(absence.absence_type_id)) {
+        return false;
+      }
+
+      // 3. Optional status filter (local state)
       if (absenceStatusFilter && absence.status !== absenceStatusFilter) return false;
+
       return true;
     }).map((absence): CalendarAbsence => ({
       id: absence.id,
@@ -139,7 +151,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
       resource: absence,
       allDay: true
     }));
-  }, [absences, absenceStatusFilter]);
+  }, [absences, absenceStatusFilter, selectedEmployeeIds, selectedAbsenceTypeIds]);
 
   // Filter and Process Holidays
   const calendarHolidays = useMemo(() => {
