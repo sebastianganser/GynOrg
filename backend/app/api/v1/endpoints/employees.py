@@ -181,6 +181,7 @@ def create_employee(
 
 
 @router.put("/{employee_id}", response_model=Employee)
+@router.patch("/{employee_id}", response_model=Employee)
 def update_employee(
     employee_id: int,
     employee_data: EmployeeUpdate,
