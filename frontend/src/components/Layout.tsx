@@ -13,10 +13,17 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ onLogout, username }) => {
-  const [currentPage, setCurrentPage] = useState('employees');
+  const [currentPage, setCurrentPage] = useState(() => {
+    return localStorage.getItem('last-active-page') || 'employees';
+  });
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [userPreference, setUserPreference] = useState<boolean | null>(null);
   const [isCalendarSettingsOpen, setIsCalendarSettingsOpen] = useState(false);
+
+  // Persist current page
+  useEffect(() => {
+    localStorage.setItem('last-active-page', currentPage);
+  }, [currentPage]);
 
   // Responsive sidebar behavior
   useEffect(() => {
