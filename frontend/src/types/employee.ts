@@ -119,20 +119,20 @@ export interface EmployeeCreate {
 
 // Employee Update Interface
 export interface EmployeeUpdate {
-  title?: string;
+  title?: string | null;
   first_name?: string;
   last_name?: string;
-  position?: string;
+  position?: string | null;
   email?: string;
-  birth_date?: string;
-  date_hired?: string;
+  birth_date?: string | null;
+  date_hired?: string | null;
   federal_state?: FederalState;
   active?: boolean;
   vacation_allowance?: number; // Temporär für Kompatibilität
   calendar_color?: string;
-  initials?: string;
+  initials?: string | null;
   school_children?: boolean;
-  youngest_child_birth_year?: number;
+  youngest_child_birth_year?: number | null;
 }
 
 // Form-spezifische Interfaces
@@ -153,18 +153,19 @@ export interface EmployeeCreateForm {
 }
 
 export interface EmployeeUpdateForm {
-  title?: string;
+  title?: string | null;
   first_name?: string;
   last_name?: string;
-  position?: string;
+  position?: string | null;
   email?: string;
-  birth_date?: string;
-  date_hired?: string;
+  birth_date?: string | null;
+  date_hired?: string | null;
   federal_state?: FederalState;
   active?: boolean;
   school_children?: boolean;
   calendar_color?: string;
-  initials?: string;
+  initials?: string | null;
+  youngest_child_birth_year?: number | null;
 }
 
 export interface VacationAllowanceForm {

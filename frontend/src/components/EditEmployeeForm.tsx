@@ -230,22 +230,20 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
         submitData.email = formData.email.trim();
       }
 
-      if (formData.title !== employee.title) {
-        submitData.title = formData.title?.trim() || undefined;
+      if ((formData.title || '') !== (employee.title || '')) {
+        submitData.title = formData.title?.trim() || null;
       }
 
-      if (formData.position !== employee.position) {
-        submitData.position = formData.position?.trim() || undefined;
+      if ((formData.position || '') !== (employee.position || '')) {
+        submitData.position = formData.position?.trim() || null;
       }
 
-
-
-      if (formData.date_hired !== employee.date_hired) {
-        submitData.date_hired = formData.date_hired?.trim() || undefined;
+      if ((formData.date_hired || '') !== (employee.date_hired || '')) {
+        submitData.date_hired = formData.date_hired?.trim() || null;
       }
 
-      if (formData.birth_date !== employee.birth_date) {
-        submitData.birth_date = formData.birth_date?.trim() || undefined;
+      if ((formData.birth_date || '') !== (employee.birth_date || '')) {
+        submitData.birth_date = formData.birth_date?.trim() || null;
       }
 
       if (formData.federal_state !== employee.federal_state) {
@@ -261,7 +259,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
       }
 
       if (formData.youngest_child_birth_year !== employee.youngest_child_birth_year) {
-        submitData.youngest_child_birth_year = formData.youngest_child_birth_year;
+        submitData.youngest_child_birth_year = formData.youngest_child_birth_year || null;
       }
 
       if (formData.calendar_color !== employee.calendar_color) {
@@ -270,7 +268,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
 
       const formattedInitials = formData.initials?.trim();
       if ((formattedInitials || '') !== (employee.initials || '')) {
-        submitData.initials = formattedInitials || undefined;
+        submitData.initials = formattedInitials || null;
       }
 
       // Only submit if there are actual changes
