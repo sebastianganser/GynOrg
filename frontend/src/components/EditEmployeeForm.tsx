@@ -44,7 +44,10 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
     school_children: employee.school_children,
     youngest_child_birth_year: employee.youngest_child_birth_year,
     calendar_color: employee.calendar_color || '#3B82F6',
+    initials: employee.initials || '',
   });
+
+  const [isInitialsManuallySet, setIsInitialsManuallySet] = useState(!!employee.initials);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const queryClient = useQueryClient();
@@ -70,8 +73,10 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
       school_children: employee.school_children,
       youngest_child_birth_year: employee.youngest_child_birth_year,
       calendar_color: employee.calendar_color || '#3B82F6',
+      initials: employee.initials || '',
     };
     setFormData(newFormData);
+    setIsInitialsManuallySet(!!employee.initials);
     setErrors({});
     clearAllChanges();
   }, [employee, clearAllChanges]);
@@ -134,7 +139,26 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
     if (errors[name]) {
       setErrors((prev: Record<string, string>) => ({ ...prev, [name]: '' }));
     }
+
+    // Manual initials override checking
+    if (name === 'initials') {
+      setIsInitialsManuallySet(true);
+    }
   };
+
+  // Auto-generate initials effect
+  useEffect(() => {
+    if (!isInitialsManuallySet) {
+      const firstInitial = formData.first_name?.charAt(0) || '';
+      const lastInitial = formData.last_name?.charAt(0) || '';
+      const autoInitials = (firstInitial + lastInitial).toUpperCase();
+
+      if (formData.initials !== autoInitials) {
+        setFormData((prev) => ({ ...prev, initials: autoInitials }));
+        markTabAsChanged('personal', true);
+      }
+    }
+  }, [formData.first_name, formData.last_name, isInitialsManuallySet, formData.initials, markTabAsChanged]);
 
   const handleAvatarUpdate = (updatedEmployee: Employee) => {
     console.log('Avatar updated for employee:', updatedEmployee.id);
@@ -236,6 +260,11 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
         submitData.calendar_color = formData.calendar_color;
       }
 
+      const formattedInitials = formData.initials?.trim().toUpperCase();
+      if ((formattedInitials || '') !== (employee.initials || '')) {
+        submitData.initials = formattedInitials || undefined;
+      }
+
       // Only submit if there are actual changes
       if (Object.keys(submitData).length > 0) {
         updateEmployeeMutation.mutate(submitData);
@@ -304,6 +333,27 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
             />
             {errors.last_name && (
               <p className="mt-1 text-sm text-red-600">{errors.last_name}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="initials" className="block text-sm font-medium text-gray-700 mb-1">
+              Initialien
+            </label>
+            <input
+              type="text"
+              id="initials"
+              name="initials"
+              value={formData.initials || ''}
+              onChange={handleInputChange}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${errors.initials ? 'border-red-500' : 'border-gray-300'
+                }`}
+              placeholder="2-3 Buchstaben"
+              maxLength={3}
+              style={{ textTransform: 'uppercase' }}
+            />
+            {errors.initials && (
+              <p className="mt-1 text-sm text-red-600">{errors.initials}</p>
             )}
           </div>
         </div>

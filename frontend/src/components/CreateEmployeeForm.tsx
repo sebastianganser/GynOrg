@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { employeeService } from '../services/employeeService';
 import { jobPositionService } from '../services/jobPositionService';
@@ -33,9 +33,12 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
     federal_state: FederalState.ST, // Default: Sachsen-Anhalt
     active: true,
     calendar_color: '#3B82F6',
+    initials: '',
     school_children: false,
     youngest_child_birth_year: undefined,
   });
+
+  const [isInitialsManuallySet, setIsInitialsManuallySet] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const queryClient = useQueryClient();
@@ -113,7 +116,22 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
     if (errors[name]) {
       setErrors((prev: Record<string, string>) => ({ ...prev, [name]: '' }));
     }
+
+    // Manual initials override checking
+    if (name === 'initials') {
+      setIsInitialsManuallySet(true);
+    }
   };
+
+  // Auto-generate initials effect
+  useEffect(() => {
+    if (!isInitialsManuallySet) {
+      const firstInitial = formData.first_name?.charAt(0) || '';
+      const lastInitial = formData.last_name?.charAt(0) || '';
+      const autoInitials = (firstInitial + lastInitial).toUpperCase();
+      setFormData((prev) => ({ ...prev, initials: autoInitials }));
+    }
+  }, [formData.first_name, formData.last_name, isInitialsManuallySet]);
 
   const validateEmail = (email: string): string | null => {
     // Grundlegende Struktur prüfen
@@ -253,6 +271,10 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
         school_children: formData.school_children ?? false,
       };
 
+      if (formData.initials?.trim()) {
+        submitData.initials = formData.initials.trim().toUpperCase();
+      }
+
       if (formData.title?.trim()) {
         submitData.title = formData.title.trim();
       }
@@ -367,6 +389,27 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
               />
               {errors.last_name && (
                 <p className="mt-1 text-sm text-red-600">{errors.last_name}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="initials" className="block text-sm font-medium text-gray-700 mb-1">
+                Initialien
+              </label>
+              <input
+                type="text"
+                id="initials"
+                name="initials"
+                value={formData.initials || ''}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${errors.initials ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                placeholder="2-3 Buchstaben"
+                maxLength={3}
+                style={{ textTransform: 'uppercase' }}
+              />
+              {errors.initials && (
+                <p className="mt-1 text-sm text-red-600">{errors.initials}</p>
               )}
             </div>
           </div>
