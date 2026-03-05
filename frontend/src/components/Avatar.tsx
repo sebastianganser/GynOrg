@@ -20,7 +20,7 @@ const sizeClasses: Record<AvatarSize, string> = {
 const getInitials = (employee: Employee): string => {
   // Wenn initials im Employee-Objekt vorhanden sind, verwende diese
   if (employee.initials) {
-    return employee.initials.toUpperCase();
+    return employee.initials;
   }
 
   // Ansonsten generiere aus Vor- und Nachname

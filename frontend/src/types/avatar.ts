@@ -43,6 +43,7 @@ export interface AvatarDisplayProps {
     id: number;
     first_name: string;
     last_name: string;
+    initials?: string;
     avatar_url?: string;
   };
   size?: AvatarSize;
@@ -67,7 +68,10 @@ export interface AvatarEditorProps {
 }
 
 // Utility-Funktionen für Avatar-Handling
-export const getAvatarInitials = (firstName: string, lastName: string): string => {
+export const getAvatarInitials = (firstName: string, lastName: string, customInitials?: string): string => {
+  if (customInitials) {
+    return customInitials;
+  }
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 };
 

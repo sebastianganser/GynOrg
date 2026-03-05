@@ -17,7 +17,7 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
 
   const avatarUrl = employee.avatar_url;
 
-  const initials = getAvatarInitials(employee.first_name, employee.last_name);
+  const initials = getAvatarInitials(employee.first_name, employee.last_name, employee.initials);
   const sizeClasses = getAvatarSizeClasses(size);
 
   const handleImageError = () => {
@@ -100,7 +100,7 @@ export default AvatarDisplay;
 
 // Zusätzliche Utility-Komponente für einfache Verwendung
 export const SimpleAvatar: React.FC<{
-  employee: { first_name: string; last_name: string; avatar_url?: string };
+  employee: { first_name: string; last_name: string; initials?: string; avatar_url?: string };
   size?: AvatarSize;
   className?: string;
 }> = ({ employee, size = 'medium', className = '' }) => {
