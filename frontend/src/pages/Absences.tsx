@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AbsenceCalendar } from '../components/AbsenceCalendar';
 import { CalendarSidebar } from '../components/CalendarSidebar';
 import { CreateAbsenceForm } from '../components/CreateAbsenceForm';
+import { EditAbsenceForm } from '../components/EditAbsenceForm';
 import { useAbsenceManagement } from '../hooks/useAbsences';
 import { useCalendarFilterStore } from '../stores/calendarFilterStore';
 import { Absence } from '../types/absence';
@@ -111,14 +112,22 @@ const Absences: React.FC = () => {
                   </h2>
                 </div>
                 <div className="p-4">
-                  <CreateAbsenceForm
-                    isOpen={showCreateForm}
-                    onClose={handleCloseForm}
-                    initialData={{
-                      start_date: selectedDate || new Date(),
-                      end_date: selectedDate || new Date()
-                    }}
-                  />
+                  {selectedAbsence ? (
+                    <EditAbsenceForm
+                      isOpen={showCreateForm}
+                      onClose={handleCloseForm}
+                      absence={selectedAbsence}
+                    />
+                  ) : (
+                    <CreateAbsenceForm
+                      isOpen={showCreateForm}
+                      onClose={handleCloseForm}
+                      initialData={{
+                        start_date: selectedDate || new Date(),
+                        end_date: selectedDate || new Date()
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )}
