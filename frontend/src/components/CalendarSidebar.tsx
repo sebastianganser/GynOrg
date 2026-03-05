@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight, Users, Calendar, Search, Palette } from 'lucide-react';
 import { useEmployeesForCalendar } from '../hooks/useEmployeesForCalendar';
 import { useAbsenceTypes, useUpdateAbsenceType } from '../hooks/useAbsences';
@@ -29,6 +30,7 @@ export function CalendarSidebar({
   className,
 }: CalendarSidebarProps) {
   // Fetch employees for calendar
+  const queryClient = useQueryClient();
   const { data: employees, isLoading, error } = useEmployeesForCalendar(true);
 
   // Zustand store for filters
@@ -80,7 +82,7 @@ export function CalendarSidebar({
       await employeeService.patchEmployee(employeeId, { calendar_color: newColor });
 
       // Refetch employees to update the UI
-      window.location.reload(); // Simple solution - in production use React Query's refetch
+      queryClient.invalidateQueries({ queryKey: ['employees'] });
     } catch (error) {
       console.error('Error updating employee color:', error);
     }
@@ -113,7 +115,7 @@ export function CalendarSidebar({
       updateCalendarSettings(updatePayload, {
         onSuccess: () => {
           setCategoryColorPickerOpen(null);
-          window.location.reload();
+          queryClient.invalidateQueries({ queryKey: ['calendar-settings'] });
         }
       });
     } else if (categoryId.startsWith('absence_type_')) {
@@ -121,7 +123,7 @@ export function CalendarSidebar({
       updateAbsenceType({ id: typeId, data: { color: pendingCategoryColor } }, {
         onSuccess: () => {
           setCategoryColorPickerOpen(null);
-          window.location.reload();
+          queryClient.invalidateQueries({ queryKey: ['absence-types'] });
         }
       });
     }
