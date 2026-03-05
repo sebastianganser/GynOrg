@@ -45,6 +45,7 @@ export interface AvatarDisplayProps {
     last_name: string;
     initials?: string;
     avatar_url?: string;
+    calendar_color?: string;
   };
   size?: AvatarSize;
   className?: string;

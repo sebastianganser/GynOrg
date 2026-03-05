@@ -5,6 +5,7 @@ import {
   getAvatarSizeClasses,
   AvatarSize
 } from '../types/avatar';
+import { getTextColorForBackground } from '../utils/colorUtils';
 
 const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
   employee,
@@ -19,6 +20,9 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
 
   const initials = getAvatarInitials(employee.first_name, employee.last_name, employee.initials);
   const sizeClasses = getAvatarSizeClasses(size);
+
+  const bgColor = employee.calendar_color || '#3B82F6';
+  const textColor = getTextColorForBackground(bgColor);
 
   const handleImageError = () => {
     setImageError(true);
@@ -44,13 +48,13 @@ const AvatarDisplay: React.FC<AvatarDisplayProps> = ({
       <div
         className={`
           ${sizeClasses} 
-          bg-blue-500 text-white 
           rounded-full 
           flex items-center justify-center 
           font-semibold 
           select-none
           ${className}
         `}
+        style={{ backgroundColor: bgColor, color: textColor }}
         title={`${employee.first_name} ${employee.last_name}`}
       >
         {initials}
@@ -100,7 +104,7 @@ export default AvatarDisplay;
 
 // Zusätzliche Utility-Komponente für einfache Verwendung
 export const SimpleAvatar: React.FC<{
-  employee: { first_name: string; last_name: string; initials?: string; avatar_url?: string };
+  employee: { first_name: string; last_name: string; initials?: string; avatar_url?: string; calendar_color?: string; };
   size?: AvatarSize;
   className?: string;
 }> = ({ employee, size = 'medium', className = '' }) => {

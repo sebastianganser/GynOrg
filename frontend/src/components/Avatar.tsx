@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Employee } from '../types/employee';
 import { AvatarSize } from '../types/avatar';
+import { getTextColorForBackground } from '../utils/colorUtils';
 
 interface AvatarProps {
   employee: Employee;
@@ -29,23 +30,7 @@ const getInitials = (employee: Employee): string => {
   return (firstInitial + lastInitial).toUpperCase();
 };
 
-const getAvatarColor = (initials: string): string => {
-  const colors = [
-    'bg-blue-500',
-    'bg-green-500',
-    'bg-purple-500',
-    'bg-orange-500',
-    'bg-pink-500',
-    'bg-indigo-500',
-    'bg-red-500',
-    'bg-yellow-500',
-    'bg-teal-500',
-    'bg-cyan-500'
-  ];
-
-  const hash = initials.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-  return colors[hash % colors.length];
-};
+// Removed getAvatarColor since we now use employee.calendar_color
 
 export const Avatar: React.FC<AvatarProps> = ({
   employee,
@@ -57,12 +42,13 @@ export const Avatar: React.FC<AvatarProps> = ({
   const [imageError, setImageError] = useState(false);
 
   const initials = getInitials(employee);
-  const colorClass = getAvatarColor(initials);
+  const bgColor = employee.calendar_color || '#3B82F6';
+  const textColor = getTextColorForBackground(bgColor);
   const sizeClass = sizeClasses[size];
 
   const baseClasses = `
     relative inline-flex items-center justify-center
-    rounded-full font-medium text-white
+    rounded-full font-medium
     ${sizeClass}
     ${onClick ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}
     ${className}
@@ -95,7 +81,10 @@ export const Avatar: React.FC<AvatarProps> = ({
           onError={() => setImageError(true)}
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center rounded-full ${colorClass}`}>
+        <div
+          className="w-full h-full flex items-center justify-center rounded-full"
+          style={{ backgroundColor: bgColor, color: textColor }}
+        >
           <span className="font-medium">{initials}</span>
         </div>
       )}
