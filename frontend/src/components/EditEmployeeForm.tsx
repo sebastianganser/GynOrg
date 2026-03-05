@@ -15,6 +15,13 @@ interface EditEmployeeFormProps {
   onCancel?: () => void;
 }
 
+const titleOptions = [
+  { value: '', label: 'Kein Titel' },
+  { value: 'Dr.', label: 'Dr.' },
+  { value: 'Prof.', label: 'Prof.' },
+  { value: 'Prof. Dr.', label: 'Prof. Dr.' },
+];
+
 export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
   employee,
   onSuccess,
@@ -181,8 +188,9 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
       newErrors.email = 'Ungültige E-Mail-Adresse';
     }
 
-    if (formData.title && formData.title.length > 100) {
-      newErrors.title = 'Titel darf maximal 100 Zeichen lang sein';
+    // Title is now a select dropdown so length validation is less of a concern, but let's keep it safe.
+    if (formData.title && formData.title.length > 20) {
+      newErrors.title = 'Titel darf maximal 20 Zeichen lang sein';
     }
 
     if (formData.position && formData.position.length > 100) {
@@ -404,17 +412,20 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
           <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
             Titel
           </label>
-          <input
-            type="text"
+          <select
             id="title"
             name="title"
             value={formData.title || ''}
             onChange={handleInputChange}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${errors.title ? 'border-red-500' : 'border-gray-300'
               }`}
-            placeholder="z.B. Dr., Prof. (optional)"
-            maxLength={20}
-          />
+          >
+            {titleOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
           {errors.title && (
             <p className="mt-1 text-sm text-red-600">{errors.title}</p>
           )}
