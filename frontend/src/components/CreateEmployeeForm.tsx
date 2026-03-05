@@ -272,7 +272,7 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
       };
 
       if (formData.initials?.trim()) {
-        submitData.initials = formData.initials.trim().toUpperCase();
+        submitData.initials = formData.initials.trim();
       }
 
       if (formData.title?.trim()) {
@@ -406,7 +406,6 @@ export const CreateEmployeeForm: React.FC<CreateEmployeeFormProps> = ({
                   }`}
                 placeholder="2-3 Buchstaben"
                 maxLength={3}
-                style={{ textTransform: 'uppercase' }}
               />
               {errors.initials && (
                 <p className="mt-1 text-sm text-red-600">{errors.initials}</p>

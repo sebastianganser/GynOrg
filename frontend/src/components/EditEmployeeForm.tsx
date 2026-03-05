@@ -260,7 +260,7 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
         submitData.calendar_color = formData.calendar_color;
       }
 
-      const formattedInitials = formData.initials?.trim().toUpperCase();
+      const formattedInitials = formData.initials?.trim();
       if ((formattedInitials || '') !== (employee.initials || '')) {
         submitData.initials = formattedInitials || undefined;
       }
@@ -350,7 +350,6 @@ export const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({
                 }`}
               placeholder="2-3 Buchstaben"
               maxLength={3}
-              style={{ textTransform: 'uppercase' }}
             />
             {errors.initials && (
               <p className="mt-1 text-sm text-red-600">{errors.initials}</p>
