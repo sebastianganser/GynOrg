@@ -186,6 +186,7 @@ def get_vacation_summary(
     # Get taken days (approved or pending absences of category VACATION in this year)
     statement = (
         select(func.sum(Absence.duration_days))
+        .select_from(Absence)
         .join(AbsenceType, Absence.absence_type_id == AbsenceType.id)
         .where(
             Absence.employee_id == employee_id,
