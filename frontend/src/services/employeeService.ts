@@ -131,6 +131,20 @@ export const employeeService = {
     return response.json();
   },
 
+  // Get vacation summary for an employee
+  async getVacationSummary(employeeId: number, year: number): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/employees/${employeeId}/vacation-summary?year=${year}`, {
+      method: "GET",
+      headers: authService.getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch vacation summary: ${response.statusText}`);
+    }
+
+    return response.json();
+  },
+
   // Soft delete employee (set active = false)
   async deleteEmployee(id: number): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/employees/${id}`, {

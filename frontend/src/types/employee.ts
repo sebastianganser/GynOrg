@@ -65,6 +65,12 @@ export interface VacationAllowanceCreate {
   carryover_days?: number;
 }
 
+export interface VacationSummaryRead {
+  total_allowance: number;
+  taken_days: number;
+  remaining_days: number;
+}
+
 // VacationAllowance Update Interface
 export interface VacationAllowanceUpdate {
   annual_allowance?: number;

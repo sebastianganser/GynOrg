@@ -5,6 +5,7 @@ import { useAbsenceManagement } from '../hooks/useAbsences';
 import { absenceService } from '../services/absenceService';
 import { employeeService } from '../services/employeeService';
 import { Employee } from '../types/employee';
+import { useVacationSummary } from '../hooks/useEmployees';
 
 interface CreateAbsenceFormProps {
   isOpen: boolean;
@@ -42,6 +43,11 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
     isCreating,
     createError
   } = useAbsenceManagement();
+
+  const { data: vacationSummary } = useVacationSummary(
+    selectedEmployeeId || undefined,
+    formData.start_date ? formData.start_date.getFullYear() : undefined
+  );
 
   // Load employees when modal opens
   useEffect(() => {
@@ -327,9 +333,18 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
 
           {/* Duration Display */}
           {formData.start_date && formData.end_date && (
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Calendar size={16} />
-              <span>Dauer: {calculateDuration()} Tag{calculateDuration() !== 1 ? 'e' : ''}</span>
+            <div className="flex flex-col space-y-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <Calendar size={16} />
+                <span>Dauer: {calculateDuration()} Tag{calculateDuration() !== 1 ? 'e' : ''}</span>
+              </div>
+
+              {selectedAbsenceType?.category === 'vacation' && vacationSummary && (
+                <div className="ml-6 flex flex-col space-y-1 text-xs text-gray-500 border-l-2 border-blue-200 pl-3 py-1">
+                  <span>Initial verfügbar: <strong>{vacationSummary.total_allowance} Tage</strong></span>
+                  <span>Resturlaub (inkl. diesem Antrag): <strong className={vacationSummary.remaining_days - calculateDuration() < 0 ? 'text-red-600' : 'text-green-600'}>{vacationSummary.remaining_days - calculateDuration()} Tage</strong></span>
+                </div>
+              )}
             </div>
           )}
 
@@ -375,8 +390,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
                 type="button"
                 onClick={() => setIsApproved(false)}
                 className={`flex-1 py-1.5 px-3 rounded-md text-sm font-medium transition-colors ${!isApproved
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
                   }`}
               >
                 Antrag
@@ -385,8 +400,8 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
                 type="button"
                 onClick={() => setIsApproved(true)}
                 className={`flex-1 py-1.5 px-3 rounded-md text-sm font-medium transition-colors ${isApproved
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
                   }`}
               >
                 Genehmigt

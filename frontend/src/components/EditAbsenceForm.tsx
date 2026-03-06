@@ -5,6 +5,7 @@ import { useAbsenceManagement } from '../hooks/useAbsences';
 import { absenceService } from '../services/absenceService';
 import { employeeService } from '../services/employeeService';
 import { Employee } from '../types/employee';
+import { useVacationSummary } from '../hooks/useEmployees';
 
 interface EditAbsenceFormProps {
   isOpen: boolean;
@@ -38,6 +39,11 @@ export const EditAbsenceForm: React.FC<EditAbsenceFormProps> = ({
     isUpdating,
     updateError
   } = useAbsenceManagement();
+
+  const { data: vacationSummary } = useVacationSummary(
+    selectedEmployeeId || undefined,
+    formData.start_date ? formData.start_date.getFullYear() : undefined
+  );
 
   // Load employees when modal opens
   useEffect(() => {
@@ -319,12 +325,36 @@ export const EditAbsenceForm: React.FC<EditAbsenceFormProps> = ({
           </div>
 
           {/* Duration Display */}
-          {formData.start_date && formData.end_date && (
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Calendar size={16} />
-              <span>Dauer: {calculateDuration()} Tag{calculateDuration() !== 1 ? 'e' : ''}</span>
-            </div>
-          )}
+          {formData.start_date && formData.end_date && (() => {
+            const selectedAbsenceType = absenceTypes.find(type => type.id === formData.absence_type_id);
+            const isVacationType = selectedAbsenceType?.category === 'vacation';
+
+            // If the original absence was a VACATION and was APPROVED or PENDING, it's included in the backend's taken_days
+            const wasVacationAndCounted = absence.absence_type?.category === 'vacation' &&
+              (absence.status === 'approved' || absence.status === 'pending');
+            const oldDuration = wasVacationAndCounted ? absence.duration_days : 0;
+
+            // Adjust the remaining days by adding the old duration back, then subtracting the new duration
+            const adjustedRemaining = vacationSummary
+              ? vacationSummary.remaining_days + oldDuration - calculateDuration()
+              : 0;
+
+            return (
+              <div className="flex flex-col space-y-2 text-sm text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <Calendar size={16} />
+                  <span>Dauer: {calculateDuration()} Tag{calculateDuration() !== 1 ? 'e' : ''}</span>
+                </div>
+
+                {isVacationType && vacationSummary && (
+                  <div className="ml-6 flex flex-col space-y-1 text-xs text-gray-500 border-l-2 border-blue-200 pl-3 py-1">
+                    <span>Initial verfügbar: <strong>{vacationSummary.total_allowance} Tage</strong></span>
+                    <span>Resturlaub (inkl. diesem Antrag): <strong className={adjustedRemaining < 0 ? 'text-red-600' : 'text-green-600'}>{adjustedRemaining} Tage</strong></span>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Duration Validation */}
           {validationErrors.duration && (

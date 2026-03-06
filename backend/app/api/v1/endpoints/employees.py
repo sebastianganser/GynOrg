@@ -12,6 +12,10 @@ from app.models.employee import Employee, EmployeeCreate, EmployeeUpdate
 from app.models.vacation_allowance import VacationAllowance
 from app.models.federal_state import FederalState
 from app.schemas.employee_calendar import EmployeeCalendarInfo
+from app.schemas.vacation_summary import VacationSummaryRead
+from app.models.absence import Absence, AbsenceStatus
+from app.models.absence_type import AbsenceType, AbsenceTypeCategory
+from sqlalchemy import extract, func
 
 router = APIRouter()
 
@@ -153,6 +157,54 @@ def get_employee_vacation_allowances(
     
     allowances = session.exec(statement).all()
     return allowances
+
+
+@router.get("/{employee_id}/vacation-summary", response_model=VacationSummaryRead)
+def get_vacation_summary(
+    employee_id: int,
+    year: int = Query(..., description="The year to calculate the summary for"),
+    session: Session = Depends(get_session),
+    current_user: dict = Depends(get_current_user)
+):
+    """Get the vacation summary for an employee for a specific year"""
+    employee = session.get(Employee, employee_id)
+    if not employee:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Employee not found"
+        )
+    
+    # Get total allowance
+    allowance = session.exec(
+        select(VacationAllowance).where(
+            VacationAllowance.employee_id == employee_id,
+            VacationAllowance.year == year
+        )
+    ).first()
+    total_allowance = allowance.days if allowance else 0.0
+
+    # Get taken days (approved or pending absences of category VACATION in this year)
+    statement = (
+        select(func.sum(Absence.duration_days))
+        .join(AbsenceType, Absence.absence_type_id == AbsenceType.id)
+        .where(
+            Absence.employee_id == employee_id,
+            extract('year', Absence.start_date) == year,
+            Absence.status.in_([AbsenceStatus.APPROVED, AbsenceStatus.PENDING]),
+            AbsenceType.category == AbsenceTypeCategory.VACATION,
+            Absence.is_active == True
+        )
+    )
+    taken_days = session.exec(statement).first()
+    taken_days = float(taken_days) if taken_days else 0.0
+
+    remaining_days = total_allowance - taken_days
+
+    return VacationSummaryRead(
+        total_allowance=total_allowance,
+        taken_days=taken_days,
+        remaining_days=remaining_days
+    )
 
 
 @router.post("/", response_model=Employee, status_code=status.HTTP_201_CREATED)

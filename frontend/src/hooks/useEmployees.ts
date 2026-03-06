@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { employeeService } from '../services/employeeService';
 import { utilityService } from '../services/utilityService';
-import { 
-  EmployeeUpdate, 
+import {
+  EmployeeUpdate,
   EmployeeWithVacation,
-  FederalState 
+  FederalState
 } from '../types/employee';
 
 // Query keys
@@ -16,6 +16,7 @@ export const employeeKeys = {
   detail: (id: number) => [...employeeKeys.details(), id] as const,
   withVacation: () => [...employeeKeys.all, 'withVacation'] as const,
   withVacationDetail: (id: number) => [...employeeKeys.withVacation(), id] as const,
+  vacationSummary: (employeeId: number, year: number) => [...employeeKeys.all, 'vacationSummary', employeeId, year] as const,
 };
 
 // Utility keys
@@ -44,7 +45,7 @@ export const useEmployees = (includeVacation: boolean = false) => {
 // Hook to get employees with search and filters
 export const useEmployeesWithSearch = (params: EmployeeSearchParams = {}) => {
   const { search, federal_state, active, include_vacation = false } = params;
-  
+
   return useQuery({
     queryKey: employeeKeys.list({ search, federal_state, active, include_vacation }),
     queryFn: async () => {
@@ -61,8 +62,8 @@ export const useEmployeesWithSearch = (params: EmployeeSearchParams = {}) => {
 // Hook to get a single employee
 export const useEmployee = (id: number, includeVacation: boolean = false) => {
   return useQuery({
-    queryKey: includeVacation 
-      ? employeeKeys.withVacationDetail(id) 
+    queryKey: includeVacation
+      ? employeeKeys.withVacationDetail(id)
       : employeeKeys.detail(id),
     queryFn: () => employeeService.getEmployee(id, includeVacation),
     enabled: !!id,
@@ -97,6 +98,18 @@ export const useCreateEmployee = () => {
       // Invalidate and refetch employees list
       queryClient.invalidateQueries({ queryKey: employeeKeys.lists() });
     },
+    onError: (error) => {
+      console.error('Error creating employee:', error);
+    },
+  });
+};
+
+export const useVacationSummary = (employeeId: number | undefined, year: number | undefined) => {
+  return useQuery({
+    queryKey: employeeKeys.vacationSummary(employeeId || 0, year || 0),
+    queryFn: () => employeeService.getVacationSummary(employeeId!, year!),
+    enabled: !!employeeId && !!year,
+    staleTime: 5 * 60 * 1000,
   });
 };
 
