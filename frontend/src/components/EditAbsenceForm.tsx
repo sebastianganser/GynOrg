@@ -92,7 +92,8 @@ export const EditAbsenceForm: React.FC<EditAbsenceFormProps> = ({
       const result = await absenceService.checkConflicts(
         selectedEmployeeId,
         absenceService.formatDateForAPI(formData.start_date),
-        absenceService.formatDateForAPI(formData.end_date)
+        absenceService.formatDateForAPI(formData.end_date),
+        absence.id
       );
       setConflicts(result);
     } catch (error) {
