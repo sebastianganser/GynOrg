@@ -14,7 +14,7 @@ const Absences: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const { absences, absenceTypes, isLoading, error } = useAbsenceManagement();
+  const { absences, absenceTypes, isLoading, error, approveAbsence, deleteAbsence } = useAbsenceManagement();
 
   const enrichedAbsences = React.useMemo(() => {
     if (!absences) return [];
@@ -169,19 +169,37 @@ const Absences: React.FC = () => {
                       <p className="mt-1 text-sm text-gray-900">{selectedAbsence.comment}</p>
                     </div>
                   )}
-                  <div className="flex gap-2 pt-4">
-                    <button
-                      onClick={() => setShowCreateForm(true)}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
-                    >
-                      Bearbeiten
-                    </button>
-                    <button
-                      onClick={() => setSelectedAbsence(null)}
-                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
-                    >
-                      Schließen
-                    </button>
+                  <div className="flex flex-col gap-2 pt-4">
+                    {selectedAbsence.status === 'pending' && (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => approveAbsence(selectedAbsence.id, { onSuccess: () => setSelectedAbsence(null) })}
+                          className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
+                        >
+                          Genehmigen
+                        </button>
+                        <button
+                          onClick={() => deleteAbsence(selectedAbsence.id, { onSuccess: () => setSelectedAbsence(null) })}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
+                        >
+                          Ablehnen
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setShowCreateForm(true)}
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
+                      >
+                        Bearbeiten
+                      </button>
+                      <button
+                        onClick={() => setSelectedAbsence(null)}
+                        className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
+                      >
+                        Schließen
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { 
-  Absence, 
-  AbsenceCreate, 
-  AbsenceUpdate, 
-  AbsenceType, 
-  AbsenceFilters 
+import {
+  Absence,
+  AbsenceCreate,
+  AbsenceUpdate,
+  AbsenceType,
+  AbsenceFilters
 } from '../types/absence';
 import { absenceService } from '../services/absenceService';
 
@@ -18,7 +18,7 @@ export const absenceKeys = {
   types: ['absence-types'] as const,
   typesList: () => [...absenceKeys.types, 'list'] as const,
   conflicts: ['absence-conflicts'] as const,
-  conflictCheck: (employeeId: number, startDate: string, endDate: string, excludeId?: number) => 
+  conflictCheck: (employeeId: number, startDate: string, endDate: string, excludeId?: number) =>
     [...absenceKeys.conflicts, 'check', employeeId, startDate, endDate, excludeId] as const,
 };
 
@@ -55,7 +55,7 @@ export const useUpdateAbsence = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: AbsenceUpdate }) => 
+    mutationFn: ({ id, data }: { id: number; data: AbsenceUpdate }) =>
       absenceService.updateAbsence(id, data),
     onSuccess: (updatedAbsence) => {
       // Update the specific absence in cache
@@ -134,7 +134,7 @@ export const useCreateAbsenceType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (absenceTypeData: Omit<AbsenceType, 'id'>) => 
+    mutationFn: (absenceTypeData: Omit<AbsenceType, 'id'>) =>
       absenceService.createAbsenceType(absenceTypeData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: absenceKeys.typesList() });
@@ -146,7 +146,7 @@ export const useUpdateAbsenceType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<AbsenceType> }) => 
+    mutationFn: ({ id, data }: { id: number; data: Partial<AbsenceType> }) =>
       absenceService.updateAbsenceType(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: absenceKeys.typesList() });
@@ -158,7 +158,7 @@ export const useDeleteAbsenceType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, hardDelete }: { id: number; hardDelete?: boolean }) => 
+    mutationFn: ({ id, hardDelete }: { id: number; hardDelete?: boolean }) =>
       absenceService.deleteAbsenceType(id, hardDelete),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: absenceKeys.typesList() });
@@ -169,11 +169,11 @@ export const useDeleteAbsenceType = () => {
 // Conflict checking hook
 export const useCheckConflicts = () => {
   return useMutation({
-    mutationFn: ({ 
-      employeeId, 
-      startDate, 
-      endDate, 
-      excludeAbsenceId 
+    mutationFn: ({
+      employeeId,
+      startDate,
+      endDate,
+      excludeAbsenceId
     }: {
       employeeId: number;
       startDate: string;
@@ -201,7 +201,7 @@ export const useOptimisticAbsenceUpdate = () => {
       { queryKey: absenceKeys.lists() },
       (oldData: Absence[] | undefined) => {
         if (!oldData) return oldData;
-        return oldData.map(absence => 
+        return oldData.map(absence =>
           absence.id === id ? { ...absence, ...updates } : absence
         );
       }
@@ -218,36 +218,40 @@ export const useAbsenceManagement = (filters?: AbsenceFilters) => {
   const createMutation = useCreateAbsence();
   const updateMutation = useUpdateAbsence();
   const deleteMutation = useDeleteAbsence();
+  const approveMutation = useApproveAbsence();
   const checkConflictsMutation = useCheckConflicts();
 
   return {
     // Data
     absences: absencesQuery.data || [],
     absenceTypes: absenceTypesQuery.data || [],
-    
+
     // Loading states
     isLoading: absencesQuery.isLoading || absenceTypesQuery.isLoading,
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,
     isDeleting: deleteMutation.isPending,
+    isApproving: approveMutation.isPending,
     isCheckingConflicts: checkConflictsMutation.isPending,
-    
+
     // Error states
     error: absencesQuery.error || absenceTypesQuery.error,
     createError: createMutation.error,
     updateError: updateMutation.error,
     deleteError: deleteMutation.error,
+    approveError: approveMutation.error,
     conflictError: checkConflictsMutation.error,
-    
+
     // Mutations
     createAbsence: createMutation.mutate,
     updateAbsence: updateMutation.mutate,
     deleteAbsence: deleteMutation.mutate,
+    approveAbsence: approveMutation.mutate,
     checkConflicts: checkConflictsMutation.mutate,
-    
+
     // Conflict check result
     conflictResult: checkConflictsMutation.data,
-    
+
     // Refetch functions
     refetchAbsences: absencesQuery.refetch,
     refetchAbsenceTypes: absenceTypesQuery.refetch,
