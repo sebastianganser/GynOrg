@@ -33,6 +33,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
   const [conflicts, setConflicts] = useState<ConflictCheckResponse | null>(null);
   const [isCheckingConflicts, setIsCheckingConflicts] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [isApproved, setIsApproved] = useState(false);
 
   const {
     absenceTypes,
@@ -79,6 +80,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
       });
       setConflicts(null);
       setValidationErrors({});
+      setIsApproved(false);
     }
   }, [isOpen, initialData, absenceTypes]);
 
@@ -159,7 +161,7 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
       start_date: absenceService.formatDateForAPI(formData.start_date),
       end_date: absenceService.formatDateForAPI(formData.end_date),
       comment: formData.comment || undefined,
-      status: AbsenceStatus.PENDING
+      status: isApproved ? AbsenceStatus.APPROVED : AbsenceStatus.PENDING
     };
 
     createAbsence(absenceData, {
@@ -362,6 +364,35 @@ export const CreateAbsenceForm: React.FC<CreateAbsenceFormProps> = ({
               </div>
             </div>
           )}
+
+          {/* Status Toggle */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Status
+            </label>
+            <div className="flex bg-gray-100 p-1 rounded-lg">
+              <button
+                type="button"
+                onClick={() => setIsApproved(false)}
+                className={`flex-1 py-1.5 px-3 rounded-md text-sm font-medium transition-colors ${!isApproved
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700'
+                  }`}
+              >
+                Antrag
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsApproved(true)}
+                className={`flex-1 py-1.5 px-3 rounded-md text-sm font-medium transition-colors ${isApproved
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700'
+                  }`}
+              >
+                Genehmigt
+              </button>
+            </div>
+          </div>
 
           {/* Comment */}
           <div>
