@@ -193,6 +193,14 @@ const Absences: React.FC = () => {
                       >
                         Bearbeiten
                       </button>
+                      {selectedAbsence.status !== 'pending' && (
+                        <button
+                          onClick={() => deleteAbsence(selectedAbsence.id, { onSuccess: () => setSelectedAbsence(null) })}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
+                        >
+                          Löschen
+                        </button>
+                      )}
                       <button
                         onClick={() => setSelectedAbsence(null)}
                         className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded text-sm font-medium transition-colors duration-200"
