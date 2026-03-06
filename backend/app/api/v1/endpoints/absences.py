@@ -189,10 +189,15 @@ def create_absence(
                 detail=f"Maximale Anzahl Tage pro Antrag überschritten: {duration} > {absence_type.max_days_per_request}"
             )
     
-    # Auto-approve if absence type doesn't require approval
-    initial_status = AbsenceStatus.PENDING
-    if not absence_type.requires_approval:
-        initial_status = AbsenceStatus.APPROVED
+    # Determine initial status: use explicit client status if provided, 
+    # otherwise fallback to auto-approve logic
+    explicit_fields = absence_in.model_dump(exclude_unset=True)
+    if "status" in explicit_fields:
+        initial_status = absence_in.status
+    else:
+        initial_status = AbsenceStatus.PENDING
+        if not absence_type.requires_approval:
+            initial_status = AbsenceStatus.APPROVED
     
     # Create absence instance directly with proper field mapping
     absence = Absence(
