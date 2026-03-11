@@ -10,6 +10,7 @@ from app.core.database import get_session
 from app.core.auth import get_current_user
 from app.models.employee import Employee, EmployeeCreate, EmployeeUpdate
 from app.models.vacation_allowance import VacationAllowance
+from app.models.vacation_entitlement import VacationEntitlement
 from app.models.federal_state import FederalState
 from app.schemas.employee_calendar import EmployeeCalendarInfo
 from app.schemas.vacation_summary import VacationSummaryRead
@@ -174,14 +175,18 @@ def get_vacation_summary(
             detail="Employee not found"
         )
     
-    # Get total allowance
-    allowance = session.exec(
-        select(VacationAllowance).where(
-            VacationAllowance.employee_id == employee_id,
-            VacationAllowance.year == year
+    # Get total allowance from VacationEntitlement mapping
+    # Find the most recent entitlement that is active in or before the requested year
+    statement = (
+        select(VacationEntitlement)
+        .where(
+            VacationEntitlement.employee_id == employee_id,
+            extract('year', VacationEntitlement.from_date) <= year
         )
-    ).first()
-    total_allowance = allowance.days if allowance else 0.0
+        .order_by(VacationEntitlement.from_date.desc())
+    )
+    entitlement = session.exec(statement).first()
+    total_allowance = float(entitlement.days) if entitlement else 0.0
 
     # Get taken days (approved or pending absences of category VACATION in this year)
     statement = (
