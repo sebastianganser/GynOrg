@@ -206,8 +206,28 @@ class AbsenceService {
   }
 
   calculateDuration(startDate: Date, endDate: Date): number {
-    const timeDiff = endDate.getTime() - startDate.getTime();
-    return Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // +1 to include both start and end date
+    if (!startDate || !endDate) return 0;
+    
+    // Create new Date objects to avoid mutating original dates
+    // Set to local midnight to ensure consistent day counting
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    
+    if (end < start) return 0;
+
+    let count = 0;
+    let current = new Date(start);
+
+    while (current <= end) {
+      const dayOfWeek = current.getDay();
+      // 0 = Sunday, 6 = Saturday
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        count++;
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    
+    return count;
   }
 }
 

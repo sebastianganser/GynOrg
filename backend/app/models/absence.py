@@ -43,8 +43,18 @@ class AbsenceBase(SQLModel):
 
     @property
     def duration_days(self) -> int:
-        """Calculate the duration in days (inclusive)"""
-        return (self.end_date - self.start_date).days + 1
+        """Calculate the duration in working days (Monday-Friday, inclusive)"""
+        if not self.start_date or not self.end_date:
+            return 0
+        from datetime import timedelta
+        days = 0
+        current_date = self.start_date
+        while current_date <= self.end_date:
+            # 0 = Monday, 1 = Tuesday, ..., 5 = Saturday, 6 = Sunday
+            if current_date.weekday() < 5:
+                days += 1
+            current_date += timedelta(days=1)
+        return days
 
     @property
     def is_active(self) -> bool:
