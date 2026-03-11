@@ -185,19 +185,18 @@ def get_vacation_summary(
 
     # Get taken days (approved or pending absences of category VACATION in this year)
     statement = (
-        select(func.sum(Absence.duration_days))
-        .select_from(Absence)
+        select(Absence)
         .join(AbsenceType, Absence.absence_type_id == AbsenceType.id)
         .where(
             Absence.employee_id == employee_id,
             extract('year', Absence.start_date) == year,
             Absence.status.in_([AbsenceStatus.APPROVED, AbsenceStatus.PENDING]),
-            AbsenceType.category == AbsenceTypeCategory.VACATION,
-            Absence.is_active == True
+            AbsenceType.category == AbsenceTypeCategory.VACATION
         )
     )
-    taken_days = session.exec(statement).first()
-    taken_days = float(taken_days) if taken_days else 0.0
+    absences = session.exec(statement).all()
+    taken_days = sum(absence.duration_days for absence in absences)
+    taken_days = float(taken_days)
 
     remaining_days = total_allowance - taken_days
 
