@@ -1,0 +1,992 @@
+[BACKEND] 2025-12-11 09:08:27,899 INFO sqlalchemy.engine.Engine [cached since 0.03806s ago] (2028, <FederalState.NIEDERSACHSEN: 'NI'>)
+[BACKEND] 2025-12-11 09:08:27,899 - sqlalchemy.engine.Engine - INFO - [cached since 0.03806s ago] (2028, <FederalState.NIEDERSACHSEN: 'NI'>)
+[BACKEND] 2025-12-11 09:08:27,899 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,899 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,899 INFO sqlalchemy.engine.Engine [cached since 0.0386s ago] (2028, <FederalState.NORDRHEIN_WESTFALEN: 'NW'>)
+[BACKEND] 2025-12-11 09:08:27,899 - sqlalchemy.engine.Engine - INFO - [cached since 0.0386s ago] (2028, <FederalState.NORDRHEIN_WESTFALEN: 'NW'>)
+[BACKEND] 2025-12-11 09:08:27,899 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,899 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine [cached since 0.03899s ago] (2028, <FederalState.RHEINLAND_PFALZ: 'RP'>)
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - [cached since 0.03899s ago] (2028, <FederalState.RHEINLAND_PFALZ: 'RP'>)
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine [cached since 0.03934s ago] (2028, <FederalState.SAARLAND: 'SL'>)
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - [cached since 0.03934s ago] (2028, <FederalState.SAARLAND: 'SL'>)
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine [cached since 0.03966s ago] (2028, <FederalState.SACHSEN: 'SN'>)
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - [cached since 0.03966s ago] (2028, <FederalState.SACHSEN: 'SN'>)
+[BACKEND] 2025-12-11 09:08:27,900 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,900 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,901 INFO sqlalchemy.engine.Engine [cached since 0.03996s ago] (2028, <FederalState.SACHSEN_ANHALT: 'ST'>)
+[BACKEND] 2025-12-11 09:08:27,901 - sqlalchemy.engine.Engine - INFO - [cached since 0.03996s ago] (2028, <FederalState.SACHSEN_ANHALT: 'ST'>)
+[BACKEND] 2025-12-11 09:08:27,901 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,901 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,901 INFO sqlalchemy.engine.Engine [cached since 0.04034s ago] (2028, <FederalState.SCHLESWIG_HOLSTEIN: 'SH'>)
+[BACKEND] 2025-12-11 09:08:27,901 - sqlalchemy.engine.Engine - INFO - [cached since 0.04034s ago] (2028, <FederalState.SCHLESWIG_HOLSTEIN: 'SH'>)
+[BACKEND] 2025-12-11 09:08:27,901 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,901 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,901 INFO sqlalchemy.engine.Engine [cached since 0.04075s ago] (2028, <FederalState.THUERINGEN: 'TH'>)
+[BACKEND] 2025-12-11 09:08:27,901 - sqlalchemy.engine.Engine - INFO - [cached since 0.04075s ago] (2028, <FederalState.THUERINGEN: 'TH'>)
+[BACKEND] 2025-12-11 09:08:27,902 INFO sqlalchemy.engine.Engine SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,902 - sqlalchemy.engine.Engine - INFO - SELECT holidays.name, holidays.date, holidays.federal_state, holidays.is_nationwide, holidays.year, holidays.notes, holidays.holiday_type, holidays.federal_state_code, holidays.school_vacation_type, holidays.data_source, holidays.last_updated, holidays.api_id, holidays.id, holidays.created_at, holidays.updated_at
+[BACKEND] FROM holidays
+[BACKEND] WHERE holidays.year = ? AND holidays.federal_state = ? AND holidays.is_nationwide = 0
+[BACKEND] 2025-12-11 09:08:27,902 INFO sqlalchemy.engine.Engine [cached since 0.04111s ago] (2028, <FederalState._FULL_NAMES: "{'BW': 'Baden-Württemberg', 'BY': 'Bayern', 'BE': 'Berlin', 'BB': 'Brandenburg', 'HB': 'Bremen', 'HH': 'Hamburg', 'HE': 'H ... (74 characters truncated) ... rhein-Westfalen', 'RP': 'Rheinland-Pfalz', 'SL': 'Saarland', 'SN': 'Sachsen', 'ST': 'Sachsen-Anhalt', 'SH': 'Schleswig-Holstein', 'TH': 'Thüringen'}">)     
+[BACKEND] 2025-12-11 09:08:27,902 - sqlalchemy.engine.Engine - INFO - [cached since 0.04111s ago] (2028, <FederalState._FULL_NAMES: "{'BW': 'Baden-Württemberg', 'BY': 'Bayern', 'BE': 'Berlin', 'BB': 'Brandenburg', 'HB': 'Bremen', 'HH': 'Hamburg', 'HE': 'H ... (74 characters truncated) ... rhein-Westfalen', 'RP': 'Rheinland-Pfalz', 'SL': 'Saarland', 'SN': 'Sachsen', 'ST': 'Sachsen-Anhalt', 'SH': 'Schleswig-Holstein', 'TH': 'Thüringen'}">)
+[BACKEND] 2025-12-11 09:08:27,902 - app.services.holiday_startup_service - INFO - All holidays for 2023-2028 already present
+[BACKEND] 2025-12-11 09:08:27,902 INFO sqlalchemy.engine.Engine ROLLBACK
+[BACKEND] 2025-12-11 09:08:27,902 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+[BACKEND] --- Logging error ---
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+[BACKEND]     stream.write(msg + self.terminator)
+[BACKEND]     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+[BACKEND]     return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 40: character maps to <undefined>
+[BACKEND] Call stack:
+[BACKEND]   File "<string>", line 1, in <module>
+[BACKEND]     from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=4828, pipe_handle=324)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[BACKEND]     exitcode = _main(fd, parent_sentinel)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+[BACKEND]     return self._bootstrap(parent_sentinel)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+[BACKEND]     self.run()
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+[BACKEND]     self._target(*self._args, **self._kwargs)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+[BACKEND]     target(sockets=sockets)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 67, in run
+[BACKEND]     return asyncio.run(self.serve(sockets=sockets))
+[BACKEND]   File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+[BACKEND]     return runner.run(main)
+[BACKEND]   File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+[BACKEND]     return self._loop.run_until_complete(task)
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 712, in run_until_complete
+[BACKEND]     self.run_forever()
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 683, in run_forever
+[BACKEND]     self._run_once()
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 2042, in _run_once
+[BACKEND]     handle._run()
+[BACKEND]   File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+[BACKEND]     self._context.run(self._callback, *self._args)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\lifespan\on.py", line 86, in main
+[BACKEND]     await app(scope, self.receive, self.send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 29, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 152, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 77, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 48, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 723, in app
+[BACKEND]     await self.lifespan(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 692, in lifespan
+[BACKEND]     async with self.lifespan_context(app) as maybe_state:
+[BACKEND]   File "C:\Python313\Lib\contextlib.py", line 214, in __aenter__
+[BACKEND]     return await anext(self.gen)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 133, in merged_lifespan
+[BACKEND]     async with original_context(app) as maybe_original_state:
+[BACKEND]   File "C:\Python313\Lib\contextlib.py", line 214, in __aenter__
+[BACKEND]     return await anext(self.gen)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 133, in merged_lifespan
+[BACKEND]     async with original_context(app) as maybe_original_state:
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 569, in __aenter__
+[BACKEND]     await self._router.startup()
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 669, in startup
+[BACKEND]     await handler()
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\main.py", line 63, in startup_event
+[BACKEND]     logger.info("\u2705 Holiday data: All years already present")
+[BACKEND] Message: '\u2705 Holiday data: All years already present'
+[BACKEND] Arguments: ()
+[BACKEND] 2025-12-11 09:08:27,902 - main - INFO - \u2705 Holiday data: All years already present
+[BACKEND] 2025-12-11 09:08:28,024 - main - INFO - Starting Holiday Scheduler...
+[BACKEND] 2025-12-11 09:08:28,033 - app.services.holiday_scheduler - INFO - Holiday Scheduler configured successfully
+[BACKEND] 2025-12-11 09:08:28,034 - apscheduler.scheduler - INFO - Scheduler started
+[BACKEND] 2025-12-11 09:08:28,034 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+[BACKEND] 2025-12-11 09:08:28,036 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2026-01-01 02:00:00+01:00 (in 1788691.963516 seconds)
+[BACKEND] 2025-12-11 09:08:28,036 - app.services.holiday_scheduler - INFO - Holiday Scheduler started successfully
+[BACKEND] --- Logging error ---
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+[BACKEND]     stream.write(msg + self.terminator)
+[BACKEND]     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+[BACKEND]     return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 40: character maps to <undefined>
+[BACKEND] Call stack:
+[BACKEND]   File "<string>", line 1, in <module>
+[BACKEND]     from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=4828, pipe_handle=324)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[BACKEND]     exitcode = _main(fd, parent_sentinel)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+[BACKEND]     return self._bootstrap(parent_sentinel)
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+[BACKEND]     self.run()
+[BACKEND]   File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+[BACKEND]     self._target(*self._args, **self._kwargs)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+[BACKEND]     target(sockets=sockets)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 67, in run
+[BACKEND]     return asyncio.run(self.serve(sockets=sockets))
+[BACKEND]   File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+[BACKEND]     return runner.run(main)
+[BACKEND]   File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+[BACKEND]     return self._loop.run_until_complete(task)
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 712, in run_until_complete
+[BACKEND]     self.run_forever()
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 683, in run_forever
+[BACKEND]     self._run_once()
+[BACKEND]   File "C:\Python313\Lib\asyncio\base_events.py", line 2042, in _run_once
+[BACKEND]     handle._run()
+[BACKEND]   File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+[BACKEND]     self._context.run(self._callback, *self._args)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\lifespan\on.py", line 86, in main
+[BACKEND]     await app(scope, self.receive, self.send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 29, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 152, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 77, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 48, in __call__
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 723, in app
+[BACKEND]     await self.lifespan(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 692, in lifespan
+[BACKEND]     async with self.lifespan_context(app) as maybe_state:
+[BACKEND]   File "C:\Python313\Lib\contextlib.py", line 214, in __aenter__
+[BACKEND]     return await anext(self.gen)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 133, in merged_lifespan
+[BACKEND]     async with original_context(app) as maybe_original_state:
+[BACKEND]   File "C:\Python313\Lib\contextlib.py", line 214, in __aenter__
+[BACKEND]     return await anext(self.gen)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 133, in merged_lifespan
+[BACKEND]     async with original_context(app) as maybe_original_state:
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 569, in __aenter__
+[BACKEND]     await self._router.startup()
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 669, in startup
+[BACKEND]     await handler()
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\main.py", line 85, in startup_event
+[BACKEND]     logger.info(f"\u2705 Holiday Scheduler started. Next run: {job_info['next_run_time']}")
+[BACKEND] Message: '\u2705 Holiday Scheduler started. Next run: 2026-01-01T02:00:00+01:00'
+[BACKEND] Arguments: ()
+[BACKEND] 2025-12-11 09:08:28,037 - main - INFO - \u2705 Holiday Scheduler started. Next run: 2026-01-01T02:00:00+01:00
+[BACKEND] 2025-12-11 09:08:28,038 - app.services.llm_service - INFO - LLM Service wird initialisiert...
+[BACKEND] 2025-12-11 09:08:28,038 - app.services.llm_service - INFO - LLM Service erfolgreich initialisiert
+[BACKEND] 2025-12-11 09:08:28,038 - app.api.llm - INFO - LLM Service erfolgreich initialisiert
+[BACKEND] 2025-12-11 09:08:28,038 - app.services.llm_service - INFO - LLM Service wird initialisiert...
+[BACKEND] 2025-12-11 09:08:28,038 - app.services.llm_service - INFO - LLM Service erfolgreich initialisiert
+[BACKEND] 2025-12-11 09:08:28,038 - app.api.llm - INFO - LLM Service erfolgreich initialisiert
+[BACKEND] INFO:     Application startup complete.
+✅ Backend Server gestartet auf http://localhost:8000
+🚀 Starte Frontend Server (Vite)...
+[FRONTEND] 
+[FRONTEND] > gynorg-frontend@0.1.0 dev
+[FRONTEND] > vite
+[FRONTEND]
+[FRONTEND] 
+[FRONTEND]   VITE v4.5.14  ready in 521 ms
+[FRONTEND]
+[FRONTEND]   âžœ  Local:   http://localhost:3000/
+[FRONTEND]   âžœ  Network: use --host to expose
+[FRONTEND]   âžœ  press h to show help
+✅ Frontend Server gestartet auf http://localhost:3000
+
+============================================================
+🎉 Beide Server erfolgreich gestartet!
+🌐 Frontend: http://localhost:3000
+🔧 Backend:  http://localhost:8000
+📚 API Docs: http://localhost:8000/api/v1/docs
+============================================================
+
+💡 Drücke Ctrl+C um beide Server zu stoppen
+[FRONTEND] Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+[FRONTEND]   npx update-browserslist-db@latest
+[FRONTEND]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[BACKEND] INFO:     127.0.0.1:60382 - "OPTIONS /api/v1/auth/login HTTP/1.1" 200 OK
+[BACKEND] INFO:     127.0.0.1:60382 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+[BACKEND] INFO:     127.0.0.1:60382 - "OPTIONS /api/v1/employees/ HTTP/1.1" 200 OK
+[BACKEND] 2025-12-11 09:08:38,328 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:38,328 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:38,329 INFO sqlalchemy.engine.Engine SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:38,329 - sqlalchemy.engine.Engine - INFO - SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:38,329 INFO sqlalchemy.engine.Engine [generated in 0.00015s] (50, 0)
+[BACKEND] 2025-12-11 09:08:38,329 - sqlalchemy.engine.Engine - INFO - [generated in 0.00015s] (50, 0)
+[BACKEND] 2025-12-11 09:08:38,330 INFO sqlalchemy.engine.Engine ROLLBACK
+[BACKEND] 2025-12-11 09:08:38,330 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+[BACKEND] INFO:     127.0.0.1:60382 - "GET /api/v1/employees/ HTTP/1.1" 500 Internal Server Error
+[BACKEND] ERROR:    Exception in ASGI application
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlite3.OperationalError: no such column: employees.calendar_color
+[BACKEND]
+[BACKEND] The above exception was the direct cause of the following exception:
+[BACKEND]
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+[BACKEND]     result = await app(  # type: ignore[func-returns-value]
+[BACKEND]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         self.scope, self.receive, self.send
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 187, in __call__
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+[BACKEND]     await self.app(scope, receive, _send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+[BACKEND]     await self.simple_response(scope, receive, send, request_headers=headers)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+[BACKEND]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 734, in app
+[BACKEND]     await route.handle(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+[BACKEND]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 73, in app
+[BACKEND]     response = await f(request)
+[BACKEND]                ^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 301, in app
+[BACKEND]     raw_response = await run_endpoint_function(
+[BACKEND]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     ...<3 lines>...
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+[BACKEND]     return await run_in_threadpool(dependant.call, **values)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+[BACKEND]     return await anyio.to_thread.run_sync(func)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\to_thread.py", line 56, in run_sync
+[BACKEND]     return await get_async_backend().run_sync_in_worker_thread(
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+[BACKEND]     return await future
+[BACKEND]            ^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+[BACKEND]     result = context.run(func, *args)
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\app\api\v1\endpoints\employees.py", line 39, in get_employees
+[BACKEND]     employees = session.exec(statement).all()
+[BACKEND]                 ~~~~~~~~~~~~^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlmodel\orm\session.py", line 66, in exec
+[BACKEND]     results = super().execute(
+[BACKEND]         statement,
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+[BACKEND]     return self._execute_internal(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         statement,
+[BACKEND]         ^^^^^^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+[BACKEND]     result: Result[Any] = compile_state_cls.orm_execute_statement(
+[BACKEND]                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self,
+[BACKEND]         ^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         conn,
+[BACKEND]         ^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+[BACKEND]     result = conn.execute(
+[BACKEND]         statement, params or {}, execution_options=execution_options
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+[BACKEND]     return meth(
+[BACKEND]         self,
+[BACKEND]         distilled_parameters,
+[BACKEND]         execution_options or NO_OPTIONS,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+[BACKEND]     return connection._execute_clauseelement(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self, distilled_params, execution_options
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+[BACKEND]     ret = self._execute_context(
+[BACKEND]         dialect,
+[BACKEND]     ...<8 lines>...
+[BACKEND]         cache_hit=cache_hit,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+[BACKEND]     return self._exec_single_context(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         dialect, context, statement, parameters
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+[BACKEND]     self._handle_dbapi_exception(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         e, str_statement, effective_parameters, cursor, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+[BACKEND]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: employees.calendar_color
+[BACKEND] [SQL: SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?]
+[BACKEND] [parameters: (50, 0)]
+[BACKEND] (Background on this error at: https://sqlalche.me/e/20/e3q8)
+[BACKEND] 2025-12-11 09:08:39,424 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:39,424 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:39,424 INFO sqlalchemy.engine.Engine SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:39,424 - sqlalchemy.engine.Engine - INFO - SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:39,424 INFO sqlalchemy.engine.Engine [cached since 1.095s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:39,424 - sqlalchemy.engine.Engine - INFO - [cached since 1.095s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:39,425 INFO sqlalchemy.engine.Engine ROLLBACK
+[BACKEND] 2025-12-11 09:08:39,425 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+[BACKEND] INFO:     127.0.0.1:63208 - "GET /api/v1/employees/ HTTP/1.1" 500 Internal Server Error
+[BACKEND] ERROR:    Exception in ASGI application
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlite3.OperationalError: no such column: employees.calendar_color
+[BACKEND]
+[BACKEND] The above exception was the direct cause of the following exception:
+[BACKEND]
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+[BACKEND]     result = await app(  # type: ignore[func-returns-value]
+[BACKEND]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         self.scope, self.receive, self.send
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 187, in __call__
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+[BACKEND]     await self.app(scope, receive, _send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+[BACKEND]     await self.simple_response(scope, receive, send, request_headers=headers)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+[BACKEND]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 734, in app
+[BACKEND]     await route.handle(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+[BACKEND]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 73, in app
+[BACKEND]     response = await f(request)
+[BACKEND]                ^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 301, in app
+[BACKEND]     raw_response = await run_endpoint_function(
+[BACKEND]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     ...<3 lines>...
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+[BACKEND]     return await run_in_threadpool(dependant.call, **values)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+[BACKEND]     return await anyio.to_thread.run_sync(func)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\to_thread.py", line 56, in run_sync
+[BACKEND]     return await get_async_backend().run_sync_in_worker_thread(
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+[BACKEND]     return await future
+[BACKEND]            ^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+[BACKEND]     result = context.run(func, *args)
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\app\api\v1\endpoints\employees.py", line 39, in get_employees
+[BACKEND]     employees = session.exec(statement).all()
+[BACKEND]                 ~~~~~~~~~~~~^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlmodel\orm\session.py", line 66, in exec
+[BACKEND]     results = super().execute(
+[BACKEND]         statement,
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+[BACKEND]     return self._execute_internal(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         statement,
+[BACKEND]         ^^^^^^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+[BACKEND]     result: Result[Any] = compile_state_cls.orm_execute_statement(
+[BACKEND]                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self,
+[BACKEND]         ^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         conn,
+[BACKEND]         ^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+[BACKEND]     result = conn.execute(
+[BACKEND]         statement, params or {}, execution_options=execution_options
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+[BACKEND]     return meth(
+[BACKEND]         self,
+[BACKEND]         distilled_parameters,
+[BACKEND]         execution_options or NO_OPTIONS,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+[BACKEND]     return connection._execute_clauseelement(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self, distilled_params, execution_options
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+[BACKEND]     ret = self._execute_context(
+[BACKEND]         dialect,
+[BACKEND]     ...<8 lines>...
+[BACKEND]         cache_hit=cache_hit,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+[BACKEND]     return self._exec_single_context(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         dialect, context, statement, parameters
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+[BACKEND]     self._handle_dbapi_exception(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         e, str_statement, effective_parameters, cursor, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+[BACKEND]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: employees.calendar_color
+[BACKEND] [SQL: SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?]
+[BACKEND] [parameters: (50, 0)]
+[BACKEND] (Background on this error at: https://sqlalche.me/e/20/e3q8)
+[BACKEND] 2025-12-11 09:08:41,735 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:41,735 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:41,736 INFO sqlalchemy.engine.Engine SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:41,736 - sqlalchemy.engine.Engine - INFO - SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:41,736 INFO sqlalchemy.engine.Engine [cached since 3.407s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:41,736 - sqlalchemy.engine.Engine - INFO - [cached since 3.407s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:41,736 INFO sqlalchemy.engine.Engine ROLLBACK
+[BACKEND] 2025-12-11 09:08:41,736 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+[BACKEND] INFO:     127.0.0.1:49901 - "GET /api/v1/employees/ HTTP/1.1" 500 Internal Server Error
+[BACKEND] ERROR:    Exception in ASGI application
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlite3.OperationalError: no such column: employees.calendar_color
+[BACKEND]
+[BACKEND] The above exception was the direct cause of the following exception:
+[BACKEND]
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+[BACKEND]     result = await app(  # type: ignore[func-returns-value]
+[BACKEND]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         self.scope, self.receive, self.send
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 187, in __call__
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+[BACKEND]     await self.app(scope, receive, _send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+[BACKEND]     await self.simple_response(scope, receive, send, request_headers=headers)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+[BACKEND]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 734, in app
+[BACKEND]     await route.handle(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+[BACKEND]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 73, in app
+[BACKEND]     response = await f(request)
+[BACKEND]                ^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 301, in app
+[BACKEND]     raw_response = await run_endpoint_function(
+[BACKEND]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     ...<3 lines>...
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+[BACKEND]     return await run_in_threadpool(dependant.call, **values)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+[BACKEND]     return await anyio.to_thread.run_sync(func)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\to_thread.py", line 56, in run_sync
+[BACKEND]     return await get_async_backend().run_sync_in_worker_thread(
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+[BACKEND]     return await future
+[BACKEND]            ^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+[BACKEND]     result = context.run(func, *args)
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\app\api\v1\endpoints\employees.py", line 39, in get_employees
+[BACKEND]     employees = session.exec(statement).all()
+[BACKEND]                 ~~~~~~~~~~~~^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlmodel\orm\session.py", line 66, in exec
+[BACKEND]     results = super().execute(
+[BACKEND]         statement,
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+[BACKEND]     return self._execute_internal(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         statement,
+[BACKEND]         ^^^^^^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+[BACKEND]     result: Result[Any] = compile_state_cls.orm_execute_statement(
+[BACKEND]                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self,
+[BACKEND]         ^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         conn,
+[BACKEND]         ^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+[BACKEND]     result = conn.execute(
+[BACKEND]         statement, params or {}, execution_options=execution_options
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+[BACKEND]     return meth(
+[BACKEND]         self,
+[BACKEND]         distilled_parameters,
+[BACKEND]         execution_options or NO_OPTIONS,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+[BACKEND]     return connection._execute_clauseelement(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self, distilled_params, execution_options
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+[BACKEND]     ret = self._execute_context(
+[BACKEND]         dialect,
+[BACKEND]     ...<8 lines>...
+[BACKEND]         cache_hit=cache_hit,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+[BACKEND]     return self._exec_single_context(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         dialect, context, statement, parameters
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+[BACKEND]     self._handle_dbapi_exception(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         e, str_statement, effective_parameters, cursor, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+[BACKEND]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: employees.calendar_color
+[BACKEND] [SQL: SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?]
+[BACKEND] [parameters: (50, 0)]
+[BACKEND] (Background on this error at: https://sqlalche.me/e/20/e3q8)
+[BACKEND] 2025-12-11 09:08:45,746 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:45,746 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+[BACKEND] 2025-12-11 09:08:45,746 INFO sqlalchemy.engine.Engine SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:45,746 - sqlalchemy.engine.Engine - INFO - SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?
+[BACKEND] 2025-12-11 09:08:45,746 INFO sqlalchemy.engine.Engine [cached since 7.417s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:45,746 - sqlalchemy.engine.Engine - INFO - [cached since 7.417s ago] (50, 0)
+[BACKEND] 2025-12-11 09:08:45,747 INFO sqlalchemy.engine.Engine ROLLBACK
+[BACKEND] 2025-12-11 09:08:45,747 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+[BACKEND] INFO:     127.0.0.1:51229 - "GET /api/v1/employees/ HTTP/1.1" 500 Internal Server Error
+[BACKEND] ERROR:    Exception in ASGI application
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlite3.OperationalError: no such column: employees.calendar_color
+[BACKEND]
+[BACKEND] The above exception was the direct cause of the following exception:
+[BACKEND]
+[BACKEND] Traceback (most recent call last):
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+[BACKEND]     result = await app(  # type: ignore[func-returns-value]
+[BACKEND]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         self.scope, self.receive, self.send
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+[BACKEND]     return await self.app(scope, receive, send)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+[BACKEND]     await super().__call__(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 112, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 187, in __call__
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+[BACKEND]     await self.app(scope, receive, _send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+[BACKEND]     await self.simple_response(scope, receive, send, request_headers=headers)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+[BACKEND]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 714, in __call__
+[BACKEND]     await self.middleware_stack(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 734, in app
+[BACKEND]     await route.handle(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+[BACKEND]     await self.app(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+[BACKEND]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+[BACKEND]     raise exc
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+[BACKEND]     await app(scope, receive, sender)
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 73, in app
+[BACKEND]     response = await f(request)
+[BACKEND]                ^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 301, in app
+[BACKEND]     raw_response = await run_endpoint_function(
+[BACKEND]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     ...<3 lines>...
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+[BACKEND]     return await run_in_threadpool(dependant.call, **values)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+[BACKEND]     return await anyio.to_thread.run_sync(func)
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\to_thread.py", line 56, in run_sync
+[BACKEND]     return await get_async_backend().run_sync_in_worker_thread(
+[BACKEND]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]         func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+[BACKEND]     return await future
+[BACKEND]            ^^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+[BACKEND]     result = context.run(func, *args)
+[BACKEND]   File "D:\Sebastian\Dokumente\Privat\Maria\Arbeit\GynOrg\backend\app\api\v1\endpoints\employees.py", line 39, in get_employees
+[BACKEND]     employees = session.exec(statement).all()
+[BACKEND]                 ~~~~~~~~~~~~^^^^^^^^^^^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlmodel\orm\session.py", line 66, in exec
+[BACKEND]     results = super().execute(
+[BACKEND]         statement,
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+[BACKEND]     return self._execute_internal(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         statement,
+[BACKEND]         ^^^^^^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         _add_event=_add_event,
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+[BACKEND]     result: Result[Any] = compile_state_cls.orm_execute_statement(
+[BACKEND]                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self,
+[BACKEND]         ^^^^^
+[BACKEND]     ...<4 lines>...
+[BACKEND]         conn,
+[BACKEND]         ^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+[BACKEND]     result = conn.execute(
+[BACKEND]         statement, params or {}, execution_options=execution_options
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+[BACKEND]     return meth(
+[BACKEND]         self,
+[BACKEND]         distilled_parameters,
+[BACKEND]         execution_options or NO_OPTIONS,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+[BACKEND]     return connection._execute_clauseelement(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         self, distilled_params, execution_options
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+[BACKEND]     ret = self._execute_context(
+[BACKEND]         dialect,
+[BACKEND]     ...<8 lines>...
+[BACKEND]         cache_hit=cache_hit,
+[BACKEND]     )
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+[BACKEND]     return self._exec_single_context(
+[BACKEND]            ~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         dialect, context, statement, parameters
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+[BACKEND]     self._handle_dbapi_exception(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         e, str_statement, effective_parameters, cursor, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+[BACKEND]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+[BACKEND]     self.dialect.do_execute(
+[BACKEND]     ~~~~~~~~~~~~~~~~~~~~~~~^
+[BACKEND]         cursor, str_statement, effective_parameters, context
+[BACKEND]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND]     )
+[BACKEND]     ^
+[BACKEND]   File "C:\Users\Sebas\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+[BACKEND]     cursor.execute(statement, parameters)
+[BACKEND]     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[BACKEND] sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: employees.calendar_color
+[BACKEND] [SQL: SELECT employees.title, employees.first_name, employees.last_name, employees.email, employees.position, employees.birth_date, employees.date_hired, employees.federal_state, employees.active, employees.initials, employees.profile_image_path, employees.calendar_color, employees.id
+[BACKEND] FROM employees
+[BACKEND] WHERE employees.active = 1
+[BACKEND]  LIMIT ? OFFSET ?]
+[BACKEND] [parameters: (50, 0)]
+[BACKEND] (Background on this error at: https://sqlalche.me/e/20/e3q8)

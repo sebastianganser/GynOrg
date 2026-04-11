@@ -1,0 +1,261 @@
+﻿# Product Requirements Document: Robust AI Assistant (Single-User)
+
+## Project Overview
+
+**Project Name:** Robust AI Assistant (Single-User)
+**Target User:** Single user (Chefarzt) managing team absence planning
+**Architecture:** FastAPI backend, React frontend, SQLite database
+**Deployment:** Docker containerized application
+
+## Technical Stack
+
+### Backend
+- **Language:** Python
+- **Framework:** FastAPI
+- **ORM:** SQLModel
+- **Database:** SQLite
+- **Authentication:** Hardcoded single user with bcrypt password hashing
+  - Username: "<ADMIN_USERNAME>"
+  - Password: "<ADMIN_PASSWORD>" (bcrypt hashed)
+
+### Frontend
+- **Language:** TypeScript
+- **Framework:** React
+- **Bundler:** Vite
+- **UI Library:** shadcn-ui
+- **State Management:** @tanstack/react-query
+
+### AI Integration
+- **Primary LLM:** OpenRouter/Anthropic Claude Sonnet 4
+- **Fallback LLM:** OpenRouter/Anthropic Claude 3.7 Sonnet
+- **Research Provider:** Perplexity Sonar (free plan)
+- **MCP Servers:** taskmaster-ai, context7
+
+### Infrastructure
+- **Container Runtime:** Docker
+- **CI/CD:** GitHub Actions
+- **Code Style:** PEP8
+
+## Core Features
+
+### 1. Authentication System
+- Single hardcoded user authentication
+- Secure bcrypt password hashing
+- Session management with JWT tokens
+- No user registration or multi-user support
+
+### 2. Employee Management
+- Create, read, update, delete employee records
+- Employee data: name, position/department (optional), annual vacation allowance
+- Employee overview with remaining vacation days
+- Vacation allowance tracking and calculations
+
+### 3. Absence Management
+- Create absence entries for team members
+- Absence types: vacation, sick leave, training, etc.
+- Date range selection (start date, end date)
+- Optional comments for absence entries
+- Edit and delete existing absence entries
+- Conflict detection for overlapping absences
+- All absences are automatically approved (entered by manager)
+
+### 4. Team Calendar View
+- Gantt-chart style calendar display
+- Horizontal timeline (days/weeks), vertical employee list
+- Color-coded absence bars by type
+- Monthly and weekly view options
+- Scroll and zoom functionality
+- Current day highlighting
+- Weekend and holiday visual indicators
+- Hover/click details for absence entries
+
+### 5. Dashboard Overview
+- Key metrics tiles (today's absences, upcoming vacations)
+- Remaining vacation days summary per employee
+- Quick action buttons for common tasks
+- Year-to-date vacation statistics
+
+### 6. Reports and Analytics
+- Statistical reports (yearly overview per employee)
+- Absence distribution by type
+- Monthly absence day counts
+- Visual charts (bar charts, pie charts)
+- PDF export functionality
+- Interactive filters by date range and absence type
+
+### 7. Settings Management
+- Database backup functionality
+- Database reset functionality
+- Absence type management (add, edit, color assignment)
+- Holiday calendar configuration
+- Password change option
+
+### 8. AI Assistant Integration
+- Integration with taskmaster-ai MCP server
+- Context7 integration for enhanced AI capabilities
+- Perplexity research integration with caching
+- AI-powered insights and recommendations
+
+## Data Model
+
+### User Table
+- user_id (Primary Key)
+- username (Login name)
+- password_hash (bcrypt encrypted)
+- name (Display name)
+
+### Employee Table
+- employee_id (Primary Key)
+- name (Full name)
+- position (Role/department, optional)
+- vacation_allowance (Annual vacation days)
+- date_hired (Optional)
+- active (Boolean flag)
+
+### Absence Table
+- absence_id (Primary Key)
+- employee_id (Foreign Key)
+- type (Absence type)
+- start_date (Start date)
+- end_date (End date)
+- comment (Optional comment)
+- days_count (Calculated field)
+- created_at (Timestamp)
+- updated_at (Timestamp)
+
+### AbsenceType Table
+- type_id (Primary Key)
+- name (Type name)
+- color_code (Display color)
+- counts_as_vacation (Boolean)
+
+### Holiday Table
+- date (Date)
+- name (Holiday name)
+
+## Technical Requirements
+
+### Performance
+- Single-user system with minimal load requirements
+- Responsive UI with real-time updates
+- Efficient database queries with proper indexing
+
+### Security
+- Secure password storage with bcrypt
+- JWT token-based authentication
+- Input validation and sanitization
+- SQL injection prevention through ORM
+
+### Scalability
+- Modular architecture for future extensions
+- Prepared for additional modules (e.g., billing system)
+- Docker containerization for easy deployment
+
+### Testing
+- Unit tests with pytest (backend)
+- Integration tests
+- End-to-end tests with Playwright
+- CI/CD pipeline with automated testing
+
+## Development Phases
+
+### Phase 1: Core Infrastructure
+1. Backend setup (FastAPI, SQLModel, SQLite)
+2. Frontend setup (React, Vite, shadcn-ui)
+3. Authentication system implementation
+4. Basic database schema and migrations
+
+### Phase 2: Core Features
+1. Employee management CRUD operations
+2. Absence management system
+3. Team calendar view implementation
+4. Dashboard with key metrics
+
+### Phase 3: Advanced Features
+1. Reports and analytics
+2. Settings management
+3. AI integration (taskmaster-ai, context7, Perplexity)
+4. PDF export functionality
+
+### Phase 4: Testing and Deployment
+1. Comprehensive testing suite
+2. Docker containerization
+3. CI/CD pipeline setup
+4. Production deployment preparation
+
+## Success Criteria
+
+### Functional Requirements
+- Single user can log in securely
+- Complete employee lifecycle management
+- Full absence planning and tracking
+- Visual calendar with all team absences
+- Comprehensive reporting capabilities
+- Database backup and restore functionality
+
+### Technical Requirements
+- All tests pass in CI/CD pipeline
+- Single-command Docker deployment
+- 90-second developer onboarding from README
+- Responsive design for desktop and tablet
+- Sub-second response times for all operations
+
+### Quality Requirements
+- 90%+ test coverage
+- Zero critical security vulnerabilities
+- PEP8 compliant Python code
+- TypeScript strict mode compliance
+- Accessible UI following WCAG guidelines
+
+## Future Enhancements
+
+### Planned Extensions
+- Billing/invoicing module integration
+- Advanced reporting with custom filters
+- Mobile-responsive improvements
+- Data export/import capabilities
+- Integration with external calendar systems
+
+### AI Enhancement Opportunities
+- Predictive absence planning
+- Automated conflict resolution suggestions
+- Intelligent vacation scheduling recommendations
+- Natural language query interface
+- Automated report generation
+
+## Environment Configuration
+
+### Required Environment Variables
+- OPENROUTER_API_KEY: OpenRouter API access
+- PERPLEXITY_API_KEY: Perplexity research API access
+- DATABASE_URL: SQLite database connection
+- JWT_SECRET: Token signing secret
+- BCRYPT_ROUNDS: Password hashing rounds
+
+### Development Setup
+- Python 3.11+ with Poetry dependency management
+- Node.js 18+ with npm/yarn
+- Docker and Docker Compose
+- Git for version control
+
+## Deployment Architecture
+
+### Production Environment
+- Multi-stage Docker build
+- Alpine Linux base images
+- Nginx reverse proxy
+- SQLite file-based database
+- Environment-based configuration
+- Health checks and monitoring
+- Automated backup scheduling
+
+### CI/CD Pipeline
+- Lint checking (flake8, eslint)
+- Unit and integration tests
+- End-to-end testing
+- Security scanning
+- Docker image building
+- Automated deployment to staging
+- Manual production deployment approval
+
+This PRD serves as the foundation for implementing a robust, single-user absence planning system with AI integration capabilities, designed for scalability and maintainability while meeting immediate business needs.

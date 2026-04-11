@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 25mm 25mm 25mm;
+            @bottom-center {
+                content: "Seite " counter(page) " von " counter(pages);
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #1a1a1a;
+        }
+
+        /* ─── Absender (klein, über dem Empfänger) ─── */
+        .absender-zeile {
+            font-size: 7pt;
+            color: #666;
+            border-bottom: 0.5pt solid #999;
+            padding-bottom: 2mm;
+            margin-bottom: 3mm;
+        }
+
+        /* ─── Empfänger-Feld (DIN 5008 Position) ─── */
+        .empfaenger {
+            margin-bottom: 15mm;
+            min-height: 27.3mm;
+        }
+
+        /* ─── Rechts: Arzt-Kontaktdaten ─── */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10mm;
+        }
+        .header-left { width: 55%; }
+        .header-right {
+            width: 40%;
+            text-align: right;
+            font-size: 9pt;
+            color: #444;
+        }
+        .header-right .arzt-name {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 2mm;
+        }
+        .header-right .fachrichtung {
+            font-style: italic;
+            margin-bottom: 3mm;
+        }
+
+        /* ─── Titel ─── */
+        h1 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+        }
+
+        /* ─── Meta-Daten ─── */
+        .meta-block {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8mm;
+            padding: 3mm;
+            background: #f5f5f5;
+            border-radius: 1mm;
+        }
+        .meta-block .col { }
+        .meta-block .label {
+            font-size: 8pt;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3pt;
+        }
+        .meta-block .value {
+            font-weight: bold;
+        }
+
+        /* ─── Diagnose ─── */
+        .diagnose {
+            margin-bottom: 6mm;
+            padding: 2mm 3mm;
+            border-left: 2pt solid #2563eb;
+            background: #eff6ff;
+        }
+        .diagnose .label {
+            font-size: 8pt;
+            color: #666;
+        }
+
+        /* ─── Positions-Tabelle ─── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6mm;
+        }
+        thead th {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 0.3pt;
+            color: #666;
+            border-bottom: 1.5pt solid #1a1a1a;
+            padding: 2mm 1mm;
+            text-align: left;
+        }
+        thead th.right { text-align: right; }
+        thead th.center { text-align: center; }
+
+        tbody td {
+            padding: 2mm 1mm;
+            border-bottom: 0.5pt solid #ddd;
+            vertical-align: top;
+        }
+        tbody td.right { text-align: right; }
+        tbody td.center { text-align: center; }
+        tbody td.ziffer { font-weight: bold; width: 12%; }
+        tbody td.beschreibung { width: 38%; }
+        tbody td.begruendung {
+            font-size: 8pt;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* ─── Summenblock ─── */
+        .summen {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8mm;
+        }
+        .summen table {
+            width: 45%;
+        }
+        .summen td {
+            padding: 1.5mm 2mm;
+            border: none;
+        }
+        .summen td.right { text-align: right; font-weight: bold; }
+        .summen .gesamt td {
+            border-top: 1.5pt solid #1a1a1a;
+            font-size: 12pt;
+            font-weight: bold;
+            padding-top: 3mm;
+        }
+
+        /* ─── USt-Hinweis ─── */
+        .ust-hinweis {
+            font-size: 8pt;
+            color: #666;
+            margin-bottom: 8mm;
+        }
+
+        /* ─── Zahlungsinformationen ─── */
+        .zahlung {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8mm;
+            padding: 4mm;
+            border: 0.5pt solid #ddd;
+            border-radius: 1mm;
+        }
+        .zahlung-text { width: 65%; }
+        .zahlung-text .titel {
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
+        .zahlung-text .bank-info {
+            font-size: 9pt;
+        }
+        .zahlung-text .bank-info .label {
+            display: inline-block;
+            width: 20mm;
+            color: #666;
+        }
+        .zahlung-qr {
+            width: 30%;
+            text-align: right;
+        }
+        .zahlung-qr img {
+            width: 30mm;
+            height: 30mm;
+        }
+        .zahlung-qr .qr-label {
+            font-size: 7pt;
+            color: #666;
+            margin-top: 1mm;
+        }
+
+        /* ─── Fußzeile ─── */
+        .fusszeile {
+            font-size: 7.5pt;
+            color: #666;
+            border-top: 0.5pt solid #ccc;
+            padding-top: 3mm;
+            text-align: center;
+        }
+
+        /* ─── Storno-Stempel ─── */
+        .storno-stempel {
+            position: fixed;
+            top: 40%;
+            left: 20%;
+            transform: rotate(-30deg);
+            font-size: 48pt;
+            font-weight: bold;
+            color: rgba(220, 38, 38, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 5pt;
+            z-index: 999;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+{% if rechnung.status.value == 'storniert' %}
+<div class="storno-stempel">STORNIERT</div>
+{% endif %}
+
+<div class="header">
+    <div class="header-left">
+        <!-- Absenderzeile -->
+        <div class="absender-zeile">
+            {{ praxis.arzt_titel }} {{ praxis.arzt_vorname }} {{ praxis.arzt_nachname }} · {{ praxis.strasse }} {{ praxis.hausnummer }} · {{ praxis.plz }} {{ praxis.ort }}
+        </div>
+
+        <!-- Empfänger -->
+        <div class="empfaenger">
+            {{ patient.anrede.value }}<br>
+            {% if patient.titel %}{{ patient.titel }} {% endif %}{{ patient.vorname }} {{ patient.nachname }}<br>
+            {{ patient.strasse }} {{ patient.hausnummer }}<br>
+            {{ patient.plz }} {{ patient.ort }}
+        </div>
+    </div>
+
+    <div class="header-right">
+        <div class="arzt-name">
+            {% if praxis.arzt_titel %}{{ praxis.arzt_titel }} {% endif %}{{ praxis.arzt_vorname }} {{ praxis.arzt_nachname }}
+        </div>
+        <div class="fachrichtung">{{ praxis.fachrichtung }}</div>
+        {% if praxis.praxis_name %}{{ praxis.praxis_name }}<br>{% endif %}
+        {{ praxis.strasse }} {{ praxis.hausnummer }}<br>
+        {{ praxis.plz }} {{ praxis.ort }}<br>
+        {% if praxis.telefon %}Tel: {{ praxis.telefon }}<br>{% endif %}
+        {% if praxis.fax %}Fax: {{ praxis.fax }}<br>{% endif %}
+        {% if praxis.email %}{{ praxis.email }}<br>{% endif %}
+    </div>
+</div>
+
+<h1>Rechnung Nr. {{ rechnung.rechnungsnummer }}</h1>
+
+<div class="meta-block">
+    <div class="col">
+        <div class="label">Rechnungsdatum</div>
+        <div class="value">{{ rechnung.rechnungsdatum.strftime('%d.%m.%Y') }}</div>
+    </div>
+    <div class="col">
+        <div class="label">Leistungszeitraum</div>
+        <div class="value">{{ rechnung.leistungszeitraum_von.strftime('%d.%m.%Y') }} – {{ rechnung.leistungszeitraum_bis.strftime('%d.%m.%Y') }}</div>
+    </div>
+    <div class="col">
+        <div class="label">Patient geb.</div>
+        <div class="value">{{ patient.geburtsdatum.strftime('%d.%m.%Y') }}</div>
+    </div>
+    <div class="col">
+        <div class="label">Zahlungsziel</div>
+        <div class="value">{{ zahlungsziel_datum.strftime('%d.%m.%Y') }}</div>
+    </div>
+</div>
+
+<div class="diagnose">
+    <span class="label">Diagnose: </span>{{ rechnung.diagnose }}
+</div>
+
+<!-- Gemäß § 12 GOÄ: Datum, Ziffer, Beschreibung, Faktor, Betrag -->
+<table>
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Ziffer</th>
+            <th>Leistungsbeschreibung</th>
+            <th class="center">Anz.</th>
+            <th class="right">Punkte</th>
+            <th class="center">Faktor</th>
+            <th class="right">Betrag €</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pos in positionen %}
+        <tr>
+            <td>{{ pos.datum.strftime('%d.%m.') }}</td>
+            <td class="ziffer">{{ pos.goae_ziffer }}</td>
+            <td class="beschreibung">
+                {{ pos.beschreibung }}
+                {% if pos.begruendung %}
+                <br><span class="begruendung">{{ pos.begruendung }}</span>
+                {% endif %}
+            </td>
+            <td class="center">{{ pos.anzahl }}</td>
+            <td class="right">{{ pos.punkte }}</td>
+            <td class="center">{{ "%.2f"|format(pos.faktor) }}</td>
+            <td class="right">{{ "%.2f"|format(pos.betrag) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="summen">
+    <table>
+        <tr>
+            <td>Zwischensumme</td>
+            <td class="right">{{ "%.2f"|format(rechnung.gesamtbetrag) }} €</td>
+        </tr>
+        {% if ust_befreit %}
+        <tr>
+            <td>USt. (befreit gem. §4 Nr. 14 UStG)</td>
+            <td class="right">0,00 €</td>
+        </tr>
+        {% endif %}
+        <tr class="gesamt">
+            <td>Gesamtbetrag</td>
+            <td class="right">{{ "%.2f"|format(rechnung.gesamtbetrag) }} €</td>
+        </tr>
+    </table>
+</div>
+
+<div class="ust-hinweis">
+    Gem. § 4 Nr. 14 UStG umsatzsteuerfrei. Abrechnung nach der Gebührenordnung für Ärzte (GOÄ).
+    Punktwert: 0,0582873 €.
+</div>
+
+<div class="zahlung">
+    <div class="zahlung-text">
+        <div class="titel">Zahlungsinformationen</div>
+        <div class="bank-info">
+            <span class="label">Empfänger:</span> {{ praxis.arzt_vorname }} {{ praxis.arzt_nachname }}<br>
+            <span class="label">Bank:</span> {{ praxis.bank_name }}<br>
+            <span class="label">IBAN:</span> {{ praxis.iban }}<br>
+            {% if praxis.bic %}<span class="label">BIC:</span> {{ praxis.bic }}<br>{% endif %}
+            <span class="label">Verwendung:</span> {{ rechnung.rechnungsnummer }}<br>
+        </div>
+        <br>
+        Bitte überweisen Sie den Betrag bis zum <strong>{{ zahlungsziel_datum.strftime('%d.%m.%Y') }}</strong>.
+    </div>
+    {% if qr_code %}
+    <div class="zahlung-qr">
+        <img src="{{ qr_code }}" alt="GiroCode">
+        <div class="qr-label">GiroCode – per Banking-App scannen</div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="fusszeile">
+    {% if praxis.arzt_titel %}{{ praxis.arzt_titel }} {% endif %}{{ praxis.arzt_vorname }} {{ praxis.arzt_nachname }}
+    · {{ praxis.fachrichtung }}
+    {% if praxis.lanr %} · LANR: {{ praxis.lanr }}{% endif %}
+    {% if praxis.steuernummer %} · St.-Nr.: {{ praxis.steuernummer }}{% endif %}
+</div>
+
+</body>
+</html>

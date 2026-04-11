@@ -1,0 +1,55 @@
+{
+  "libraries": [
+    {
+      "id": "/docs/react",
+      "name": "react",
+      "aliases": ["reactjs", "react 18", "react.js"],
+      "summary": "React ist eine deklarative Bibliothek für UI-Komponenten. Der Fokus liegt auf Kompositionsmustern, Hooks und einheitlicher State-Verwaltung.",
+      "topics": {
+        "overview": "React-Komponenten basieren auf Composition. Hooks wie useState und useEffect sind zentrale Primitive. JSX ermöglicht deklaratives Rendering.",
+        "hooks": "Verwende eigene Hooks, um Logik zu extrahieren. Halte die Hook-Reihenfolge stabil und prüfe Abhängigkeiten in useEffect sauber.",
+        "routing": "React Router v6 verwendet element-basierte Routen. Nutze createBrowserRouter für Data APIs und Loader/Aktionspattern.",
+        "best practices": "Setze StrictMode in der Entwicklung ein, kapsle Zustand in Context + Reducer für komplexe Szenarien und vermeide Prop-Drilling mit Composition.",
+        "best practices ssr": "Nutze Streaming SSR mit Suspense. Cache externe Datenquellen und verwende React.lazy nur für reine Client-Komponenten.",
+        "migration from 17 to 18": "Prüfe Verwendung von createRoot statt render. Aktiviere Concurrent Features schrittweise und überprüfe Legacy-Lifecycles."
+      },
+      "examples": [
+        "import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <button onClick={() => setCount((c) => c + 1)}>\n      Klicks: {count}\n    </button>\n  );\n}",
+        "import {\n  createBrowserRouter,\n  RouterProvider,\n} from 'react-router-dom';\n\nconst router = createBrowserRouter([\n  {\n    path: '/',\n    element: <Layout />,\n    children: [\n      { path: '', element: <Dashboard /> },\n      { path: 'settings', element: <Settings /> }\n    ]\n  }\n]);"
+      ]
+    },
+    {
+      "id": "/docs/fastapi",
+      "name": "fastapi",
+      "aliases": ["fast-api", "fast api"],
+      "summary": "FastAPI ist ein performantes Python-Webframework auf Basis von Starlette und Pydantic. Es kombiniert Typsicherheit, automatische Dokumentation und asynchrone Request-Handling.",
+      "topics": {
+        "overview": "Definiere Endpunkte mit Python-Typen und lass FastAPI automatisch OpenAPI-Schemas generieren. Async-Endpunkte nutzen uvicorn oder hypercorn.",
+        "best practices": "Nutze Pydantic-Modelle für Validierung, teile Routers modular auf und aktiviere automatische Docs nur in sicheren Kontexten.",
+        "security": "Verwende Depends für OAuth2/JWT Flows. Setze trusted hosts, CORS-Regeln und rate limiting via Middleware durch.",
+        "performance": "Nutze BackgroundTasks für Nebenläufigkeit, aktiviere HTTP keep-alive und verwende Connection-Pools für DB-Zugriffe.",
+        "testing": "TestClient ermöglicht sync Tests. Verwende dependency_overrides, um externe Services zu mocken.",
+        "migration from 0.95 to 0.110": "Pydantic v2 Migration beachten: Model.model_dump statt dict(), neue Config-API nutzen und validators anpassen."
+      },
+      "examples": [
+        "from fastapi import FastAPI, Depends\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass TodoItem(BaseModel):\n    title: str\n    done: bool = False\n\n@app.post('/todos', response_model=TodoItem, status_code=201)\nasync def create_todo(item: TodoItem):\n    return item",
+        "from fastapi import APIRouter\n\nrouter = APIRouter(prefix='/users', tags=['users'])\n\n@router.get('/')\nasync def list_users():\n    return []"
+      ]
+    },
+    {
+      "id": "/docs/playwright",
+      "name": "playwright",
+      "aliases": ["ms playwright", "playwright testing"],
+      "summary": "Playwright automatisiert Browser-Tests mit einer einheitlichen API für Chromium, Firefox und WebKit. Synchronisiertes Warten und Fixtures erleichtern stabile E2E-Szenarien.",
+      "topics": {
+        "overview": "Nutze das Codegen für Startpunkte, Fixtures für Kontexte und expect.poll für wiederholte Checks.",
+        "best practices": "Verwende data-test-Attribute, starte Browser im headless-Modus im CI und nutze trace viewer für Debugging.",
+        "testing": "Strukturiere Tests mit test.describe, nutze Projektkonfigurationen für Browservarianten und setUp/tearDown via hooks."
+      },
+      "examples": [
+        "import { test, expect } from '@playwright/test';\n\ntest('Login flow', async ({ page }) => {\n  await page.goto('http://localhost:5173');\n  await page.getByLabel('E-Mail').fill('demo@example.com');\n  await page.getByRole('button', { name: 'Login' }).click();\n  await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();\n});"
+      ]
+    }
+  ]
+}
+

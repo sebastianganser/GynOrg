@@ -1,0 +1,117 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-08T12:45:37.316Z",
+		"tasksAnalyzed": 13,
+		"totalTasks": 13,
+		"analysisCount": 13,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Setup Project Repository and Initial Structure",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the repository setup into subtasks such as: (1) Create root and subdirectories, (2) Initialize backend with Poetry and dependencies, (3) Initialize frontend with npm/yarn and dependencies, (4) Add README, .gitignore, and environment templates.",
+			"reasoning": "This task is foundational but straightforward, involving standard project scaffolding and tool initialization. Complexity is low due to minimal logic and well-documented procedures."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Backend Core Infrastructure Setup",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Expand into subtasks: (1) Install and configure FastAPI, (2) Set up SQLModel and database connection, (3) Define initial models, (4) Configure environment variables, (5) Initialize database and migrations.",
+			"reasoning": "Requires integrating multiple backend technologies and establishing database models, but follows common patterns for modern Python APIs."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Frontend Core Infrastructure Setup",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Divide into: (1) Initialize React project with Vite and TypeScript, (2) Set up shadcn-ui and base components, (3) Configure project structure (App.tsx, main.tsx), (4) Integrate @tanstack/react-query.",
+			"reasoning": "Standard frontend setup with modern tooling; complexity is moderate due to multiple dependencies but no advanced logic."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Authentication System Implementation",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Subtasks: (1) Implement User model with bcrypt hashing, (2) Create login endpoint, (3) Integrate JWT token generation, (4) Set up environment variables for secrets, (5) Write authentication tests.",
+			"reasoning": "Involves security-sensitive logic (hashing, JWT), environment management, and endpoint creation, increasing complexity."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Employee Management CRUD Operations",
+			"complexityScore": 6,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Expand into: (1) Backend CRUD endpoints, (2) Frontend UI for listing employees, (3) Create employee form, (4) Edit employee form, (5) Delete employee functionality, (6) Integrate data fetching/mutations.",
+			"reasoning": "Requires full-stack CRUD implementation and UI integration, with moderate business logic and state management."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Absence Management System Implementation",
+			"complexityScore": 7,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Break down into: (1) Define Absence and AbsenceType models, (2) Backend CRUD endpoints, (3) Conflict detection logic, (4) Frontend UI for absence entry, (5) Edit/delete absence UI, (6) Automatic approval logic, (7) Data validation and testing.",
+			"reasoning": "Adds complexity with conflict detection, multiple models, and both backend and frontend logic."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Team Calendar View Implementation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Subtasks: (1) Research/select calendar library, (2) Build calendar component, (3) Integrate employee/absence data, (4) Implement color-coding by type, (5) Add navigation (monthly/weekly), (6) Support interactions (hover/click), (7) Test rendering and accuracy.",
+			"reasoning": "Requires advanced UI/UX, data integration, and interactive features, making it one of the more complex tasks."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Dashboard Overview Implementation",
+			"complexityScore": 6,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Expand into: (1) Design dashboard layout, (2) Implement metrics tiles, (3) Integrate vacation summaries, (4) Add quick action buttons, (5) Fetch and display statistics, (6) Test responsiveness and accuracy.",
+			"reasoning": "Moderate complexity due to data aggregation, UI composition, and real-time updates."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Reports and Analytics Implementation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down into: (1) Backend report endpoints, (2) Frontend report UI, (3) Integrate chart library, (4) Implement bar/pie charts, (5) Add PDF export, (6) Implement filters, (7) Test report accuracy, (8) Test export functionality.",
+			"reasoning": "High complexity due to statistical logic, charting, export features, and interactive filtering."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Settings Management Implementation",
+			"complexityScore": 7,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Expand into: (1) Database backup/reset endpoints, (2) Absence type CRUD, (3) Holiday configuration, (4) Password change logic, (5) Frontend settings UI, (6) Secure sensitive operations, (7) Test all settings features.",
+			"reasoning": "Multiple sensitive operations, CRUD logic, and security considerations increase complexity."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "AI Integration Implementation",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Subtasks: (1) Integrate taskmaster-ai API, (2) Integrate context7 API, (3) Integrate Perplexity API, (4) Implement caching for results, (5) Secure API keys, (6) Test endpoints and responses.",
+			"reasoning": "Involves external API integration, caching, and secure key management, requiring careful coordination."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Testing Suite Implementation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down into: (1) Backend unit tests, (2) Backend integration tests, (3) Frontend unit tests, (4) Frontend end-to-end tests, (5) Set up Playwright, (6) Configure CI/CD for tests, (7) Ensure coverage reporting, (8) Test pipeline execution.",
+			"reasoning": "Comprehensive testing across backend, frontend, and CI/CD with high coverage targets is complex and critical."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Docker Containerization and CI/CD Pipeline Setup",
+			"complexityScore": 7,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Expand into: (1) Write backend Dockerfile, (2) Write frontend Dockerfile, (3) Set up Nginx reverse proxy, (4) Configure multi-stage builds, (5) Set up GitHub Actions for linting/testing, (6) Add Docker image build/deploy steps, (7) Implement health checks and monitoring.",
+			"reasoning": "Requires expertise in containerization, orchestration, and CI/CD automation, with multiple moving parts."
+		}
+	]
+}

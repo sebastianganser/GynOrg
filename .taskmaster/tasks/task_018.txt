@@ -1,0 +1,107 @@
+# Task ID: 18
+# Title: Implement Complete Database-Driven Holiday System with Multi-Year Support
+# Status: done
+# Dependencies: 2, 3, 6, 14
+# Priority: high
+# Description: Refactor the holiday management system to load and store all holidays from 2020 to 2030 proactively in the database, enabling reliable multi-year holiday availability for absence calculations and improving frontend performance and navigation.
+# Details:
+1. Backend Enhancements:
+- Extend the Holiday API to support bulk import of holidays for years 2020 through 2030 using a reliable holiday calculation library such as Feiertage.js (TypeScript) or a Python equivalent for German federal states.
+- Implement startup logic to check and populate the database with all required holidays if missing.
+- Add an API endpoint to provide available years with holidays stored in the database.
+- Ensure holiday data includes federal state information for accurate regional holiday calculations.
+
+2. Frontend Refactoring:
+- Update the useHolidays hook to fetch holidays from the backend for any selected year instead of only the current year.
+- Enhance the AbsenceCalendar component to support year navigation, allowing users to view holidays across multiple years seamlessly.
+- Optimize data fetching to load holidays once per year and cache results to improve performance.
+
+3. Absence Calculation Improvements:
+- Modify absence calculation services to use the full range of holidays from the database, supporting vacation requests spanning multiple years.
+- Implement robust error handling for missing holiday data or API failures.
+
+4. Database Migration & Testing:
+- Create migration scripts to add necessary tables or columns for storing multi-year holiday data.
+- Validate performance improvements by comparing API call frequency and frontend responsiveness before and after implementation.
+
+Best Practices:
+- Use type-safe holiday calculation libraries to ensure accuracy.
+- Cache holiday data on the frontend to minimize repeated API calls.
+- Write clear API documentation for new endpoints.
+- Follow existing project coding standards and patterns for consistency.
+
+# Test Strategy:
+1. Backend Testing:
+- Verify bulk import correctly populates holidays for all years 2020-2030 in the database.
+- Test startup logic triggers import if holidays are missing.
+- Confirm API endpoint returns correct available years.
+- Validate holiday data correctness per federal state.
+
+2. Frontend Testing:
+- Test useHolidays hook fetches and caches holidays for selected years.
+- Verify AbsenceCalendar allows navigation across years and displays correct holidays.
+- Check UI responsiveness and performance improvements.
+
+3. Absence Calculation Testing:
+- Create test cases for vacation requests spanning multiple years, ensuring holidays are correctly considered.
+- Simulate error scenarios (e.g., missing holiday data) and verify graceful error handling.
+
+4. Integration & Regression Testing:
+- Run end-to-end tests covering holiday display, absence creation, and calculation.
+- Confirm no regressions in unrelated features.
+
+5. Performance Validation:
+- Measure API call counts before and after implementation to confirm reduction.
+- Monitor frontend load times and responsiveness.
+
+Use automated tests (pytest for backend, React Testing Library/Jest for frontend) and manual exploratory testing as needed.
+
+# Subtasks:
+## 1. Extend Holiday API for Bulk Import of Multi-Year Holidays [done]
+### Dependencies: None
+### Description: Enhance the backend Holiday API to support bulk import of holidays for all years from 2020 to 2030 using a type-safe holiday calculation library (e.g., Feiertage.js or Python equivalent) including federal state information.
+### Details:
+Implement logic to calculate and import holidays for each year and federal state into the database in bulk, ensuring data accuracy and type safety.
+
+## 2. Implement Startup Logic for Automatic Holiday Data Population [done]
+### Dependencies: 18.1
+### Description: Create backend startup routines that check the database for existing holiday data for years 2020-2030 and automatically populate missing data using the bulk import functionality.
+### Details:
+On application startup, verify holiday data completeness and trigger bulk import for any missing years or federal states to ensure the database is always pre-populated.
+
+## 3. Add API Endpoint to Retrieve Available Years with Stored Holidays [done]
+### Dependencies: 18.1
+### Description: Develop a new backend API endpoint that returns a list of years for which holiday data is currently stored in the database, supporting frontend year selection.
+### Details:
+The endpoint should query the database and return all years with complete holiday data, including federal state coverage.
+
+## 4. Refactor Frontend useHolidays Hook for Multi-Year Holiday Fetching [done]
+### Dependencies: 18.3
+### Description: Update the frontend useHolidays hook to fetch holiday data from the backend for any selected year instead of only the current year, supporting dynamic year changes.
+### Details:
+Modify the hook to accept a year parameter, call the new API endpoints, and cache results per year to optimize performance.
+
+## 5. Enhance AbsenceCalendar Component with Year Navigation [done]
+### Dependencies: 18.4
+### Description: Improve the AbsenceCalendar frontend component to support seamless navigation across multiple years, allowing users to view holidays and absences from 2020 to 2030.
+### Details:
+Implement UI controls for year selection/navigation and integrate with the updated useHolidays hook to display correct holiday data per year.
+
+## 6. Modify Absence Calculation Services for Multi-Year Holiday Support [done]
+### Dependencies: 18.1, 18.2
+### Description: Update backend absence calculation logic to utilize the full range of holidays stored in the database for years 2020-2030, supporting vacation requests spanning multiple years.
+### Details:
+Refactor services to query holiday data by date range and federal state, and implement robust error handling for missing or incomplete holiday data.
+
+## 7. Create Database Migration Scripts for Multi-Year Holiday Storage [done]
+### Dependencies: None
+### Description: Develop and apply database migration scripts to add or modify tables and columns necessary to store holiday data for multiple years and federal states from 2020 to 2030.
+### Details:
+Ensure the database schema supports efficient querying and storage of holiday data with year and federal state attributes.
+
+## 8. Conduct Comprehensive Testing and Performance Validation [done]
+### Dependencies: 18.1, 18.2, 18.3, 18.4, 18.5, 18.6, 18.7
+### Description: Perform thorough testing of backend and frontend changes including bulk import, API endpoints, frontend hooks, calendar navigation, and absence calculations; validate performance improvements and reduced API call frequency.
+### Details:
+Include unit, integration, and end-to-end tests; measure frontend responsiveness and API call reduction before and after implementation.
+

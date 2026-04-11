@@ -1,0 +1,17 @@
+# Task ID: 14
+# Title: Frontend Layout Architecture Setup with Collapsible Sidebar Navigation
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Implement a professional frontend layout with a collapsible sidebar, header bar, main content area, and responsive behavior using shadcn/ui and Lucide-React icons. Integrate React Router for navigation and persist sidebar state with localStorage.
+# Details:
+1. Use shadcn/ui's sidebar component as the foundation for the collapsible sidebar. Configure it to support expanded (with icons and text) and minimized (icons only) modes, referencing best practices such as 240px width expanded and 56px collapsed for desktop. Sidebar should include navigation items: Dashboard, Employees, Absences, Calendar, Reports, Settings, each with appropriate Lucide-React icons. 2. Implement a header bar above the main content area, featuring breadcrumbs (reflecting current route via React Router) and user info (e.g., username/avatar). 3. Structure the main content area to render routed pages. 4. Ensure responsive behavior: expanded sidebar on desktop, minimized on tablet, and overlay/sheet sidebar on mobile (using shadcn/ui's mobile sheet pattern). 5. Persist sidebar open/closed state in localStorage and restore on load. 6. Integrate React Router for navigation between pages, ensuring sidebar and breadcrumbs update accordingly. 7. Use Tailwind CSS for layout and spacing adjustments. 8. Follow accessibility best practices for navigation and keyboard interaction. 9. Organize layout components (Sidebar, Header, Content) in a dedicated layout directory. 10. Provide clear code comments and documentation for maintainability.
+
+# Test Strategy:
+- Verify sidebar expands/collapses correctly and persists state across reloads via localStorage.
+- Confirm navigation items route to correct pages and update breadcrumbs.
+- Test responsive behavior: expanded on desktop, minimized on tablet, overlay on mobile.
+- Check header bar displays correct breadcrumbs and user info.
+- Ensure accessibility: keyboard navigation, ARIA labels, and focus management.
+- Validate layout structure and visual consistency across breakpoints.
+- Review code for maintainability and adherence to project conventions.

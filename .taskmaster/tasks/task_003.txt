@@ -1,0 +1,37 @@
+# Task ID: 3
+# Title: Frontend Core Infrastructure Setup
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Configure React, Vite, shadcn-ui, and TypeScript for the frontend, including initial project structure.
+# Details:
+Initialize React (latest) with Vite (latest), TypeScript (latest), and shadcn-ui. Set up basic project structure with App.tsx, main.tsx, and initial UI components. Use @tanstack/react-query for state management. Recommended: React 18+, Vite 4+, TypeScript 5+, shadcn-ui latest.
+
+# Test Strategy:
+Verify project builds and runs without errors. Check basic UI rendering.
+
+# Subtasks:
+## 1. Initialize React Project with Vite and TypeScript [done]
+### Dependencies: None
+### Description: Set up a new React project using Vite with TypeScript template. Ensure Node.js is installed, then use the Vite CLI to scaffold the project and install dependencies.
+### Details:
+Run `npm create vite@latest <project-name> -- --template react-ts` or follow the interactive prompts to select React and TypeScript as the template. After creation, run `npm install` and `npm run dev` to verify the setup.
+
+## 2. Set up shadcn-ui and Base Components [done]
+### Dependencies: 3.1
+### Description: Install shadcn-ui and initialize its base components within the project. Ensure all required peer dependencies are installed.
+### Details:
+Follow shadcn-ui documentation to install the package and generate base UI components. This may involve running a CLI command and configuring the UI library within the project.
+
+## 3. Configure Project Structure (App.tsx, main.tsx) [done]
+### Dependencies: 3.2
+### Description: Organize and configure the main entry files of the project, ensuring App.tsx and main.tsx are set up according to best practices.
+### Details:
+Edit App.tsx to include a basic component structure and ensure main.tsx correctly renders the App component. Adjust file imports and structure as needed for clarity and maintainability.
+
+## 4. Integrate @tanstack/react-query [done]
+### Dependencies: 3.3
+### Description: Install and configure @tanstack/react-query for state and data management. Set up the QueryClient and QueryClientProvider in the project entry point.
+### Details:
+Install @tanstack/react-query via npm. In main.tsx, create a QueryClient instance and wrap the App component with QueryClientProvider to enable React Query throughout the app.
+

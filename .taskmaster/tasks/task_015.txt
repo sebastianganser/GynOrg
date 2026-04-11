@@ -1,0 +1,54 @@
+# Task ID: 15
+# Title: Implement Desktop-Optimized Split-Screen Login Layout
+# Status: done
+# Dependencies: 3, 14
+# Priority: medium
+# Description: Redesign the current centered, card-based login page into a desktop-optimized split-screen layout, with the login form on the left (40-50% width) and a branding/info section on the right (50-60% width), specifically targeting desktop browsers while maintaining mobile responsiveness.
+# Details:
+Refactor LoginForm.tsx to implement a split-screen layout using Tailwind CSS with Flexbox or CSS Grid. On desktop (Chrome/Firefox), the left panel (40-50% width) should contain the login form, while the right panel (50-60% width) displays branding, imagery, or informational content. Use Tailwind utility classes to ensure a clean, modern look and professional spacing. The layout should gracefully degrade to a single-column, centered card on mobile devices. Ensure accessibility (contrast, keyboard navigation) and test for cross-browser consistency. Reference best practices from modern split-screen login designs, such as SeedProd and OptinMonster, which use a distraction-free form area and a visually engaging side panel for branding or messaging. Avoid unnecessary distractions and keep the login process clear and prominent. Update any related styles or assets as needed.
+
+# Test Strategy:
+- On desktop browsers (Chrome, Firefox), verify that the login page displays as a split-screen with correct proportions (login form left, branding/info right).
+- Confirm the login form is fully functional and visually prominent.
+- Check that the branding/info section displays correctly and does not interfere with the login process.
+- Resize the browser window and test on mobile devices to ensure the layout reverts to a centered, card-based design with no split-screen.
+- Test keyboard navigation and screen reader accessibility for both panels.
+- Validate visual consistency and responsiveness across supported browsers.
+
+# Subtasks:
+## 1. Analyze Existing LoginForm.tsx and CSS Structure [done]
+### Dependencies: None
+### Description: Review the current implementation of LoginForm.tsx and its associated CSS or Tailwind classes to understand the existing layout, component structure, and styling approaches.
+### Details:
+Identify how the current centered card layout is structured, including any reusable components, state management, and style dependencies. Document any constraints or reusable logic that must be preserved.
+
+## 2. Design Split-Screen Layout Concept [done]
+### Dependencies: 15.1
+### Description: Create a detailed design concept for a desktop-optimized split-screen login layout, specifying the left panel (login form, 40-50% width) and right panel (branding/info, 50-60% width).
+### Details:
+Define the visual hierarchy, spacing, color scheme, and content for both panels. Reference best practices from modern split-screen login designs (e.g., SeedProd, OptinMonster) and ensure the design is distraction-free and visually engaging.
+
+## 3. Implement Split-Screen Layout with Tailwind CSS [done]
+### Dependencies: 15.2
+### Description: Refactor LoginForm.tsx to implement the split-screen layout using Tailwind CSS utility classes, leveraging Flexbox or CSS Grid for responsive alignment.
+### Details:
+Apply Tailwind classes to achieve the specified width ratios for desktop, ensure clean and modern styling, and integrate branding or imagery into the right panel. Update or add any necessary assets.
+
+## 4. Ensure Mobile Responsiveness and Graceful Degradation [done]
+### Dependencies: 15.3
+### Description: Adapt the split-screen layout to gracefully degrade to a single-column, centered card layout on mobile devices.
+### Details:
+Use Tailwind's responsive utility classes to switch to a stacked layout on smaller screens. Ensure the login form remains prominent and accessible on all device sizes.
+
+## 5. Test Accessibility and Cross-Browser Consistency [done]
+### Dependencies: 15.4
+### Description: Verify that the new layout meets accessibility standards (contrast, keyboard navigation) and displays consistently in Chrome and Firefox.
+### Details:
+Use accessibility testing tools and manual checks to ensure compliance. Test the layout in the latest versions of Chrome and Firefox on desktop and mobile.
+
+## 6. Integrate with Existing Layout Architecture and Update Styles [done]
+### Dependencies: 15.5
+### Description: Ensure the new split-screen login layout integrates seamlessly with the existing application layout and update any related global or shared styles as needed.
+### Details:
+Refactor or update layout wrappers, shared components, or global styles to support the new design. Remove obsolete styles and ensure consistency across the application.
+

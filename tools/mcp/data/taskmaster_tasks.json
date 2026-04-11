@@ -1,0 +1,128 @@
+{
+  "nextId": 8,
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Backend Grundkonfiguration abschließen",
+      "status": "done",
+      "priority": "high",
+      "description": "FastAPI-Anwendung mit Basis-Endpunkten und Settings vorbereiten.",
+      "dependencies": [],
+      "tag": "baseline",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Konfigurationsmodule strukturieren",
+          "status": "done",
+          "description": "Settings, Logging und DB-Verbindung in Modulen aufteilen."
+        },
+        {
+          "id": "1.2",
+          "title": "Healthcheck-Endpunkt bereitstellen",
+          "status": "done",
+          "description": "Einfachen GET-Endpunkt /health implementieren."
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Frontend Build-Pipeline stabilisieren",
+      "status": "in-progress",
+      "priority": "medium",
+      "description": "Vite-Konfiguration, Linting und Tests im CI absichern.",
+      "dependencies": ["1"],
+      "tag": "baseline",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Vite-Preview an bestehende API anpassen",
+          "status": "done",
+          "description": "Proxy-Setup für lokale API-Aufrufe justieren."
+        },
+        {
+          "id": "2.2",
+          "title": "Vitest Snapshot Tests aktivieren",
+          "status": "pending",
+          "description": "Snapshots für kritische Komponenten ergänzen und stabilisieren."
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Taskmaster-MCP Integration finalisieren",
+      "status": "pending",
+      "priority": "high",
+      "description": "Lokalen MCP-Server bereitstellen, der Task-Operationen unterstützt.",
+      "dependencies": ["1", "2"],
+      "tag": "llm-integration",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Lokale Taskdaten konsolidieren",
+          "status": "in-progress",
+          "description": "Persistente JSON-Struktur für Tasks und Subtasks definieren."
+        },
+        {
+          "id": "3.2",
+          "title": "Tool-Aufrufe gegen lokale Daten testen",
+          "status": "pending",
+          "description": "get_tasks, get_task und next_task mit Beispieldaten ausführen."
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Context7-Dokumentation einspielen",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Mock-Dokumentation für häufige Frameworks und APIs bereitstellen.",
+      "dependencies": ["3"],
+      "tag": "llm-integration",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "React Library abdecken",
+          "status": "pending",
+          "description": "Hooks, Routing und Best Practices dokumentieren."
+        },
+        {
+          "id": "4.2",
+          "title": "FastAPI Best Practices hinzufügen",
+          "status": "pending",
+          "description": "Security-, Performance- und Testing-Hinweise erfassen."
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Recherchevorlage für neue Features erstellen",
+      "status": "pending",
+      "priority": "low",
+      "description": "Standardisierte Query- und Kontextstruktur für Recherchen definieren.",
+      "dependencies": [],
+      "tag": "research",
+      "subtasks": []
+    },
+    {
+      "id": "6",
+      "title": "Projekt-Komplexität regelmäßig prüfen",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Komplexitätsgrenzen definieren und Reports automatisieren.",
+      "dependencies": ["3"],
+      "tag": "quality",
+      "subtasks": []
+    },
+    {
+      "id": "7",
+      "title": "PRD Parser fallback implementieren",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Fallback-Logik für fehlende Dateien inklusive freundlicher Fehlermeldungen.",
+      "dependencies": ["3"],
+      "tag": "quality",
+      "subtasks": []
+    }
+  ]
+}
+

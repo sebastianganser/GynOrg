@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "taskmaster-ai": {
+      "command": "node",
+      "args": ["./tools/mcp/taskmaster-server.mjs"]
+    },
+    "context7": {
+      "command": "node",
+      "args": ["./tools/mcp/context7-server.mjs"]
+    }
+  }
+}
