@@ -465,22 +465,25 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
 const CustomListView = ({ events, date, localizer, onSelectEvent }: any) => {
   const [sortBy, setSortBy] = useState<'date' | 'name'>('date');
 
-  const currentMonthEvents = useMemo(() => {
+  const currentYearEvents = useMemo(() => {
     return events.filter((e: any) => {
+      // Exclude holidays and school vacations
+      if (e.isHoliday || e.isConsolidated) return false;
+
       const eStart = moment(e.start);
       // RBC end date is exclusive for all day events, so subtract 1 day to see the true end, unless it's not allDay
       const eEndActual = e.allDay && !e.halfDayTime ? moment(e.end).subtract(1, 'day') : moment(e.end);
       
-      const startOfMonth = moment(date).startOf('month');
-      const endOfMonth = moment(date).endOf('month');
+      const startOfYear = moment(date).startOf('year');
+      const endOfYear = moment(date).endOf('year');
       
-      // Keep event if it overlaps with current month
-      return eStart.isSameOrBefore(endOfMonth, 'day') && eEndActual.isSameOrAfter(startOfMonth, 'day');
+      // Keep event if it overlaps with current year
+      return eStart.isSameOrBefore(endOfYear, 'day') && eEndActual.isSameOrAfter(startOfYear, 'day');
     });
   }, [events, date]);
 
   const sortedEvents = useMemo(() => {
-    return [...currentMonthEvents].sort((a: any, b: any) => {
+    return [...currentYearEvents].sort((a: any, b: any) => {
       if (sortBy === 'date') {
         const dateA = a.start.getTime();
         const dateB = b.start.getTime();
@@ -495,7 +498,7 @@ const CustomListView = ({ events, date, localizer, onSelectEvent }: any) => {
         return a.start.getTime() - b.start.getTime();
       }
     });
-  }, [currentMonthEvents, sortBy]);
+  }, [currentYearEvents, sortBy]);
 
   return (
     <div className="flex flex-col h-full bg-white text-gray-800 overflow-hidden border-t">
@@ -518,7 +521,7 @@ const CustomListView = ({ events, date, localizer, onSelectEvent }: any) => {
 
       <div className="flex-1 overflow-auto p-4 space-y-2">
         {sortedEvents.length === 0 ? (
-          <div className="text-gray-500 text-center mt-10">Keine Einträge {localizer.format(date, 'MMMM YYYY', 'de')}</div>
+          <div className="text-gray-500 text-center mt-10">Keine Abwesenheiten {localizer.format(date, 'YYYY', 'de')}</div>
         ) : (
           sortedEvents.map((event: any, idx: number) => {
             const color = event.color || (event.isHoliday || event.isConsolidated ? getHolidayColor(event.resource) : '#3b82f6');
@@ -561,11 +564,11 @@ const CustomListView = ({ events, date, localizer, onSelectEvent }: any) => {
     </div>
   );
 };
-CustomListView.title = (date: Date, { localizer }: any) => localizer.format(date, 'MMMM YYYY', 'de');
+CustomListView.title = (date: Date, { localizer }: any) => `Jahr ${localizer.format(date, 'YYYY', 'de')}`;
 CustomListView.navigate = (date: Date, action: string, { localizer }: any) => {
   switch (action) {
-    case 'PREV': return localizer.add(date, -1, 'month');
-    case 'NEXT': return localizer.add(date, 1, 'month');
+    case 'PREV': return localizer.add(date, -1, 'year');
+    case 'NEXT': return localizer.add(date, 1, 'year');
     default: return date;
   }
 };
