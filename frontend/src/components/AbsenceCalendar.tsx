@@ -410,13 +410,10 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
     next: 'Weiter',
     today: 'Heute',
     month: 'Monat',
-    week: 'Woche',
-    day: 'Tag',
-    agenda: 'Agenda',
+    liste: 'Liste',
     date: 'Datum',
     time: 'Zeit',
     event: 'Ereignis',
-    work_week: 'Arbeitswoche',
     showMore: (total: number) => `+${total} mehr`,
     noEventsInRange: 'Keine Ereignisse in diesem Zeitraum.'
   };
@@ -457,8 +454,118 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
               localizer?.format(date, 'dd', culture) || ''
           }}
           culture="de"
+          views={{ month: true, liste: CustomListView as any }}
         />
       </div>
     </div>
   );
+};
+
+// Define Custom List View
+const CustomListView = ({ events, date, localizer, onSelectEvent }: any) => {
+  const [sortBy, setSortBy] = useState<'date' | 'name'>('date');
+
+  const currentMonthEvents = useMemo(() => {
+    return events.filter((e: any) => {
+      const eStart = moment(e.start);
+      // RBC end date is exclusive for all day events, so subtract 1 day to see the true end, unless it's not allDay
+      const eEndActual = e.allDay && !e.halfDayTime ? moment(e.end).subtract(1, 'day') : moment(e.end);
+      
+      const startOfMonth = moment(date).startOf('month');
+      const endOfMonth = moment(date).endOf('month');
+      
+      // Keep event if it overlaps with current month
+      return eStart.isSameOrBefore(endOfMonth, 'day') && eEndActual.isSameOrAfter(startOfMonth, 'day');
+    });
+  }, [events, date]);
+
+  const sortedEvents = useMemo(() => {
+    return [...currentMonthEvents].sort((a: any, b: any) => {
+      if (sortBy === 'date') {
+        const dateA = a.start.getTime();
+        const dateB = b.start.getTime();
+        if (dateA !== dateB) return dateA - dateB;
+        return a.title.localeCompare(b.title);
+      } else {
+        // Try to get employee name
+        const nameA = a.resource?.first_name ? `${a.resource.last_name}, ${a.resource.first_name}` : (a.resource?.name || a.title);
+        const nameB = b.resource?.first_name ? `${b.resource.last_name}, ${b.resource.first_name}` : (b.resource?.name || b.title);
+        const compare = nameA.localeCompare(nameB);
+        if (compare !== 0) return compare;
+        return a.start.getTime() - b.start.getTime();
+      }
+    });
+  }, [currentMonthEvents, sortBy]);
+
+  return (
+    <div className="flex flex-col h-full bg-white text-gray-800 overflow-hidden border-t">
+      {/* Sort Options */}
+      <div className="flex items-center gap-4 py-3 px-4 border-b bg-gray-50">
+        <label className="font-medium text-sm text-gray-700">Sortieren nach:</label>
+        <button 
+          onClick={() => setSortBy('date')} 
+          className={`px-3 py-1.5 text-sm rounded transition-colors ${sortBy === 'date' ? 'bg-blue-600 text-white font-medium shadow-sm' : 'bg-white border text-gray-700 hover:bg-gray-100'}`}
+        >
+          Chronologisch
+        </button>
+        <button 
+          onClick={() => setSortBy('name')} 
+          className={`px-3 py-1.5 text-sm rounded transition-colors ${sortBy === 'name' ? 'bg-blue-600 text-white font-medium shadow-sm' : 'bg-white border text-gray-700 hover:bg-gray-100'}`}
+        >
+          Name
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-auto p-4 space-y-2">
+        {sortedEvents.length === 0 ? (
+          <div className="text-gray-500 text-center mt-10">Keine Einträge {localizer.format(date, 'MMMM YYYY', 'de')}</div>
+        ) : (
+          sortedEvents.map((event: any, idx: number) => {
+            const color = event.color || (event.isHoliday || event.isConsolidated ? getHolidayColor(event.resource) : '#3b82f6');
+            const isPending = event.resource?.status === 'pending';
+            const isHoliday = event.isHoliday || event.isConsolidated;
+            
+            const startDateStr = moment(event.start).format('DD.MM.YYYY');
+            const endDateActual = event.allDay && !event.halfDayTime ? moment(event.end).subtract(1, 'day') : moment(event.end);
+            const endDateStr = endDateActual.format('DD.MM.YYYY');
+            const dateRange = startDateStr === endDateStr ? startDateStr : `${startDateStr} - ${endDateStr}`;
+            
+            const displayTitle = event.resource?.displayTitle || event.title;
+            const halfDayText = event.halfDayTime === 'AM' ? ' (Vormittag)' : event.halfDayTime === 'PM' ? ' (Nachmittag)' : '';
+
+            return (
+               <div 
+                 key={`${event.id}-${idx}`} 
+                 className={`flex items-center justify-between p-3 border rounded-lg transition-colors cursor-pointer hover:bg-gray-50 ${isHoliday ? 'bg-gray-50' : ''}`}
+                 onClick={() => onSelectEvent && onSelectEvent(event)}
+               >
+                 <div className="flex items-center gap-3">
+                   <div 
+                     className="w-4 h-4 rounded-full flex-shrink-0" 
+                     style={{ 
+                       backgroundColor: color,
+                       opacity: isPending ? 0.5 : 1
+                     }} 
+                   />
+                   <div>
+                     <div className="font-medium text-gray-900">{displayTitle}{halfDayText}</div>
+                     <div className="text-sm text-gray-500">{dateRange}</div>
+                   </div>
+                 </div>
+                 {isPending && <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full font-medium ml-2">Antrag</span>}
+               </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+};
+CustomListView.title = (date: Date, { localizer }: any) => localizer.format(date, 'MMMM YYYY', 'de');
+CustomListView.navigate = (date: Date, action: string, { localizer }: any) => {
+  switch (action) {
+    case 'PREV': return localizer.add(date, -1, 'month');
+    case 'NEXT': return localizer.add(date, 1, 'month');
+    default: return date;
+  }
 };
