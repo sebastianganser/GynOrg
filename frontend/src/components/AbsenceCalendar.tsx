@@ -410,7 +410,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
     next: 'Weiter',
     today: 'Heute',
     month: 'Monat',
-    liste: 'Liste',
+    agenda: 'Liste',
     date: 'Datum',
     time: 'Zeit',
     event: 'Ereignis',
@@ -454,7 +454,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
               localizer?.format(date, 'dd', culture) || ''
           }}
           culture="de"
-          views={{ month: true, liste: CustomListView as any }}
+          views={{ month: true, agenda: CustomListView as any }}
         />
       </div>
     </div>
