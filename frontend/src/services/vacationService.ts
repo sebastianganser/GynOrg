@@ -96,10 +96,9 @@ export const vacationService = {
     }
   },
 
-  // Get vacation allowances for current year across all employees
-  async getCurrentYearVacationAllowances(): Promise<VacationAllowance[]> {
-    const currentYear = new Date().getFullYear();
-    const response = await fetch(`${API_BASE_URL}/vacation-allowances/?year=${currentYear}`, {
+  // Get vacation allowances for a specific year across all employees
+  async getVacationAllowancesByYear(year: number = new Date().getFullYear()): Promise<VacationAllowance[]> {
+    const response = await fetch(`${API_BASE_URL}/vacation-allowances/?year=${year}`, {
       method: 'GET',
       headers: authService.getAuthHeaders(),
     });

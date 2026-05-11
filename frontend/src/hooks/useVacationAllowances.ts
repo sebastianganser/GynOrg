@@ -37,7 +37,7 @@ export const useVacationAllowance = (employeeId: number, year: number) => {
 export const useCurrentYearVacationAllowances = () => {
   return useQuery({
     queryKey: vacationKeys.currentYear(),
-    queryFn: () => vacationService.getCurrentYearVacationAllowances(),
+    queryFn: () => vacationService.getVacationAllowancesByYear(),
     staleTime: 5 * 60 * 1000,
   });
 };
