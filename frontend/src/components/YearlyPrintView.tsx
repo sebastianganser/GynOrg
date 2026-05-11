@@ -116,10 +116,13 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
     style.innerHTML = `
       @media print {
         @page { size: A4 portrait; margin: 10mm; }
+        @page landscapePage { size: A4 landscape; margin: 10mm; }
+        
         body * { visibility: hidden; }
         .print-section, .print-section * { visibility: visible; }
         .print-section { position: absolute; left: 0; top: 0; width: 100%; height: auto; overflow: visible; background: white; }
         .print-page-break { page-break-before: always; }
+        .landscape-section { page: landscapePage; }
         .no-print { display: none !important; }
         
         /* Prevent background colors from being stripped in some browsers */
@@ -131,8 +134,8 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
   }, []);
 
   return (
-    <div className="print-section bg-white text-gray-900 h-full overflow-auto text-sm w-full">
-      <div className="flex justify-end p-4 no-print border-b bg-gray-50">
+    <div className="print-section bg-white text-gray-900 h-full overflow-y-auto text-sm w-full pb-20">
+      <div className="flex justify-end p-4 no-print border-b bg-gray-50 sticky top-0 z-10">
         <button 
           onClick={() => window.print()}
           className="px-4 py-2 bg-blue-600 text-white rounded font-medium shadow hover:bg-blue-700 flex items-center gap-2 transition-colors"
@@ -142,8 +145,82 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
         </button>
       </div>
 
-      {/* PAGE 1: Yearly Gantt Calendar */}
-      <div className="p-8 w-full max-w-[1000px] mx-auto min-h-screen">
+      {/* PAGE 1..N-1: Employee Invoices */}
+      {employeeSummaries.map((summary, idx) => (
+        <div key={summary.employee.id} className={`p-8 w-full max-w-[800px] mx-auto min-h-screen pt-12 ${idx > 0 ? 'print-page-break' : ''} border-b-8 border-gray-100 print:border-b-0`}>
+          <div className="border-b-2 border-gray-800 pb-4 mb-8">
+            <h2 className="text-3xl font-bold">{summary.employee.last_name}, {summary.employee.first_name}</h2>
+            <p className="text-gray-500 mt-1">Urlaubsabrechnung für das Jahr {year}</p>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded p-6 mb-8 flex justify-between text-lg">
+            <div>
+              <div className="text-gray-600 text-sm">Urlaubsanspruch {year}:</div>
+              <div className="font-bold">{summary.allowance.annual} Tage</div>
+            </div>
+            <div>
+              <div className="text-gray-600 text-sm">Resturlaub Vorjahr:</div>
+              <div className="font-bold">{summary.allowance.carryover} Tage</div>
+            </div>
+            <div className="text-right">
+              <div className="text-gray-600 text-sm">Gesamtanspruch:</div>
+              <div className="font-bold text-blue-800 text-xl">{summary.allowance.total} Tage</div>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold mb-4">Urlaube im Jahr {year}</h3>
+          
+          {summary.absences.length === 0 ? (
+            <p className="text-gray-500 italic py-4 border-b border-t border-gray-100">Keine Urlaube verzeichnet.</p>
+          ) : (
+            <table className="w-full text-left border-collapse mb-8">
+              <thead>
+                <tr className="border-b-2 border-gray-300">
+                  <th className="py-2">Art</th>
+                  <th className="py-2">Zeitraum</th>
+                  <th className="py-2">Status</th>
+                  <th className="py-2 text-right">Tage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {summary.absences.map((abs, i) => (
+                  <tr key={abs.id} className="border-b border-gray-200">
+                    <td className="py-3">{abs.type}</td>
+                    <td className="py-3">{abs.start === abs.end ? abs.start : `${abs.start} - ${abs.end}`}</td>
+                    <td className="py-3">
+                      <span className={`px-2 py-1 rounded text-xs font-bold ${abs.status === 'approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                        {abs.status === 'approved' ? 'Genehmigt' : 'Antrag'}
+                      </span>
+                    </td>
+                    <td className="py-3 text-right font-medium">{abs.days}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-gray-50 font-bold border-b border-gray-300">
+                  <td colSpan={3} className="py-3 px-2 text-right">Summe verplanter Urlaubstage:</td>
+                  <td className="py-3 text-right">{summary.allowance.used}</td>
+                </tr>
+              </tfoot>
+            </table>
+          )}
+
+          <div className="mt-8 border-t-2 border-gray-800 pt-6 flex justify-between items-end">
+            <div className="text-gray-500 text-sm">
+              Stand: {moment().format('DD.MM.YYYY')}
+            </div>
+            <div className="text-right">
+              <div className="text-gray-600">Verbleibender Resturlaub:</div>
+              <div className={`font-bold text-3xl mt-1 ${summary.allowance.balance < 0 ? 'text-red-600' : 'text-green-700'}`}>
+                {summary.allowance.balance} Tage
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* PAGE N: Yearly Gantt Calendar (Landscape) */}
+      <div className="landscape-section print-page-break p-8 w-full max-w-[1200px] mx-auto min-h-screen">
         <h1 className="text-2xl font-bold mb-6 text-center">Urlaubsplan {year}</h1>
         
         {/* Gantt Grid */}
@@ -260,79 +337,6 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
         </div>
       </div>
 
-      {/* PAGE 2+: Employee Invoices */}
-      {employeeSummaries.map((summary) => (
-        <div key={summary.employee.id} className="print-page-break p-8 w-full max-w-[800px] mx-auto min-h-screen pt-12">
-          <div className="border-b-2 border-gray-800 pb-4 mb-8">
-            <h2 className="text-3xl font-bold">{summary.employee.last_name}, {summary.employee.first_name}</h2>
-            <p className="text-gray-500 mt-1">Urlaubsabrechnung für das Jahr {year}</p>
-          </div>
-
-          <div className="bg-blue-50 border border-blue-200 rounded p-6 mb-8 flex justify-between text-lg">
-            <div>
-              <div className="text-gray-600 text-sm">Urlaubsanspruch {year}:</div>
-              <div className="font-bold">{summary.allowance.annual} Tage</div>
-            </div>
-            <div>
-              <div className="text-gray-600 text-sm">Resturlaub Vorjahr:</div>
-              <div className="font-bold">{summary.allowance.carryover} Tage</div>
-            </div>
-            <div className="text-right">
-              <div className="text-gray-600 text-sm">Gesamtanspruch:</div>
-              <div className="font-bold text-blue-800 text-xl">{summary.allowance.total} Tage</div>
-            </div>
-          </div>
-
-          <h3 className="text-xl font-bold mb-4">Urlaube im Jahr {year}</h3>
-          
-          {summary.absences.length === 0 ? (
-            <p className="text-gray-500 italic py-4 border-b border-t border-gray-100">Keine Urlaube verzeichnet.</p>
-          ) : (
-            <table className="w-full text-left border-collapse mb-8">
-              <thead>
-                <tr className="border-b-2 border-gray-300">
-                  <th className="py-2">Art</th>
-                  <th className="py-2">Zeitraum</th>
-                  <th className="py-2">Status</th>
-                  <th className="py-2 text-right">Tage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {summary.absences.map((abs, i) => (
-                  <tr key={abs.id} className="border-b border-gray-200">
-                    <td className="py-3">{abs.type}</td>
-                    <td className="py-3">{abs.start === abs.end ? abs.start : `${abs.start} - ${abs.end}`}</td>
-                    <td className="py-3">
-                      <span className={`px-2 py-1 rounded text-xs font-bold ${abs.status === 'approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                        {abs.status === 'approved' ? 'Genehmigt' : 'Antrag'}
-                      </span>
-                    </td>
-                    <td className="py-3 text-right font-medium">{abs.days}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr className="bg-gray-50 font-bold border-b border-gray-300">
-                  <td colSpan={3} className="py-3 px-2 text-right">Summe verplanter Urlaubstage:</td>
-                  <td className="py-3 text-right">{summary.allowance.used}</td>
-                </tr>
-              </tfoot>
-            </table>
-          )}
-
-          <div className="mt-8 border-t-2 border-gray-800 pt-6 flex justify-between items-end">
-            <div className="text-gray-500 text-sm">
-              Stand: {moment().format('DD.MM.YYYY')}
-            </div>
-            <div className="text-right">
-              <div className="text-gray-600">Verbleibender Resturlaub:</div>
-              <div className={`font-bold text-3xl mt-1 ${summary.allowance.balance < 0 ? 'text-red-600' : 'text-green-700'}`}>
-                {summary.allowance.balance} Tage
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
     </div>
   );
 };
