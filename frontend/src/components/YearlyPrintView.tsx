@@ -134,7 +134,7 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
   }, []);
 
   return (
-    <div className="print-section bg-white text-gray-900 h-full overflow-y-auto text-sm w-full pb-20">
+    <div className="print-section bg-white text-gray-900 absolute inset-0 z-50 overflow-y-auto text-sm pb-20">
       <div className="flex justify-end p-4 no-print border-b bg-gray-50 sticky top-0 z-10">
         <button 
           onClick={() => window.print()}
