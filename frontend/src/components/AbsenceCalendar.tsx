@@ -419,7 +419,7 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
     next: 'Weiter',
     today: 'Heute',
     month: 'Monat',
-    agenda: 'Liste',
+    agenda: 'Bericht',
     date: 'Datum',
     time: 'Zeit',
     event: 'Ereignis',
