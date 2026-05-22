@@ -4,6 +4,8 @@ import { CalendarAbsence } from '../types/absence';
 import { Employee, VacationAllowance } from '../types/employee';
 import { getHolidayColor } from '../types/holiday';
 import { vacationService } from '../services/vacationService';
+import { vacationEntitlementService } from '../services/vacationEntitlementService';
+import { VacationEntitlement } from '../types/vacationEntitlement';
 
 interface YearlyPrintViewProps {
   events: any[]; // Combined absences and holidays from react-big-calendar
@@ -15,25 +17,31 @@ interface YearlyPrintViewProps {
 export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, localizer, employees }) => {
   const year = moment(date).year();
   const [allowances, setAllowances] = useState<Record<number, VacationAllowance>>({});
+  const [entitlements, setEntitlements] = useState<VacationEntitlement[]>([]);
   
-  // Fetch vacation allowances for the selected year
+  // Fetch vacation allowances and entitlements for the selected year
   useEffect(() => {
     let isMounted = true;
-    const fetchAllowances = async () => {
+    const fetchData = async () => {
       try {
-        const data = await vacationService.getVacationAllowancesByYear(year);
+        const [allowanceData, entitlementData] = await Promise.all([
+          vacationService.getVacationAllowancesByYear(year),
+          vacationEntitlementService.getEntitlements()
+        ]);
+        
         if (isMounted) {
           const allowanceMap: Record<number, VacationAllowance> = {};
-          data.forEach(a => {
+          allowanceData.forEach(a => {
             allowanceMap[a.employee_id] = a;
           });
           setAllowances(allowanceMap);
+          setEntitlements(entitlementData);
         }
       } catch (error) {
-        console.error("Failed to fetch allowances for print view:", error);
+        console.error("Failed to fetch allowances or entitlements for print view:", error);
       }
     };
-    fetchAllowances();
+    fetchData();
     return () => { isMounted = false; };
   }, [year]);
 
@@ -97,7 +105,13 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
       }).sort((a, b) => moment(a.start, 'DD.MM.YYYY').valueOf() - moment(b.start, 'DD.MM.YYYY').valueOf());
 
       const allowance = allowances[emp.id];
-      const annual = allowance?.annual_allowance || 0;
+      const annual = allowance?.annual_allowance ?? (() => {
+        const yearDate = new Date(`${year}-01-01`);
+        const empEntitlements = entitlements.filter(e => e.employee_id === emp.id)
+            .sort((a, b) => new Date(b.from_date).getTime() - new Date(a.from_date).getTime());
+        const activeRule = empEntitlements.find(e => new Date(e.from_date) <= yearDate);
+        return activeRule ? activeRule.days : 30; // fallback to 30
+      })();
       const carryover = allowance?.carryover_days || 0;
       const total = annual + carryover;
       const balance = total - usedDays;
@@ -108,7 +122,7 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
         absences: absenceList
       };
     });
-  }, [employees, currentYearEvents, allowances]);
+  }, [employees, currentYearEvents, allowances, entitlements, year]);
 
   const totalPages = employeeSummaries.length + 1;
   const [currentPage, setCurrentPage] = useState(0);

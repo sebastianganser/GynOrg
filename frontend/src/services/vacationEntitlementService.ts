@@ -3,9 +3,11 @@ import { API_BASE_URL } from './config';
 import { authService } from './authService';
 
 export const vacationEntitlementService = {
-    async getEntitlements(employeeId: number): Promise<VacationEntitlement[]> {
+    async getEntitlements(employeeId?: number): Promise<VacationEntitlement[]> {
         const url = new URL(`${API_BASE_URL}/vacation-entitlements/`, window.location.origin);
-        url.searchParams.append('employee_id', employeeId.toString());
+        if (employeeId !== undefined) {
+            url.searchParams.append('employee_id', employeeId.toString());
+        }
 
         const response = await fetch(url.toString(), {
             method: 'GET',
