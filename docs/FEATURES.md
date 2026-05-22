@@ -15,7 +15,9 @@
 ## 3. Benutzeroberfläche
 - **Team-Kalenderansicht:** Grafische Kalenderübersicht (Gantt-Chart-ähnlich). Umschaltbar zwischen Monats- und Wochenansicht mit Scroll/Zoom-Funktion. Visuelle Kennzeichnung von Wochenenden, Feiertagen und Schulferien.
 - **Dashboard (Übersichtsseite):** Kacheln mit Kennzahlen, Resturlaubsübersicht pro Mitarbeiter, Schnellzugriff.
-- **Berichte und Auswertungen:** Generierung von Berichten (z. B. Jahresübersicht, Abwesenheitsverteilung nach Typ). Visuelle Diagramme und interaktive Filter.
+- **Berichte und Auswertungen / Listenansicht:**
+  - **Jahresabrechnung (Liste):** Paginiertes, druckoptimiertes Layout ("Urlaubsabrechnung") zur Darstellung der Jahres-Urlaubsbilanz jedes Mitarbeiters, vorbereitet für PDF-Export.
+  - **Statistiken:** Visuelle Diagramme und interaktive Filter (generelle Jahresübersicht, Abwesenheitsverteilung).
 - **Einstellungen:** Zentrale Verwaltung von Systemeinstellungen, Praxisdaten und Kalender-Konfigurationen.
 
 ## 4. Erweiterungsmodule

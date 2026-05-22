@@ -180,11 +180,12 @@ export const AbsenceCalendar: React.FC<AbsenceCalendarProps> = ({
   const { data: employees } = useEmployees(false);
   
   const WrappedYearlyPrintView = useMemo(() => {
-    const View = (props: any) => <YearlyPrintView {...props} employees={employees || []} />;
+    const activeEmployees = (employees || []).filter(e => selectedEmployeeIds.includes(e.id));
+    const View = (props: any) => <YearlyPrintView {...props} employees={activeEmployees} />;
     View.title = (YearlyPrintView as any).title;
     View.navigate = (YearlyPrintView as any).navigate;
     return View;
-  }, [employees]);
+  }, [employees, selectedEmployeeIds]);
 
   // Holidays
   const { holidays } = useHolidays(date.getFullYear());
