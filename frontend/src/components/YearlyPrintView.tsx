@@ -81,7 +81,7 @@ export const YearlyPrintView: React.FC<YearlyPrintViewProps> = ({ events, date, 
       const absenceList = empEvents.map(e => {
         const absence = e.resource;
         // The backend should calculate duration, fallback to basic day diff if missing
-        let days = absence.duration || 0; 
+        let days = absence.duration_days || 0; 
         if (!days) {
           const s = moment(absence.start_date);
           const e = moment(absence.end_date);
